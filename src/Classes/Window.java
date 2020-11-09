@@ -1,4 +1,4 @@
-package sample;
+package Classes;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,7 +12,7 @@ public class Window {
 
     public void createWindow(String fxmlFile, Boolean isDecorated, Stage stage, Boolean inNewWindow, Integer width, Integer height) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
-        if (isDecorated)
+        if (!isDecorated)
             stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(new Scene(root, width, height));
         stage.show();

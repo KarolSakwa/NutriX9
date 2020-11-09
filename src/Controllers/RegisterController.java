@@ -1,4 +1,4 @@
-package sample;
+package Controllers;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -7,10 +7,8 @@ import javafx.stage.Stage;
 
 
 import javafx.event.ActionEvent;
+import Classes.DatabaseConnection;
 
-import javax.xml.soap.Text;
-import java.io.File;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.Statement;
 

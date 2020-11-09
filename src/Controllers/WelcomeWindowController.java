@@ -1,13 +1,11 @@
-package sample;
+package Controllers;
 
+import Classes.ChildrenWindow;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import Classes.DatabaseConnection;
 
-import java.io.IOException;
 import java.sql.Connection;
 
 public class WelcomeWindowController {
@@ -18,22 +16,17 @@ public class WelcomeWindowController {
     @FXML
     private Label welcomeLabel;
 
-    public WelcomeWindowController (SelectProfileController selectProfileController){
+    public WelcomeWindowController(SelectProfileController selectProfileController){
         this.selectProfileController = selectProfileController;
         thisStage = new Stage();
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("welcomeWindow.fxml"));
-            loader.setController(this);
-            thisStage.initStyle(StageStyle.UNDECORATED);
-            thisStage.setScene(new Scene(loader.load(), 600, 400));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        ChildrenWindow welcomeWindow = new ChildrenWindow();
+        welcomeWindow.create("../fxml/welcomeWindow.fxml", this, thisStage, false, 600, 400);
     }
 
     public void initialize() {
         welcomeLabel.setText(selectProfileController.getUsername());
     }
+
     public void showStage(){
         thisStage.showAndWait();
     }

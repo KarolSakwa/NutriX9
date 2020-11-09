@@ -1,7 +1,6 @@
-package sample;
+package Controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,14 +11,11 @@ import javafx.event.ActionEvent;
 
 import javafx.scene.control.TextField;
 import javafx.stage.StageStyle;
+import Classes.DatabaseConnection;
 
-import java.awt.*;
-import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ResourceBundle;
-import java.net.URL;
 
 
 public class LogInController {
