@@ -1,6 +1,7 @@
 package Classes;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.Statement;
 
 
 public class DatabaseConnection {
@@ -21,6 +22,17 @@ public class DatabaseConnection {
         }
         return databaseLink;
     }
+
+    public void executeQuery(Connection con, String query){
+        try {
+            Statement statement = con.createStatement();
+            statement.executeUpdate(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
     //public
 
 }

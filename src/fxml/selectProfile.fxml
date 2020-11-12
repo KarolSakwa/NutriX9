@@ -26,7 +26,7 @@
                   <Image url="@../img/login.png" />
                </image>
             </ImageView>
-            <Label layoutX="14.0" layoutY="160.0" text="Profile:">
+            <Label layoutX="24.0" layoutY="163.0" text="Select profile:">
                <font>
                   <Font size="13.0" />
                </font>
@@ -36,17 +36,12 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <ChoiceBox fx:id="profileChoiceBox" layoutX="89.0" layoutY="157.0" prefWidth="150.0" />
             <Button fx:id="cancelButton" layoutX="24.0" layoutY="337.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="25.0" prefWidth="254.0" style="-fx-background-color: #58b7cd;" text="Exit" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="addNewProfileButton" layoutX="24.0" layoutY="232.0" mnemonicParsing="false" onAction="#addNewProfileButtonOnAction" prefHeight="25.0" prefWidth="254.0" style="-fx-background-color: #58b7cd;" text="Add new profile" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
+            <ComboBox fx:id="selectProfileComboBox" layoutX="24.0" layoutY="200.0" prefHeight="25.0" prefWidth="251.0" promptText="... or create new (type name here)" />
          </children>
       </AnchorPane>
    </right>

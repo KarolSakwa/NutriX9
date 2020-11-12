@@ -1,6 +1,5 @@
 package Classes;
 
-import Controllers.WelcomeWindowController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
@@ -22,9 +21,4 @@ public class ChildrenWindow {
             e.printStackTrace();
         }
     }
-
-    public interface Something {
-
-    }
-
 }

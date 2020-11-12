@@ -3,7 +3,7 @@ package Controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import Classes.DatabaseConnection;
 
@@ -18,19 +18,20 @@ public class SelectProfileController {
     DatabaseConnection databaseConnection = new DatabaseConnection();
     Connection con = databaseConnection.getConnection();
     @FXML
-    private ChoiceBox profileChoiceBox;
+    private ComboBox selectProfileComboBox;
     @FXML
     private Button cancelButton, selectButton, addNewProfileButton;
     String username;
 
 
     public void initialize() throws SQLException {
+        selectProfileComboBox.setEditable(true);
         String query = "SELECT username FROM users;";
         Statement statement = con.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
         while (resultSet.next()) {
             username = resultSet.getString("username");
-            profileChoiceBox.getItems().add(username);
+            selectProfileComboBox.getItems().add(username);
         }
     }
     // ON ACTION METHODS
@@ -41,9 +42,26 @@ public class SelectProfileController {
     }
 
     public void selectButtonOnAction(ActionEvent event) throws IOException {
+        String username = selectProfileComboBox.getValue().toString();
+        try {
+            Statement statement = con.createStatement();
+            ResultSet userExists = statement.executeQuery("SELECT COUNT(*) AS 'rowCount' FROM users WHERE username = '" + username + "'");
+            userExists.next();
+            Integer count = userExists.getInt("rowCount");
+            if (count == 0) // adding new user to the db only when there's no other with this name
+                statement.executeUpdate("INSERT INTO users (username) VALUE ('" + username + "')");
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
         Stage stage = (Stage) selectButton.getScene().getWindow();
         stage.close();
-        openWelcomeWindow();
+        if (userDietsNum(username) == 0)
+            openAddNewDietWindow();
+        else
+            openDietView();
+
+
     }
     public void addNewProfileButtonOnAction() {
         AddNewProfileController addNewProfileController = new AddNewProfileController(this);
@@ -53,12 +71,30 @@ public class SelectProfileController {
     // OTHER
 
     public String getUsername() {
-        return profileChoiceBox.getValue().toString();
+        return selectProfileComboBox.getValue().toString();
     }
 
-    private void openWelcomeWindow() {
-        WelcomeWindowController welcomeWindowController = new WelcomeWindowController(this);
-        welcomeWindowController.showStage();
+    private void openAddNewDietWindow() {
+        AddNewDietController addNewDietController = new AddNewDietController(this);
+        addNewDietController.showStage();
+    }
+
+    private void openDietView() {
+        DietViewController dietViewController = new DietViewController(this);
+        dietViewController.showStage();
+    }
+
+    private Integer userDietsNum(String username) {
+        try {
+            Statement statement = con.createStatement();
+            ResultSet usersDiets = statement.executeQuery("SELECT COUNT(*) AS 'dietCount' FROM diets WHERE username = '" + username + "'");
+            usersDiets.next();
+            return usersDiets.getInt("dietCount");
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+            return 0;
+        }
     }
 
 }
