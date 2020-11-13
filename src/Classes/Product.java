@@ -82,6 +82,20 @@ public class Product {
 
     public String getQuantity() { return quantity; }
 
+    public String getShorterUnit() {
+        switch (unitType) {
+            case "gram":
+                return "gr";
+            case "milliliter":
+                return "ml";
+            case "unit":
+                return "U";
+            default:
+                return "";
+        }
+
+    }
+
 
     public void setName(String name) {
         this.name = name;

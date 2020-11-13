@@ -2,11 +2,13 @@ package Controllers;
 
 import Classes.ChildrenWindow;
 import Classes.DatabaseConnection;
+import Classes.MealTable;
 import Classes.Product;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
@@ -25,6 +27,7 @@ public class AddProductController {
     @FXML Button closeButton, addSelectedButton;
     @FXML ChoiceBox selectColumnChoiceBox;
     @FXML TableView productsTableView;
+    @FXML Group meal1Header;
     @FXML TextField searchProductTextField, quantityTextField;
     @FXML TableColumn productNameColumn, quantityTableColumn, kcalColumn, proteinsColumn, carbohydratesColumn, fatsColumn, macronutrientColumn, categoryColumn, wholesomenessIndexColumn;
 
@@ -38,6 +41,7 @@ public class AddProductController {
         selectColumnChoiceBox.getItems().addAll(productNameColumn.getText(), macronutrientColumn.getText(), categoryColumn.getText(), wholesomenessIndexColumn.getText());
         selectColumnChoiceBox.setValue(productNameColumn.getText());
         changeUnitInQuantityPromptText();
+
     }
 
     public void closeButtonOnAction(){
@@ -46,11 +50,13 @@ public class AddProductController {
     }
 
     public void addSelectedButtonOnAction() {
+        MealTable mealTable = new MealTable();
         Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
-        String additionalS = (Integer.parseInt(quantityTextField.getText()) > 1) ? "s" : "";
-        dietViewController.product1Label.setVisible(true);
-        dietViewController.product1Label.setText(selectedProduct.getName() + " (" + quantityTextField.getText() + " " + selectedProduct.getUnitType() + additionalS + ")");
-        dietViewController.addProductButton.setLayoutY(419);
+        mealTable.showHeaders("Meal 1", 251.0, 151.0, dietViewController.dietViewPane);
+        mealTable.insertRow(selectedProduct, Double.parseDouble(quantityTextField.getText()), dietViewController.productsInMeal1Count, dietViewController.kcal1Label, dietViewController.dietViewPane);
+        dietViewController.productsInMeal1Count += 1;
+        Stage stage = (Stage) addSelectedButton.getScene().getWindow();
+        stage.close();
     }
 
     public void showStage(){
@@ -104,8 +110,6 @@ public class AddProductController {
                 filteredProducts.setPredicate(p -> p.getWholesomenessIndex().toString().toLowerCase().contains(searchProductTextField.getText().toLowerCase().trim()));//filter table by first name
             }
         });
-
-
     }
 
     private void changeUnitInQuantityPromptText() {
@@ -113,6 +117,20 @@ public class AddProductController {
             Product product = (Product) productsTableView.getSelectionModel().getSelectedItem();
             quantityTextField.setPromptText("Quantity (" + product.getUnitType() + ")");
         });
+    }
+
+    private void changeLabels(Group header, Group rowGroup, Label quantityLabel, Label productLabel, Label kcalLabel, Label carbsLabel, Label proteinsLabel, Label fatsLabel, Label WILabel) {
+        Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
+        Double productQuantity = Double.parseDouble(quantityTextField.getText());
+        header.setVisible(true);
+        rowGroup.setVisible(true);
+        quantityLabel.setText(quantityTextField.getText() + " " + selectedProduct.getShorterUnit());
+        productLabel.setText(selectedProduct.getName());
+        kcalLabel.setText(String.valueOf(Math.round(selectedProduct.getKcal() * productQuantity)));
+        proteinsLabel.setText(String.valueOf(Math.round(selectedProduct.getProteins() * productQuantity)));
+        carbsLabel.setText(String.valueOf(Math.round(selectedProduct.getCarbohydrates() * productQuantity)));
+        fatsLabel.setText((String.valueOf(Math.round(selectedProduct.getFats() * productQuantity))));
+        WILabel.setText(selectedProduct.getWholesomenessIndex().toString());
     }
 
 }

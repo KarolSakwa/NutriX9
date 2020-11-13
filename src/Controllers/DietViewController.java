@@ -1,9 +1,13 @@
 package Controllers;
 
 import Classes.ChildrenWindow;
+import Classes.MealTable;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import Classes.DatabaseConnection;
 
@@ -17,10 +21,15 @@ public class DietViewController {
     private final SelectProfileController selectProfileController;
     DatabaseConnection databaseConnection = new DatabaseConnection();
     Connection con = databaseConnection.getConnection();
-    @FXML Label dietNameLabel, meal1Label, product1Label;
-    @FXML Button addMealButton, addProductButton;
+    @FXML Group meal1Header, meal1Row1;
+    @FXML ImageView minus1ImageView;
+    @FXML Label dietNameLabel, meal1Label, product1Label, quantity1Label, kcal1Label, proteins1Label, carbs1Label, fats1Label, WI1Label;
+    @FXML Button addMealButton, meal1AddProductButton;
+    @FXML Pane dietViewPane;
+    Integer productsInMeal1Count = 1;
 
     public DietViewController(SelectProfileController selectProfileController) {
+        MealTable mealTable = new MealTable();
         this.selectProfileController = selectProfileController;
         thisStage = new Stage();
         ChildrenWindow dietViewWindow = new ChildrenWindow();
@@ -43,13 +52,16 @@ public class DietViewController {
     }
 
     public void addMealButtonOnAction() {
-        meal1Label.setVisible(true);
-        addProductButton.setVisible(true);
+        meal1AddProductButton.setVisible(true);
     }
 
-    public void addProductButtonOnAction() {
+    public void meal1AddProductButtonOnAction() {
         AddProductController addProductController = new AddProductController(this);
         addProductController.showStage();
+    }
+
+    public void minus1ImageViewOnAction() {
+        System.out.println("ahu");
     }
 
     
