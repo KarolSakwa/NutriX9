@@ -30,7 +30,7 @@ public class AddProductController {
     @FXML Group meal1Header;
     @FXML TextField searchProductTextField, quantityTextField;
     @FXML TableColumn productNameColumn, quantityTableColumn, kcalColumn, proteinsColumn, carbohydratesColumn, fatsColumn, macronutrientColumn, categoryColumn, wholesomenessIndexColumn;
-
+    MealTable mealTable = new MealTable();
 
     public AddProductController(DietViewController dietViewController) {
         this.dietViewController = dietViewController;
@@ -50,13 +50,14 @@ public class AddProductController {
     }
 
     public void addSelectedButtonOnAction() {
-        MealTable mealTable = new MealTable();
         Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
         mealTable.showHeaders("Meal 1", 251.0, 151.0, dietViewController.dietViewPane);
-        mealTable.insertRow(selectedProduct, Double.parseDouble(quantityTextField.getText()), dietViewController.productsInMeal1Count, dietViewController.kcal1Label, dietViewController.dietViewPane);
-        dietViewController.productsInMeal1Count += 1;
+        mealTable.productsInMeal1Count += 1;
+        mealTable.insertRow(selectedProduct, Double.parseDouble(quantityTextField.getText()), mealTable.productsInMeal1Count, dietViewController.kcal1Label, dietViewController.dietViewPane);
+        System.out.println(mealTable.productsInMeal1Count);
         Stage stage = (Stage) addSelectedButton.getScene().getWindow();
         stage.close();
+        quantityTextField.setText("");
     }
 
     public void showStage(){

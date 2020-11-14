@@ -146,7 +146,7 @@
       <Label fx:id="kcal1Label" layoutX="253.0" layoutY="150.0" text="Label" visible="false" />
       <ImageView fx:id="minus1ImageView" fitHeight="20.0" fitWidth="20.0" layoutX="474.0" layoutY="170.0" onMouseClicked="#minus1ImageViewOnAction" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
-            <Image url="@../img/minus.png" />
+            <Image url="@../Classes/minus.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />

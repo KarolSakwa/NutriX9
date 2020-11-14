@@ -26,7 +26,7 @@ public class DietViewController {
     @FXML Label dietNameLabel, meal1Label, product1Label, quantity1Label, kcal1Label, proteins1Label, carbs1Label, fats1Label, WI1Label;
     @FXML Button addMealButton, meal1AddProductButton;
     @FXML Pane dietViewPane;
-    Integer productsInMeal1Count = 1;
+    AddProductController addProductController = new AddProductController(this);
 
     public DietViewController(SelectProfileController selectProfileController) {
         MealTable mealTable = new MealTable();
@@ -56,7 +56,6 @@ public class DietViewController {
     }
 
     public void meal1AddProductButtonOnAction() {
-        AddProductController addProductController = new AddProductController(this);
         addProductController.showStage();
     }
 
