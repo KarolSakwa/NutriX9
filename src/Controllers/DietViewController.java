@@ -29,7 +29,7 @@ public class DietViewController {
     AddProductController addProductController = new AddProductController(this);
 
     public DietViewController(SelectProfileController selectProfileController) {
-        MealTable mealTable = new MealTable();
+        MealTable mealTable = new MealTable(null, null, null, null, null);
         this.selectProfileController = selectProfileController;
         thisStage = new Stage();
         ChildrenWindow dietViewWindow = new ChildrenWindow();

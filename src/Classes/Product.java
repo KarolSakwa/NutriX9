@@ -1,16 +1,9 @@
 package Classes;
 
 public class Product {
-    private String name;
-    private Double kcal;
-    private Double proteins;
-    private Double carbohydrates;
-    private Double fats;
-    private String macronutrientCategory;
-    private String category;
+    private String name, macronutrientCategory, category, unitType, quantity;
+    private Double kcal, proteins, carbohydrates, fats, price;
     private Integer wholesomenessIndex;
-    private String unitType;
-    private String quantity;
 
     public Double getKcal() {
         return kcal;
@@ -101,7 +94,15 @@ public class Product {
         this.name = name;
     }
 
-    public Product(String name, Double kcal, Double proteins, Double carbohydrates, Double fats, String macronutrientCategory, String category, Integer wholesomenessIndex, String unitType, String quantity) {
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Product(String name, Double kcal, Double proteins, Double carbohydrates, Double fats, String macronutrientCategory, String category, Integer wholesomenessIndex, String unitType, String quantity, Double price) {
         this.name = name;
         this.kcal = kcal;
         this.proteins = proteins;
@@ -112,5 +113,6 @@ public class Product {
         this.wholesomenessIndex = wholesomenessIndex;
         this.unitType = unitType;
         this.quantity = quantity;
+        this.price = price;
     }
 }

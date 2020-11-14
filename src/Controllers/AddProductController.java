@@ -29,8 +29,9 @@ public class AddProductController {
     @FXML TableView productsTableView;
     @FXML Group meal1Header;
     @FXML TextField searchProductTextField, quantityTextField;
-    @FXML TableColumn productNameColumn, quantityTableColumn, kcalColumn, proteinsColumn, carbohydratesColumn, fatsColumn, macronutrientColumn, categoryColumn, wholesomenessIndexColumn;
-    MealTable mealTable = new MealTable();
+    @FXML TableColumn productNameColumn, quantityTableColumn, kcalColumn, proteinsColumn, carbohydratesColumn,
+            fatsColumn, macronutrientColumn, categoryColumn, wholesomenessIndexColumn, priceColumn;
+    MealTable mealTable = new MealTable(null, null, null, null, null);
 
     public AddProductController(DietViewController dietViewController) {
         this.dietViewController = dietViewController;
@@ -51,10 +52,10 @@ public class AddProductController {
 
     public void addSelectedButtonOnAction() {
         Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
-        mealTable.showHeaders("Meal 1", 251.0, 151.0, dietViewController.dietViewPane);
-        mealTable.productsInMeal1Count += 1;
-        mealTable.insertRow(selectedProduct, Double.parseDouble(quantityTextField.getText()), mealTable.productsInMeal1Count, dietViewController.kcal1Label, dietViewController.dietViewPane);
-        System.out.println(mealTable.productsInMeal1Count);
+        mealTable.insertHeaders("Meal 1", 251.0, 151.0, dietViewController.dietViewPane);
+        mealTable.currentProductsNum += 1;
+        mealTable.insertRow(selectedProduct, Double.parseDouble(quantityTextField.getText()), mealTable.currentProductsNum, dietViewController.kcal1Label, dietViewController.dietViewPane);
+        System.out.println(mealTable.currentProductsNum);
         Stage stage = (Stage) addSelectedButton.getScene().getWindow();
         stage.close();
         quantityTextField.setText("");
@@ -75,6 +76,7 @@ public class AddProductController {
         macronutrientColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("macronutrientCategory"));
         categoryColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("category"));
         wholesomenessIndexColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("wholesomenessIndex"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("price"));
         FilteredList<Product> filteredProducts = new FilteredList(products, p -> true);
         productsTableView.setItems(filteredProducts);
         try {
@@ -91,7 +93,8 @@ public class AddProductController {
                         product.getString("category"),
                         Integer.parseInt(product.getString("wholesomeness_index")),
                         product.getString("unit_type"),
-                        product.getString("quantity")
+                        product.getString("quantity"),
+                        Double.parseDouble(product.getString("price"))
                         ));
             }
         } catch (Exception e) {
@@ -119,8 +122,8 @@ public class AddProductController {
             quantityTextField.setPromptText("Quantity (" + product.getUnitType() + ")");
         });
     }
-
-    private void changeLabels(Group header, Group rowGroup, Label quantityLabel, Label productLabel, Label kcalLabel, Label carbsLabel, Label proteinsLabel, Label fatsLabel, Label WILabel) {
+/*
+    private void changeLabels(Group header, Group rowGroup, Label quantityLabel, Label productLabel, Label kcalLabel, Label carbsLabel, Label proteinsLabel, Label fatsLabel, Label WILabel, Label priceLabel) {
         Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
         Double productQuantity = Double.parseDouble(quantityTextField.getText());
         header.setVisible(true);
@@ -131,8 +134,11 @@ public class AddProductController {
         proteinsLabel.setText(String.valueOf(Math.round(selectedProduct.getProteins() * productQuantity)));
         carbsLabel.setText(String.valueOf(Math.round(selectedProduct.getCarbohydrates() * productQuantity)));
         fatsLabel.setText((String.valueOf(Math.round(selectedProduct.getFats() * productQuantity))));
+        priceLabel.setText((String.valueOf(Math.round(selectedProduct.getPrice() * productQuantity))));
         WILabel.setText(selectedProduct.getWholesomenessIndex().toString());
     }
+
+ */
 
 }
 
