@@ -13,8 +13,9 @@ import Classes.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class DietViewController {
     private Stage thisStage;
@@ -27,9 +28,10 @@ public class DietViewController {
     @FXML Button addMealButton, meal1AddProductButton;
     @FXML Pane dietViewPane;
     AddProductController addProductController = new AddProductController(this);
+    public ArrayList<MealTable> mealsList = new ArrayList<>();
 
     public DietViewController(SelectProfileController selectProfileController) {
-        MealTable mealTable = new MealTable(null, null, null, null, null);
+        //MealTable mealTable = new MealTable();
         this.selectProfileController = selectProfileController;
         thisStage = new Stage();
         ChildrenWindow dietViewWindow = new ChildrenWindow();
@@ -52,7 +54,13 @@ public class DietViewController {
     }
 
     public void addMealButtonOnAction() {
+        MealTable meal1Table = new MealTable();
+        mealsList.add(meal1Table);
+
+
+        //System.out.println(mealsList.size());
         meal1AddProductButton.setVisible(true);
+
     }
 
     public void meal1AddProductButtonOnAction() {
@@ -63,5 +71,8 @@ public class DietViewController {
         System.out.println("ahu");
     }
 
+    public void testButtonOnAction() {
+
+    }
     
 }

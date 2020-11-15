@@ -21,7 +21,7 @@ public class Product {
         this.proteins = proteins;
     }
 
-    public Double getCarbohydrates() {
+    public Double getCarbs() {
         return carbohydrates;
     }
 

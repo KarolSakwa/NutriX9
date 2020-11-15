@@ -27,11 +27,10 @@ public class AddProductController {
     @FXML Button closeButton, addSelectedButton;
     @FXML ChoiceBox selectColumnChoiceBox;
     @FXML TableView productsTableView;
-    @FXML Group meal1Header;
     @FXML TextField searchProductTextField, quantityTextField;
     @FXML TableColumn productNameColumn, quantityTableColumn, kcalColumn, proteinsColumn, carbohydratesColumn,
             fatsColumn, macronutrientColumn, categoryColumn, wholesomenessIndexColumn, priceColumn;
-    MealTable mealTable = new MealTable(null, null, null, null, null);
+    MealTable meal1Table = new MealTable();
 
     public AddProductController(DietViewController dietViewController) {
         this.dietViewController = dietViewController;
@@ -52,10 +51,15 @@ public class AddProductController {
 
     public void addSelectedButtonOnAction() {
         Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
-        mealTable.insertHeaders("Meal 1", 251.0, 151.0, dietViewController.dietViewPane);
-        mealTable.currentProductsNum += 1;
-        mealTable.insertRow(selectedProduct, Double.parseDouble(quantityTextField.getText()), mealTable.currentProductsNum, dietViewController.kcal1Label, dietViewController.dietViewPane);
-        System.out.println(mealTable.currentProductsNum);
+        if (meal1Table.productsList.size() == 0)
+            meal1Table.create(dietViewController.dietViewPane);
+        meal1Table.productsList.add(selectedProduct);
+        //mealTable.insertHeaders("Meal 1", 251.0, 151.0, dietViewController.dietViewPane);
+        //mealTable.currentProductsNum += 1;
+        //mealTable.insertRow(selectedProduct, Double.parseDouble(quantityTextField.getText()), mealTable.rowList.indexOf(), dietViewController.kcal1Label, dietViewController.dietViewPane);
+        //System.out.println(mealTable.currentProductsNum);
+
+        meal1Table.insertRow(selectedProduct, Double.parseDouble(quantityTextField.getText()), meal1Table.contentContainer);
         Stage stage = (Stage) addSelectedButton.getScene().getWindow();
         stage.close();
         quantityTextField.setText("");
