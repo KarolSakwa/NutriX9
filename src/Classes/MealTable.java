@@ -1,10 +1,12 @@
 package Classes;
 
 import Controllers.DietViewController;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -21,7 +23,7 @@ public class MealTable {
 
     public void create(Pane pane) {
         contentContainer = new VBox();
-        contentContainer.setLayoutX(112);
+        contentContainer.setLayoutX(132);
         contentContainer.setLayoutY(159);
         createHeaders();
         contentContainer.getChildren().addAll(mealName, headers);
@@ -37,7 +39,7 @@ public class MealTable {
         mealNameLabel.setStyle("-fx-font-weight: bold;");
 
         // Other headers
-        headers = new HBox(15);
+        headers = new HBox(20);
         headers.setPrefHeight(35);
         headers.setAlignment(Pos.CENTER_RIGHT);
         Label kcalHeader = new Label("kcal");
@@ -45,15 +47,17 @@ public class MealTable {
         Label carbsHeader = new Label("Carbs");
         Label fatsHeader = new Label("Fats");
         Label WIsHeader = new Label("WI*");
-        Label priceHeader = new Label("Price");
+        Label priceHeader = new Label("Price           "); // spaces to align headers with content
+        Tooltip WITooltip = new Tooltip("Wholesomeness Index");
+        WIsHeader.setTooltip(WITooltip);
         headers.getChildren().addAll(kcalHeader, proteinsHeader, carbsHeader, fatsHeader, WIsHeader, priceHeader);
         setHeadersStyle(headers);
     }
     public void insertRow(Product product, Double quantity, VBox parent){
         // Container
-        HBox rowContainer = new HBox(10);
+        HBox rowContainer = new HBox();
         rowContainer.setPrefHeight(13);
-        rowContainer.setAlignment(Pos.CENTER);
+        rowContainer.setAlignment(Pos.CENTER_RIGHT);
 
         // Rows
         Label productName = new Label(product.getName());
@@ -68,9 +72,13 @@ public class MealTable {
         ImageView deleteButton = new ImageView("img/minus.png");
         deleteButton.setFitWidth(20);
         deleteButton.setFitHeight(16);
+        deleteButton.setOnMouseClicked(e -> parent.getChildren().remove(rowContainer));
 
         rowContainer.getChildren().addAll(productName, productQuantity, productKcal, productProteins, productCarbs, productFats, productWI, productPrice, deleteButton);
+        setLabelsStyle(rowContainer);
         parent.getChildren().add(rowContainer);
+        executeLabelLengthEqualization(rowContainer);
+
     }
 
 
@@ -84,8 +92,32 @@ public class MealTable {
         }
     }
     private void setLabelsStyle(HBox hBox) {
-        for (Node label : hBox.getChildren()) {
+        String space="";
+        for (Integer i = 0; i < hBox.getChildren().size() -1; i++) { // -1, cause I don't want to include the last element of the list (deleteButton)
+            Label label = (Label) hBox.getChildren().get(i);
+        }
+    }
 
+    // Had some issues with layout, decided to add some spaces to labels to obtain the same labels' length
+    private void labelLengthEqualization(Label label, Integer numChars) {
+        Integer necessaryChars = numChars - label.getText().length();
+        String spaces = new String();
+        for (Integer i = 0; i < necessaryChars; i++) {
+            spaces += " ";
+        }
+        label.setText(label.getText() + spaces);
+    }
+
+
+    private void executeLabelLengthEqualization(HBox hBox) {
+        for (Integer i = 1; i < hBox.getChildren().size() -1; i++) { // -1, cause I don't want to include the last element of the list (deleteButton)
+            Label label = (Label) hBox.getChildren().get(i);
+            labelLengthEqualization(label, 7);
+            System.out.println(label.getText());
+            label.setPadding(new Insets(0, 10, 0,10));
+            label.setStyle(
+                    "-fx-border-insets: 8px;" +
+                    "-fx-background-insets: 8px;");
         }
     }
 

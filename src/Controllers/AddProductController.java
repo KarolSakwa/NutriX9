@@ -75,7 +75,7 @@ public class AddProductController {
         quantityTableColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("quantity"));
         kcalColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("kcal"));
         proteinsColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("proteins"));
-        carbohydratesColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("carbohydrates"));
+        carbohydratesColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("carbs"));
         fatsColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("fats"));
         macronutrientColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("macronutrientCategory"));
         categoryColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("category"));
