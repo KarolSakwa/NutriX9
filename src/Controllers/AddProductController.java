@@ -54,12 +54,8 @@ public class AddProductController {
         if (meal1Table.productsList.size() == 0)
             meal1Table.create(dietViewController.dietViewPane);
         meal1Table.productsList.add(selectedProduct);
-        //mealTable.insertHeaders("Meal 1", 251.0, 151.0, dietViewController.dietViewPane);
-        //mealTable.currentProductsNum += 1;
-        //mealTable.insertRow(selectedProduct, Double.parseDouble(quantityTextField.getText()), mealTable.rowList.indexOf(), dietViewController.kcal1Label, dietViewController.dietViewPane);
-        //System.out.println(mealTable.currentProductsNum);
-
         meal1Table.insertRow(selectedProduct, Double.parseDouble(quantityTextField.getText()), meal1Table.contentContainer);
+        meal1Table.insertSummary(Double.parseDouble(quantityTextField.getText()), meal1Table.contentContainer);
         Stage stage = (Stage) addSelectedButton.getScene().getWindow();
         stage.close();
         quantityTextField.setText("");

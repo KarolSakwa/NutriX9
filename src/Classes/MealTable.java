@@ -6,14 +6,18 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MealTable {
     public VBox contentContainer;
@@ -25,100 +29,121 @@ public class MealTable {
         contentContainer = new VBox();
         contentContainer.setLayoutX(132);
         contentContainer.setLayoutY(159);
-        createHeaders();
-        contentContainer.getChildren().addAll(mealName, headers);
         pane.getChildren().addAll(contentContainer);
     }
 
-    private void createHeaders() {
-        mealName = new HBox();
-        mealName.setPrefHeight(13);
-        mealName.setAlignment(Pos.CENTER);
-        Label mealNameLabel = new Label("Meal ");
-        mealName.getChildren().addAll(mealNameLabel);
-        mealNameLabel.setStyle("-fx-font-weight: bold;");
-
-        // Other headers
-        headers = new HBox(20);
-        headers.setPrefHeight(35);
-        headers.setAlignment(Pos.CENTER_RIGHT);
-        Label kcalHeader = new Label("kcal");
-        Label proteinsHeader = new Label("Proteins");
-        Label carbsHeader = new Label("Carbs");
-        Label fatsHeader = new Label("Fats");
-        Label WIsHeader = new Label("WI*");
-        Label priceHeader = new Label("Price           "); // spaces to align headers with content
-        Tooltip WITooltip = new Tooltip("Wholesomeness Index");
-        WIsHeader.setTooltip(WITooltip);
-        headers.getChildren().addAll(kcalHeader, proteinsHeader, carbsHeader, fatsHeader, WIsHeader, priceHeader);
-        setHeadersStyle(headers);
-    }
     public void insertRow(Product product, Double quantity, VBox parent){
         // Container
         HBox rowContainer = new HBox();
         rowContainer.setPrefHeight(13);
-        rowContainer.setAlignment(Pos.CENTER_RIGHT);
+        rowContainer.setAlignment(Pos.CENTER_LEFT);
 
-        // Rows
-        Label productName = new Label(product.getName());
-        Label productQuantity = new Label(quantity.toString() + " " + product.getShorterUnit());
-        Label productKcal = new Label(String.format("%.1f", (product.getKcal() * quantity)));
-        Label productProteins = new Label(String.format("%.1f", (product.getProteins() * quantity)));
-        Label productCarbs = new Label(String.format("%.1f", (product.getCarbs() * quantity)));
-        Label productFats = new Label(String.format("%.1f", (product.getFats() * quantity)));
-        Label productWI = new Label(product.getWholesomenessIndex().toString());
-        Label productPrice = new Label(String.format("%.1f", (product.getPrice() * quantity)));
+        Text quantityText = new Text(quantity.toString() + " " + product.getShorterUnit());
+        addNecessarySpaces(quantityText, 10); // to get better alignment
+
+        Text nameText = new Text(product.getName());
+        nameText.setStyle("-fx-font-weight: 800;");
+
+        TextFlow kcalTextFlow = new TextFlow();
+        Text kcalTextNormal = new Text("kcal: ");
+        Text kcalTextBold = new Text(String.format("%.1f", (product.getKcal() * quantity)) + "    ");
+        kcalTextFlow.getChildren().addAll(kcalTextNormal, kcalTextBold);
+
+        TextFlow proteinsTextFlow = new TextFlow();
+        Text proteinsTextNormal = new Text(product.proteinsAbbr + ": ");
+        Text proteinsTextBold = new Text(String.format("%.1f", (product.getProteins() * quantity))  + "    ");
+        proteinsTextFlow.getChildren().addAll(proteinsTextNormal, proteinsTextBold);
+
+        TextFlow carbsTextFlow = new TextFlow();
+        Text carbsTextNormal = new Text(product.carbsAbbr + ": ");
+        Text carbsTextBold = new Text(String.format("%.1f", (product.getCarbs() * quantity))  + "    ");
+        carbsTextFlow.getChildren().addAll(carbsTextNormal, carbsTextBold);
+
+        TextFlow fatsTextFlow = new TextFlow();
+        Text fatsTextNormal = new Text(product.fatsAbbr + ": ");
+        Text fatsTextBold = new Text(String.format("%.1f", (product.getFats() * quantity))  + "    ");
+        fatsTextFlow.getChildren().addAll(fatsTextNormal, fatsTextBold);
+
+        TextFlow WITextFlow = new TextFlow();
+        Text WITextNormal = new Text("WI: ");
+        Text WITextBold = new Text(product.getWholesomenessIndex().toString() + "    ");
+        WITextFlow.getChildren().addAll(WITextNormal, WITextBold);
+
+        TextFlow priceTextFlow = new TextFlow();
+        Text priceTextBold = new Text(String.format("%.1f", (product.getPrice() * quantity)) + " ");
+        Text priceTextNormal = new Text(product.priceAbbr);
+        priceTextFlow.getChildren().addAll(priceTextBold, priceTextNormal);
 
         ImageView deleteButton = new ImageView("img/minus.png");
         deleteButton.setFitWidth(20);
         deleteButton.setFitHeight(16);
-        deleteButton.setOnMouseClicked(e -> parent.getChildren().remove(rowContainer));
+        deleteButton.setOnMouseClicked(e -> {
+            parent.getChildren().remove(rowContainer);
+            productsList.remove(product);
+        });
 
-        rowContainer.getChildren().addAll(productName, productQuantity, productKcal, productProteins, productCarbs, productFats, productWI, productPrice, deleteButton);
-        setLabelsStyle(rowContainer);
+        Text[] boldList = {quantityText, kcalTextBold, priceTextBold, carbsTextBold, fatsTextBold, proteinsTextBold, WITextBold};
+        ArrayList<Text> boldArray = new ArrayList<>();
+        boldArray.addAll(Arrays.asList(boldList));
+        setTextsStyle(boldArray);
+        addNecessarySpaces(nameText, 10);
+        rowContainer.getChildren().addAll(quantityText, nameText, kcalTextFlow, proteinsTextFlow, carbsTextFlow, fatsTextFlow, WITextFlow, priceTextFlow, deleteButton);
         parent.getChildren().add(rowContainer);
-        executeLabelLengthEqualization(rowContainer);
-
     }
 
+    public void insertSummary(Double quantity, VBox parent) {
+        HBox summaryContainer = new HBox();
 
-    private void adjustHeader(Label header, Integer prefHeight) {
-        header.setPrefHeight(prefHeight);
-    }
+        TextFlow summaryTextFlow = new TextFlow();
+        Text totalText = new Text("Total: ");
+        Double totalKcal = new Double(0);
+        Double totalProteins = new Double(0);
+        Double totalCarbs = new Double(0);
+        Double totalFats = new Double(0);
+        Double totalWI = new Double(0);
+        Double totalPrice = new Double(0);
 
-    private void setHeadersStyle(HBox hBox) {
-        for (Node label : hBox.getChildren()) {
-            label.setStyle("-fx-font-weight: bold;");
+        for (int i = 0; i < productsList.size(); i++) {
+            Double convertedQuantity = convertQuantity(productsList.get(i), quantity);
+            totalKcal = productsList.get(i).getKcal() * convertedQuantity;
+            totalProteins = productsList.get(i).getProteins() * convertedQuantity;
+            totalCarbs = productsList.get(i).getCarbs() * convertedQuantity;
+            totalFats = productsList.get(i).getFats() * convertedQuantity;
+            totalPrice = productsList.get(i).getPrice() * convertedQuantity;
         }
+        Text totalKcalText = new Text(totalKcal.toString());
+        Text totalProteinsText = new Text(totalProteins.toString());
+        Text totalCarbsText = new Text(totalCarbs.toString());
+        Text totalFatsText = new Text(totalFats.toString());
+        Text totalWIText = new Text(totalWI.toString());
+        Text totalPriceText = new Text(totalPrice.toString());
+
+        summaryTextFlow.getChildren().addAll(totalText, totalKcalText, totalProteinsText, totalCarbsText, totalFatsText, totalPriceText, totalWIText);
+        summaryContainer.getChildren().add(summaryTextFlow);
+        parent.getChildren().add(summaryContainer);
     }
-    private void setLabelsStyle(HBox hBox) {
-        String space="";
-        for (Integer i = 0; i < hBox.getChildren().size() -1; i++) { // -1, cause I don't want to include the last element of the list (deleteButton)
-            Label label = (Label) hBox.getChildren().get(i);
-        }
+    private Double convertQuantity(Product product, Double quantity) { // we want some unit types to be counted the other way than the others, e.g. 100 ml = 1 unit
+        if (product.getUnitType() == "milliliter" || product.getUnitType() == "gram")
+            return quantity / 100;
+        return quantity;
     }
 
-    // Had some issues with layout, decided to add some spaces to labels to obtain the same labels' length
-    private void labelLengthEqualization(Label label, Integer numChars) {
-        Integer necessaryChars = numChars - label.getText().length();
-        String spaces = new String();
-        for (Integer i = 0; i < necessaryChars; i++) {
+    private void addNecessarySpaces(Text text, Integer totalChars) {
+        String spaces = "";
+        String textContent = text.getText();
+        Integer necessarySpaces = totalChars - textContent.length();
+        for (Integer i = 0; i < necessarySpaces; i++) {
             spaces += " ";
         }
-        label.setText(label.getText() + spaces);
+        text.setText(textContent + spaces);
     }
-
-
-    private void executeLabelLengthEqualization(HBox hBox) {
-        for (Integer i = 1; i < hBox.getChildren().size() -1; i++) { // -1, cause I don't want to include the last element of the list (deleteButton)
-            Label label = (Label) hBox.getChildren().get(i);
-            labelLengthEqualization(label, 7);
-            System.out.println(label.getText());
-            label.setPadding(new Insets(0, 10, 0,10));
-            label.setStyle(
-                    "-fx-border-insets: 8px;" +
-                    "-fx-background-insets: 8px;");
+    private void setTextsStyle(ArrayList<Text> texts) {
+        for (Integer i = 0; i < texts.size(); i++) {
+            Text text = (Text) texts.get(i);
+            text.setStyle("-fx-font-weight: 800;" +
+                    "-fx-fill: green;");
         }
     }
+
 
 }

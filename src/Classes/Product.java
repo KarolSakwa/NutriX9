@@ -4,6 +4,12 @@ public class Product {
     private String name, macronutrientCategory, category, unitType, quantity;
     private Double kcal, proteins, carbohydrates, fats, price;
     private Integer wholesomenessIndex;
+    public final String kcalAbbr = "K";
+    public final String proteinsAbbr = "P";
+    public final String carbsAbbr = "C";
+    public final String fatsAbbr = "F";
+    public final String priceAbbr = "zł";
+
 
     public Double getKcal() {
         return kcal;
