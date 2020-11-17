@@ -1,15 +1,13 @@
 package Controllers;
 
-import Classes.ChildrenWindow;
-import Classes.DatabaseConnection;
-import Classes.MealTable;
-import Classes.Product;
+import Classes.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 
@@ -30,7 +28,8 @@ public class AddProductController {
     @FXML TextField searchProductTextField, quantityTextField;
     @FXML TableColumn productNameColumn, quantityTableColumn, kcalColumn, proteinsColumn, carbohydratesColumn,
             fatsColumn, macronutrientColumn, categoryColumn, wholesomenessIndexColumn, priceColumn;
-    MealTable meal1Table = new MealTable();
+    public MealTable meal1Table = new MealTable();
+    public MealTableSummary meal1TableSummary = new MealTableSummary();
 
     public AddProductController(DietViewController dietViewController) {
         this.dietViewController = dietViewController;
@@ -54,8 +53,15 @@ public class AddProductController {
         if (meal1Table.productsList.size() == 0)
             meal1Table.create(dietViewController.dietViewPane);
         meal1Table.productsList.add(selectedProduct);
-        meal1Table.insertRow(selectedProduct, Double.parseDouble(quantityTextField.getText()), meal1Table.contentContainer);
-        meal1Table.insertSummary(Double.parseDouble(quantityTextField.getText()), meal1Table.contentContainer);
+        meal1Table.productsQuantityList.add(Double.parseDouble(quantityTextField.getText()));
+        meal1Table.insertRow(selectedProduct, Double.parseDouble(quantityTextField.getText()), meal1Table.contentContainer, meal1TableSummary);
+        Integer selectedProductIndex = meal1Table.productsList.indexOf(selectedProduct);
+        if (meal1Table.productsList.size() == 1)
+            meal1TableSummary.create(meal1Table, meal1Table.productsQuantityList.get(selectedProductIndex), meal1Table.contentContainer);
+            System.out.println(meal1Table.productsQuantityList.get(selectedProductIndex));
+        meal1TableSummary.update(meal1Table.productsList, meal1Table.productsQuantityList.get(selectedProductIndex), meal1Table.contentContainer);
+
+        System.out.println(meal1Table.productsQuantityList);
         Stage stage = (Stage) addSelectedButton.getScene().getWindow();
         stage.close();
         quantityTextField.setText("");
