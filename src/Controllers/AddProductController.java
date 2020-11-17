@@ -28,8 +28,6 @@ public class AddProductController {
     @FXML TextField searchProductTextField, quantityTextField;
     @FXML TableColumn productNameColumn, quantityTableColumn, kcalColumn, proteinsColumn, carbohydratesColumn,
             fatsColumn, macronutrientColumn, categoryColumn, wholesomenessIndexColumn, priceColumn;
-    public MealTable meal1Table = new MealTable();
-    public MealTableSummary meal1TableSummary = new MealTableSummary();
 
     public AddProductController(DietViewController dietViewController) {
         this.dietViewController = dietViewController;
@@ -50,18 +48,9 @@ public class AddProductController {
 
     public void addSelectedButtonOnAction() {
         Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
-        if (meal1Table.productsList.size() == 0)
-            meal1Table.create(dietViewController.dietViewPane);
-        meal1Table.productsList.add(selectedProduct);
-        meal1Table.productsQuantityList.add(Double.parseDouble(quantityTextField.getText()));
-        meal1Table.insertRow(selectedProduct, Double.parseDouble(quantityTextField.getText()), meal1Table.contentContainer, meal1TableSummary);
-        Integer selectedProductIndex = meal1Table.productsList.indexOf(selectedProduct);
-        if (meal1Table.productsList.size() == 1)
-            meal1TableSummary.create(meal1Table, meal1Table.productsQuantityList.get(selectedProductIndex), meal1Table.contentContainer);
-            System.out.println(meal1Table.productsQuantityList.get(selectedProductIndex));
-        meal1TableSummary.update(meal1Table.productsList, meal1Table.productsQuantityList.get(selectedProductIndex), meal1Table.contentContainer);
 
-        System.out.println(meal1Table.productsQuantityList);
+
+
         Stage stage = (Stage) addSelectedButton.getScene().getWindow();
         stage.close();
         quantityTextField.setText("");
