@@ -5,9 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 
@@ -48,8 +46,11 @@ public class AddProductController {
 
     public void addSelectedButtonOnAction() {
         Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
-
-
+        if (dietViewController.meal1Table.productsList.size() == 0)
+            dietViewController.meal1Table.create(dietViewController.dietViewPane);
+        dietViewController.meal1Table.productsDictionary.put(selectedProduct, Double.valueOf(quantityTextField.getText()));
+        dietViewController.meal1Table.productsList.add(selectedProduct);
+        dietViewController.meal1Table.insertRow(dietViewController.meal1Table.productsDictionary, dietViewController.meal1Table.productsList, selectedProduct, dietViewController.meal1Table.tableContent);
 
         Stage stage = (Stage) addSelectedButton.getScene().getWindow();
         stage.close();
@@ -63,7 +64,7 @@ public class AddProductController {
     private void addToTable() {
         ObservableList products = FXCollections.observableArrayList();
         productNameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
-        quantityTableColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("quantity"));
+        quantityTableColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("unitQuantity"));
         kcalColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("kcal"));
         proteinsColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("proteins"));
         carbohydratesColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("carbs"));
@@ -88,7 +89,7 @@ public class AddProductController {
                         product.getString("category"),
                         Integer.parseInt(product.getString("wholesomeness_index")),
                         product.getString("unit_type"),
-                        product.getString("quantity"),
+                        product.getString("unit_quantity"),
                         Double.parseDouble(product.getString("price"))
                         ));
             }

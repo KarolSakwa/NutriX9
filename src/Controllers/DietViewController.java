@@ -1,6 +1,7 @@
 package Controllers;
 
 import Classes.ChildrenWindow;
+import Classes.MealTable;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -27,6 +28,7 @@ public class DietViewController {
     @FXML Label dietNameLabel, meal1Label, product1Label, quantity1Label, kcal1Label, proteins1Label, carbs1Label, fats1Label, WI1Label;
     @FXML Button addMealButton, meal1AddProductButton;
     @FXML Pane dietViewPane;
+    public MealTable meal1Table;
     AddProductController addProductController = new AddProductController(this);
 
     public DietViewController(SelectProfileController selectProfileController) {
@@ -52,9 +54,7 @@ public class DietViewController {
     }
 
     public void addMealButtonOnAction() {
-
-
-        //System.out.println(mealsList.size());
+        meal1Table = new MealTable(1, 106, 134);
         meal1AddProductButton.setVisible(true);
 
     }

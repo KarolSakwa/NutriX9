@@ -1,8 +1,15 @@
 package Classes;
 
 public class Product {
-    private String name, macronutrientCategory, category, unitType, quantity;
-    private Double kcal, proteins, carbohydrates, fats, price;
+    private String name, macronutrientCategory, category, unitType, unitQuantity;
+    private Double kcal;
+    private Double proteins;
+    private Double carbohydrates;
+    private Double fats;
+    private Double price;
+
+
+    private Double quantity;
     private Integer wholesomenessIndex;
     public final String kcalAbbr = "K";
     public final String proteinsAbbr = "P";
@@ -31,7 +38,7 @@ public class Product {
         return carbohydrates;
     }
 
-    public void setCarbohydrates(Double carbohydrates) {
+    public void setCarbs(Double carbohydrates) {
         this.carbohydrates = carbohydrates;
     }
 
@@ -77,9 +84,9 @@ public class Product {
 
     public String getUnitType() { return unitType; }
 
-    public void setQuantity(String quantity) { this.quantity = quantity; }
+    public void setUnitQuantity(String unitQuantity) { this.unitQuantity = unitQuantity; }
 
-    public String getQuantity() { return quantity; }
+    public String getUnitQuantity() { return unitQuantity; }
 
     public String getShorterUnit() {
         switch (unitType) {
@@ -95,7 +102,6 @@ public class Product {
 
     }
 
-
     public void setName(String name) {
         this.name = name;
     }
@@ -108,7 +114,15 @@ public class Product {
         this.price = price;
     }
 
-    public Product(String name, Double kcal, Double proteins, Double carbohydrates, Double fats, String macronutrientCategory, String category, Integer wholesomenessIndex, String unitType, String quantity, Double price) {
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
+    public Product(String name, Double kcal, Double proteins, Double carbohydrates, Double fats, String macronutrientCategory, String category, Integer wholesomenessIndex, String unitType, String unitQuantity, Double price) {
         this.name = name;
         this.kcal = kcal;
         this.proteins = proteins;
@@ -118,7 +132,7 @@ public class Product {
         this.category = category;
         this.wholesomenessIndex = wholesomenessIndex;
         this.unitType = unitType;
-        this.quantity = quantity;
+        this.unitQuantity = unitQuantity;
         this.price = price;
     }
 }
