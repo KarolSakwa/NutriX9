@@ -22,10 +22,12 @@ public class AddProductController {
     Connection con = databaseConnection.getConnection();
     @FXML Button closeButton, addSelectedButton;
     @FXML ChoiceBox selectColumnChoiceBox;
+    MealTableSummary mealTableSummary;
     @FXML TableView productsTableView;
     @FXML TextField searchProductTextField, quantityTextField;
     @FXML TableColumn productNameColumn, quantityTableColumn, kcalColumn, proteinsColumn, carbohydratesColumn,
             fatsColumn, macronutrientColumn, categoryColumn, wholesomenessIndexColumn, priceColumn;
+
 
     public AddProductController(DietViewController dietViewController) {
         this.dietViewController = dietViewController;
@@ -50,7 +52,20 @@ public class AddProductController {
             dietViewController.meal1Table.create(dietViewController.dietViewPane);
         dietViewController.meal1Table.productsDictionary.put(selectedProduct, Double.valueOf(quantityTextField.getText()));
         dietViewController.meal1Table.productsList.add(selectedProduct);
-        dietViewController.meal1Table.insertRow(dietViewController.meal1Table.productsDictionary, dietViewController.meal1Table.productsList, selectedProduct, dietViewController.meal1Table.tableContent);
+        dietViewController.meal1Table.insertRow(dietViewController.meal1Table.productsDictionary, dietViewController.meal1Table.productsList, selectedProduct, Double.valueOf(quantityTextField.getText()), dietViewController.meal1Table.tableContent);
+        if (dietViewController.meal1Table.productsList.size() == 1) {
+            mealTableSummary = new MealTableSummary();
+            mealTableSummary.create(dietViewController.meal1Table);
+        }
+        else if (dietViewController.meal1Table.productsList.size() > 1)
+            mealTableSummary.update(dietViewController.meal1Table);
+
+        Object ahu;
+        for (Integer i = 0; i < dietViewController.meal1Table.tableContent.getItems().size(); i++) {
+            ahu = dietViewController.meal1Table.tableContent.getColumns().get(2).getCellObservableValue(i).getValue();
+            System.out.println(ahu);
+        }
+
 
         Stage stage = (Stage) addSelectedButton.getScene().getWindow();
         stage.close();

@@ -15,13 +15,13 @@ import java.util.Map;
 
 public class MealTable {
     VBox tableContainer;
-    HBox mealNameContainer, summaryContainer;
+    HBox mealNameContainer;
     Label mealName;
-    public TableView tableContent, tableSummary;
+    public TableView<Product> tableContent;
     TableColumn quantityColumn, nameColumn, kcalColumn, proteinsColumn, carbsColumn, fatsColumn, WIColumn, priceColumn;
     Integer mealNum, tableContainerLayoutX, tableContainerLayoutY;
     private final Integer tableContainerWidth = 560;
-    private final Integer tableContainerHeight = 370;
+    private final Integer tableContainerHeight = 800;
     public ArrayList<Product> productsList = new ArrayList<>();
     public Map<Product, Double> productsDictionary = new HashMap<>(); // the easiest way to store information about specific product quantity
 
@@ -49,12 +49,9 @@ public class MealTable {
         tableContent = new TableView();
         createColumns(tableContent);
 
-        summaryContainer = new HBox();
-        tableSummary = new TableView();
-        tableSummary.getStyleClass().add("noHeader");
-        summaryContainer.getChildren().add(tableSummary);
-
-        tableContainer.getChildren().addAll(mealNameContainer, tableContent, summaryContainer);
+        tableContainer.getChildren().addAll(mealNameContainer, tableContent);
+        //MealTableSummary mealTableSummary = new MealTableSummary();
+        //mealTableSummary.create(this);
         pane.getChildren().add(tableContainer);
     }
 
@@ -66,7 +63,7 @@ public class MealTable {
         carbsColumn = new TableColumn("Carbs");
         fatsColumn = new TableColumn("Fats");
         WIColumn = new TableColumn("WI*");
-        priceColumn = new TableColumn("Proteins");
+        priceColumn = new TableColumn("Price");
 
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("unitQuantity"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -89,7 +86,7 @@ public class MealTable {
         table.getColumns().addAll(quantityColumn, nameColumn, kcalColumn, proteinsColumn, carbsColumn, fatsColumn, WIColumn, priceColumn);
     }
 
-    public void insertRow(Map<Product, Double> productsDictionary, ArrayList<Product> productsList, Product product, TableView table) {
+    public void insertRow(Map<Product, Double> productsDictionary, ArrayList<Product> productsList, Product product, Double quantity, TableView table) {
         table.getItems().clear();
         ArrayList<Product> newProductsList = new ArrayList<>();
         Product productCopy = new Product(product.getName(), product.getKcal(), product.getProteins(), product.getCarbs(), product.getFats(), product.getMacronutrientCategory(), product.getCategory(), product.getWholesomenessIndex(), product.getUnitType(), product.getUnitQuantity(), product.getPrice());
@@ -99,8 +96,24 @@ public class MealTable {
         productCopy.setCarbs(product.getCarbs() * productsDictionary.get(product));
         productCopy.setFats(product.getFats() * productsDictionary.get(product));
         productCopy.setPrice(product.getPrice() * productsDictionary.get(product));
+        productCopy.setQuantity(quantity);
         productsList.remove(product);
         productsList.add(productCopy);
         table.getItems().addAll(productsList);
     }
+    /*
+    private void createProductCopy(Product product) {
+        Product productCopy = new Product(product.getName(), product.getKcal(), product.getProteins(), product.getCarbs(), product.getFats(), product.getMacronutrientCategory(), product.getCategory(), product.getWholesomenessIndex(), product.getUnitType(), product.getUnitQuantity(), product.getPrice());
+        productCopy.setUnitQuantity(productsDictionary.get(product) + " " + product.getShorterUnit());
+        productCopy.setKcal(product.getKcal() * productsDictionary.get(product));
+        productCopy.setProteins(product.getProteins() * productsDictionary.get(product));
+        productCopy.setCarbs(product.getCarbs() * productsDictionary.get(product));
+        productCopy.setFats(product.getFats() * productsDictionary.get(product));
+        productCopy.setPrice(product.getPrice() * productsDictionary.get(product));
+        productCopy.setQuantity(quantity);
+    }
+
+
+     */
+
 }
