@@ -1,5 +1,6 @@
 package Classes;
 
+import javafx.geometry.NodeOrientation;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -9,15 +10,16 @@ import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 
 public class MealTableSummary {
-    TableColumn kcalSummary;
-    TableColumn proteinsSummary;
-    TableColumn carbsSummary;
-    TableColumn fatsSummary;
-    TableColumn WISummary;
-    TableColumn priceSummary;
+    TableColumn kcalSummary, proteinsSummary, carbsSummary, fatsSummary, WISummary, priceSummary, emptyColumn;
     TableView tableSummary;
+
     HBox summaryContainer;
-    Double totalKcal, totalProteins, totalCarbs, totalFats, totalWI, totalPrice;
+    Double totalKcal;
+    Double totalProteins;
+    Double totalCarbs;
+    Double totalFats;
+    Integer totalWI;
+    Double totalPrice;
     ArrayList<Product> totalList = new ArrayList<>();
 
     public void create(MealTable mealTable) {
@@ -27,11 +29,12 @@ public class MealTableSummary {
         fatsSummary = new TableColumn();
         WISummary = new TableColumn();
         priceSummary = new TableColumn();
+        emptyColumn = new TableColumn();
 
         summaryContainer = new HBox();
-        summaryContainer.setMinHeight(200);
+        summaryContainer.setMaxHeight(30);
         tableSummary = new SummaryTableView();
-        tableSummary.setMinWidth(150);
+        tableSummary.setMaxHeight(25);
         summaryContainer.getChildren().add(tableSummary);
 
         kcalSummary.setCellValueFactory(new PropertyValueFactory<>("kcal"));
@@ -41,11 +44,19 @@ public class MealTableSummary {
         WISummary.setCellValueFactory(new PropertyValueFactory<>("wholesomenessIndex"));
         priceSummary.setCellValueFactory(new PropertyValueFactory<>("price"));
 
+        emptyColumn.setMinWidth(mealTable.quantityColumn.getWidth() + mealTable.nameColumn.getWidth()); // need it to align other columns correctly
+        kcalSummary.setMaxWidth(mealTable.kcalColumn.getWidth());
+        proteinsSummary.setMaxWidth(mealTable.priceColumn.getWidth());
+        carbsSummary.setMaxWidth(mealTable.carbsColumn.getWidth());
+        fatsSummary.setMaxWidth(mealTable.fatsColumn.getWidth());
+        WISummary.setMaxWidth(mealTable.WIColumn.getWidth());
+        priceSummary.setMaxWidth(mealTable.priceColumn.getWidth());
+
         totalKcal = 0.0;
         totalProteins = 0.0;
         totalCarbs = 0.0;
         totalFats = 0.0;
-        totalWI = 0.0;
+        totalWI = 0;
         totalPrice = 0.0;
 
         Product product = mealTable.productsList.get(0);
@@ -55,7 +66,7 @@ public class MealTableSummary {
         product.setFats(product.getFats() * product.getQuantity());
         product.setPrice(product.getPrice() * product.getQuantity());
 
-        tableSummary.getColumns().addAll(kcalSummary, proteinsSummary, carbsSummary, fatsSummary, WISummary, priceSummary);
+        tableSummary.getColumns().addAll(emptyColumn, kcalSummary, proteinsSummary, carbsSummary, fatsSummary, WISummary, priceSummary);
 
         tableSummary.getItems().add(product);
         mealTable.tableContainer.getChildren().add(tableSummary);
@@ -68,19 +79,20 @@ public class MealTableSummary {
         totalProteins = 0.0;
         totalCarbs = 0.0;
         totalFats = 0.0;
-        totalWI = 0.0;
+        totalWI = 0;
         totalPrice = 0.0;
 
-        for (Product product : mealTable.productsList) {
-            totalKcal += product.getKcal() * product.getQuantity();
-            totalProteins += product.getProteins() * product.getQuantity();
-            totalCarbs += product.getCarbs() * product.getQuantity();
-            totalFats += product.getFats() * product.getQuantity();
-            totalWI += product.getWholesomenessIndex();
-            totalPrice += product.getPrice() * product.getQuantity();
+        for (Integer i = 0; i < mealTable.tableContent.getItems().size(); i++) {
+            totalKcal += (Double) mealTable.tableContent.getColumns().get(2).getCellObservableValue(i).getValue();
+            totalProteins += (Double) mealTable.tableContent.getColumns().get(3).getCellObservableValue(i).getValue();
+            totalCarbs += (Double) mealTable.tableContent.getColumns().get(4).getCellObservableValue(i).getValue();
+            totalFats += (Double) mealTable.tableContent.getColumns().get(5).getCellObservableValue(i).getValue();
+            totalWI += (Integer) mealTable.tableContent.getColumns().get(6).getCellObservableValue(i).getValue();
+            totalPrice += (Double) mealTable.tableContent.getColumns().get(7).getCellObservableValue(i).getValue();
         }
         Product totalProduct = new Product("Total", totalKcal, totalProteins, totalCarbs, totalFats, "", "", totalWI.intValue(), "", "", totalPrice);
-
+        summaryContainer.setMaxHeight(60);
+        tableSummary.setMaxHeight(55);
         tableSummary.getItems().add(totalProduct);
         mealTable.tableContainer.getChildren().add(tableSummary);
     }

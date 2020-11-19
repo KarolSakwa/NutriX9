@@ -21,7 +21,7 @@ public class MealTable {
     TableColumn quantityColumn, nameColumn, kcalColumn, proteinsColumn, carbsColumn, fatsColumn, WIColumn, priceColumn;
     Integer mealNum, tableContainerLayoutX, tableContainerLayoutY;
     private final Integer tableContainerWidth = 560;
-    private final Integer tableContainerHeight = 800;
+    private final Integer tableContainerHeight = 200;
     public ArrayList<Product> productsList = new ArrayList<>();
     public Map<Product, Double> productsDictionary = new HashMap<>(); // the easiest way to store information about specific product quantity
 
@@ -47,6 +47,7 @@ public class MealTable {
         mealNameContainer.getChildren().add(mealName);
 
         tableContent = new TableView();
+        tableContent.setMinWidth(170);
         createColumns(tableContent);
 
         tableContainer.getChildren().addAll(mealNameContainer, tableContent);

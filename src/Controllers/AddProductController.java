@@ -60,13 +60,6 @@ public class AddProductController {
         else if (dietViewController.meal1Table.productsList.size() > 1)
             mealTableSummary.update(dietViewController.meal1Table);
 
-        Object ahu;
-        for (Integer i = 0; i < dietViewController.meal1Table.tableContent.getItems().size(); i++) {
-            ahu = dietViewController.meal1Table.tableContent.getColumns().get(2).getCellObservableValue(i).getValue();
-            System.out.println(ahu);
-        }
-
-
         Stage stage = (Stage) addSelectedButton.getScene().getWindow();
         stage.close();
         quantityTextField.setText("");
