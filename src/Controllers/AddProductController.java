@@ -38,7 +38,7 @@ public class AddProductController {
         selectColumnChoiceBox.getItems().addAll(productNameColumn.getText(), macronutrientColumn.getText(), categoryColumn.getText(), wholesomenessIndexColumn.getText());
         selectColumnChoiceBox.setValue(productNameColumn.getText());
         changeUnitInQuantityPromptText();
-
+        addSelectedButton.setOnAction(e -> addSelectedButtonOnAction(dietViewController.meal1Table));
     }
 
     public void closeButtonOnAction(){
@@ -46,19 +46,22 @@ public class AddProductController {
         stage.close();
     }
 
-    public void addSelectedButtonOnAction() {
+
+
+
+    public void addSelectedButtonOnAction(MealTable mealTable) {
         Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
-        if (dietViewController.meal1Table.productsList.size() == 0)
-            dietViewController.meal1Table.create(dietViewController.dietViewPane);
-        dietViewController.meal1Table.productsDictionary.put(selectedProduct, Double.valueOf(quantityTextField.getText()));
-        dietViewController.meal1Table.productsList.add(selectedProduct);
-        dietViewController.meal1Table.insertRow(dietViewController.meal1Table.productsDictionary, dietViewController.meal1Table.productsList, selectedProduct, Double.valueOf(quantityTextField.getText()), dietViewController.meal1Table.tableContent);
-        if (dietViewController.meal1Table.productsList.size() == 1) {
+        if (mealTable.productsList.size() == 0)
+            mealTable.create(dietViewController.dietViewPane);
+        mealTable.productsDictionary.put(selectedProduct, Double.valueOf(quantityTextField.getText()));
+        mealTable.productsList.add(selectedProduct);
+        mealTable.insertRow(mealTable.productsDictionary, mealTable.productsList, selectedProduct, Double.valueOf(quantityTextField.getText()), mealTable.tableContent);
+        if (mealTable.productsList.size() == 1) {
             mealTableSummary = new MealTableSummary();
-            mealTableSummary.create(dietViewController.meal1Table);
+            mealTableSummary.create(mealTable);
         }
-        else if (dietViewController.meal1Table.productsList.size() > 1)
-            mealTableSummary.update(dietViewController.meal1Table);
+        else if (mealTable.productsList.size() > 1)
+            mealTableSummary.update(mealTable);
 
         Stage stage = (Stage) addSelectedButton.getScene().getWindow();
         stage.close();

@@ -1,3 +1,3 @@
-.my-table .table-column {
-  -fx-alignment: CENTER-RIGHT;
+.table-summary {
+  -fx-font-weight: 900;
 }

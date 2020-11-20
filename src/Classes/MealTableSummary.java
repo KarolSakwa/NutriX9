@@ -32,9 +32,7 @@ public class MealTableSummary {
         emptyColumn = new TableColumn();
 
         summaryContainer = new HBox();
-        summaryContainer.setMaxHeight(30);
         tableSummary = new SummaryTableView();
-        tableSummary.setMaxHeight(25);
         summaryContainer.getChildren().add(tableSummary);
 
         kcalSummary.setCellValueFactory(new PropertyValueFactory<>("kcal"));
@@ -67,12 +65,18 @@ public class MealTableSummary {
         product.setPrice(product.getPrice() * product.getQuantity());
 
         tableSummary.getColumns().addAll(emptyColumn, kcalSummary, proteinsSummary, carbsSummary, fatsSummary, WISummary, priceSummary);
+        tableSummary.getStyleClass().add(("table-summary"));
 
         tableSummary.getItems().add(product);
         mealTable.tableContainer.getChildren().add(tableSummary);
     }
 
     public void update(MealTable mealTable) {
+        summaryContainer.setMinHeight(26);
+        tableSummary.setMinHeight(26);
+        summaryContainer.setMaxHeight(26);
+        tableSummary.setMaxHeight(26); // for some reason it resizes on adding another row, need to resize it back
+
         mealTable.tableContainer.getChildren().remove(tableSummary);
         tableSummary.getItems().clear();
         totalKcal = 0.0;
@@ -91,8 +95,7 @@ public class MealTableSummary {
             totalPrice += (Double) mealTable.tableContent.getColumns().get(7).getCellObservableValue(i).getValue();
         }
         Product totalProduct = new Product("Total", totalKcal, totalProteins, totalCarbs, totalFats, "", "", totalWI.intValue(), "", "", totalPrice);
-        summaryContainer.setMaxHeight(60);
-        tableSummary.setMaxHeight(55);
+
         tableSummary.getItems().add(totalProduct);
         mealTable.tableContainer.getChildren().add(tableSummary);
     }
@@ -108,4 +111,6 @@ public class MealTableSummary {
             header.setVisible(false);
         }
     }
+
+
 }

@@ -28,10 +28,10 @@
       <ComboBox fx:id="bodyTypeComboBox" layoutX="103.0" layoutY="242.0" prefHeight="25.0" prefWidth="204.0" promptText="Body type" />
       <ComboBox fx:id="trainingIntensityComboBox" layoutX="103.0" layoutY="286.0" prefHeight="25.0" prefWidth="204.0" promptText="Training intensity" />
       <ComboBox fx:id="numTrainingsComboBox" layoutX="103.0" layoutY="330.0" prefHeight="25.0" prefWidth="204.0" promptText="Number of trainings per week" />
-      <Button fx:id="submitButton" layoutX="178.0" layoutY="473.0" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit" />
-      <Line endX="650.0" layoutX="234.0" layoutY="78.0" startX="-350.0" stroke="WHITE" strokeWidth="2.0" />
       <ComboBox fx:id="dietTypeComboBox" layoutX="103.0" layoutY="375.0" prefHeight="25.0" prefWidth="204.0" promptText="Diet type" />
+      <Line endX="650.0" layoutX="234.0" layoutY="78.0" startX="-350.0" stroke="WHITE" strokeWidth="2.0" />
       <TextField fx:id="dietNameTextField" layoutX="103.0" layoutY="422.0" prefHeight="25.0" prefWidth="204.0" promptText="Diet name" />
+      <Button fx:id="submitButton" layoutX="178.0" layoutY="473.0" mnemonicParsing="false" onAction="#submitButtonOnAction" text="Submit" />
       <Button fx:id="closeButton" layoutX="183.0" layoutY="518.0" mnemonicParsing="false" onAction="#closeButtonOnAction" text="Close" />
    </children>
 </Pane>
