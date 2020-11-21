@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class AddProductController {
     private Stage thisStage;
@@ -38,7 +39,13 @@ public class AddProductController {
         selectColumnChoiceBox.getItems().addAll(productNameColumn.getText(), macronutrientColumn.getText(), categoryColumn.getText(), wholesomenessIndexColumn.getText());
         selectColumnChoiceBox.setValue(productNameColumn.getText());
         changeUnitInQuantityPromptText();
-        addSelectedButton.setOnAction(e -> addSelectedButtonOnAction(dietViewController.meal1Table));
+        addSelectedButton.setOnAction(e -> {
+                if (dietViewController.meal1Table.productsList.size() < 5)
+                    addSelectedButtonOnAction(dietViewController.meal1Table);
+                else
+                    addSelectedButtonOnAction(dietViewController.meal2Table);
+
+        });
     }
 
     public void closeButtonOnAction(){
@@ -51,8 +58,10 @@ public class AddProductController {
 
     public void addSelectedButtonOnAction(MealTable mealTable) {
         Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
-        if (mealTable.productsList.size() == 0)
+        if (mealTable.productsList.size() == 0) {
             mealTable.create(dietViewController.dietViewPane);
+            dietViewController.mealsList.add(mealTable.productsList);
+        }
         mealTable.productsDictionary.put(selectedProduct, Double.valueOf(quantityTextField.getText()));
         mealTable.productsList.add(selectedProduct);
         mealTable.insertRow(mealTable.productsDictionary, mealTable.productsList, selectedProduct, Double.valueOf(quantityTextField.getText()), mealTable.tableContent);

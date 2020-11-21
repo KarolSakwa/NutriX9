@@ -94,7 +94,6 @@ public class MealTable {
 
     public void insertRow(Map<Product, Double> productsDictionary, ArrayList<Product> productsList, Product product, Double quantity, TableView table) {
         table.getItems().clear();
-        ArrayList<Product> newProductsList = new ArrayList<>();
         Product productCopy = new Product(product.getName(), product.getKcal(), product.getProteins(), product.getCarbs(), product.getFats(), product.getMacronutrientCategory(), product.getCategory(), product.getWholesomenessIndex(), product.getUnitType(), product.getUnitQuantity(), product.getPrice());
         productCopy.setUnitQuantity(productsDictionary.get(product) + " " + product.getShorterUnit());
         productCopy.setKcal(product.getKcal() * productsDictionary.get(product));

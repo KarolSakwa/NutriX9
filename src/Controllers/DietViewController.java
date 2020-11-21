@@ -28,7 +28,8 @@ public class DietViewController {
     @FXML Label dietNameLabel, meal1Label, product1Label, quantity1Label, kcal1Label, proteins1Label, carbs1Label, fats1Label, WI1Label;
     @FXML Button addMealButton, meal1AddProductButton;
     @FXML Pane dietViewPane;
-    public MealTable meal1Table;
+    public MealTable meal1Table, meal2Table;
+    ArrayList<ArrayList> mealsList = new ArrayList<>();
     AddProductController addProductController = new AddProductController(this);
 
     public DietViewController(SelectProfileController selectProfileController) {
@@ -54,8 +55,13 @@ public class DietViewController {
     }
 
     public void addMealButtonOnAction() {
-        meal1Table = new MealTable(1, 106, 134);
-        meal1AddProductButton.setVisible(true);
+        if (mealsList.size() == 0) {
+            meal1Table = new MealTable(1, 100, 150);
+            meal1AddProductButton.setVisible(true);
+        }
+        else if (mealsList.size() == 1)
+            meal2Table = new MealTable(mealsList.size()+1, 100,  (mealsList.size()+1) * 200);
+
 
     }
 
