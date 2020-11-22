@@ -32,7 +32,7 @@ public class DietViewController {
     @FXML Button meal1AddProductButton;
     @FXML Pane dietViewPane;
     public MealTable meal1Table, meal2Table, meal3Table, meal4Table, meal5Table;
-    ObservableList<ObservableList> mealsList = FXCollections.observableArrayList();
+    public ObservableList<ObservableList> mealsList = FXCollections.observableArrayList();
     public ArrayList<MealTable> mealTableList = new ArrayList<>();
     AddProductController addProductController = new AddProductController(this);
 
@@ -60,23 +60,23 @@ public class DietViewController {
 
     public void addMealButtonOnAction() {
         if (mealsList.size() == 0) {
-            meal1Table = new MealTable(1, 1, 1, addProductController); // just sample arguments to initiate, corrected in function
+            meal1Table = new MealTable(1, 1, 1, this, addProductController); // just sample arguments to initiate, corrected in function
             createMealTable(meal1Table);
         }
         else if (mealsList.size() == 1) {
-            meal2Table = new MealTable(1, 1, 1, addProductController);
+            meal2Table = new MealTable(1, 1, 1, this, addProductController);
             createMealTable(meal2Table);
         }
         else if (mealsList.size() == 2) {
-            meal3Table = new MealTable(1, 1, 1, addProductController);
+            meal3Table = new MealTable(1, 1, 1, this, addProductController);
             createMealTable(meal3Table);
         }
         else if (mealsList.size() == 3) {
-            meal4Table = new MealTable(1, 1, 1, addProductController);
+            meal4Table = new MealTable(1, 1, 1, this, addProductController);
             createMealTable(meal4Table);
         }
         else if (mealsList.size() == 4) {
-            meal5Table = new MealTable(1, 1, 1, addProductController);
+            meal5Table = new MealTable(1, 1, 1, this, addProductController);
             createMealTable(meal5Table);
         }
     }

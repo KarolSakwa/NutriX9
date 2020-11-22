@@ -1,11 +1,13 @@
 package Classes;
 
 import Controllers.AddProductController;
+import Controllers.DietViewController;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -30,12 +32,16 @@ public class MealTable {
     private final Integer tableContainerHeight = 110;
     Button addProductButton, deleteProductButton, deleteMealButton;
     AddProductController addProductController;
+    MealTableSummary mealTableSummary;
+    DietViewController dietViewController;
 
-    public MealTable(Integer mealNum, Integer tableContainerLayoutX, Integer tableContainerLayoutY, AddProductController addProductController) {
+
+    public MealTable(Integer mealNum, Integer tableContainerLayoutX, Integer tableContainerLayoutY, DietViewController dietViewController, AddProductController addProductController) {
         this.mealNum = mealNum;
         this.tableContainerLayoutX = tableContainerLayoutX;
         this.tableContainerLayoutY = tableContainerLayoutY;
         this.addProductController = addProductController;
+        this.dietViewController = dietViewController;
     }
     public Integer getMealNum() {
         return mealNum;
@@ -75,6 +81,7 @@ public class MealTable {
         deleteProductButton = new Button("Delete");
         deleteProductButton.setOnAction(e -> deleteProductButtonOnAction());
         deleteMealButton = new Button("DELETE MEAL");
+        deleteMealButton.setOnAction(e -> deleteMealButtonOnAction(pane));
         mealNameContainer.getChildren().addAll(deleteMealButton, mealName, addProductButton, deleteProductButton);
         mealNameContainer.setAlignment(Pos.CENTER_RIGHT);
         mealNameContainer.setMargin(addProductButton, new Insets(0, 10, 0, 0));
@@ -86,7 +93,12 @@ public class MealTable {
         tableContent.setMaxHeight(147);
         createColumns(tableContent);
 
-        tableContainer.getChildren().addAll(mealNameContainer, tableContent);
+        mealTableSummary = new MealTableSummary();
+        mealTableSummary.create(this);
+
+
+        tableContainer.getChildren().addAll(mealNameContainer, tableContent, mealTableSummary.tableSummary);
+
         pane.getChildren().add(tableContainer);
     }
 
@@ -156,9 +168,11 @@ public class MealTable {
             productsList.remove(selectedProduct);
             addProductController.mealTableSummary.update(this);
         }
-        else {
-            System.out.println("AHU");
-        }
+    }
 
+    private void deleteMealButtonOnAction(Pane pane) {
+        System.out.println(pane.getChildren());
+        dietViewController.mealsList.get(0).remove(this.productsList);
+        pane.getChildren().remove(this.tableContainer);
     }
 }

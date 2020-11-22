@@ -66,27 +66,15 @@ public class AddProductController {
             Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
             mealTable.productsList.add(selectedProduct);
             mealTable.insertRow(mealTable.productsList, selectedProduct, Double.valueOf(quantityTextField.getText()), mealTable.tableContent);
-            if (mealTable.productsList.size() == 1) {
-                mealTableSummary = new MealTableSummary();
-                mealTableSummary.create(mealTable);
-            } else if (mealTable.productsList.size() > 1)
-                mealTableSummary.update(mealTable);
-
             Stage stage = (Stage) addSelectedButton.getScene().getWindow();
             stage.close();
             quantityTextField.setText("");
-            System.out.println(mealTable.productsList);
             qualityAlertLabel.setVisible(false);
         }
         else {
             qualityAlertLabel.setVisible(true);
         }
-        mealTable.productsList.addListener(new ListChangeListener() {
-            @Override
-            public void onChanged(ListChangeListener.Change change) {
-                mealTableSummary.update(mealTable);
-            }
-        });
+
     }
 
     public void showStage(){

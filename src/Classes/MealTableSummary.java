@@ -1,5 +1,6 @@
 package Classes;
 
+import javafx.collections.ListChangeListener;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -20,9 +21,15 @@ public class MealTableSummary {
     Double totalFats;
     Integer totalWI;
     Double totalPrice;
-    ArrayList<Product> totalList = new ArrayList<>();
 
     public void create(MealTable mealTable) {
+        mealTable.productsList.addListener(new ListChangeListener() {
+            @Override
+            public void onChanged(ListChangeListener.Change change) {
+                mealTable.mealTableSummary.update(mealTable);
+            }
+        });
+
         kcalSummary = new TableColumn();
         proteinsSummary = new TableColumn();
         carbsSummary = new TableColumn();
@@ -58,13 +65,13 @@ public class MealTableSummary {
         totalWI = 0;
         totalPrice = 0.0;
 
-        Product product = mealTable.productsList.get(0);
+        Product product = new Product("" , 0.0, 0.0, 0.0, 0.0, "",
+                "", 0, "", "", 0.0); // just to display zeros instead of blank space
 
         tableSummary.getColumns().addAll(emptyColumn, kcalSummary, proteinsSummary, carbsSummary, fatsSummary, WISummary, priceSummary);
         tableSummary.getStyleClass().add(("table-summary"));
 
         tableSummary.getItems().add(product);
-        mealTable.tableContainer.getChildren().add(tableSummary);
     }
 
     public void update(MealTable mealTable) {
@@ -82,19 +89,18 @@ public class MealTableSummary {
         totalWI = 0;
         totalPrice = 0.0;
 
-        for (Integer i = 0; i < mealTable.tableContent.getItems().size(); i++) {
-            totalKcal += (Double) mealTable.tableContent.getColumns().get(2).getCellObservableValue(i).getValue();
-            totalProteins += (Double) mealTable.tableContent.getColumns().get(3).getCellObservableValue(i).getValue();
-            totalCarbs += (Double) mealTable.tableContent.getColumns().get(4).getCellObservableValue(i).getValue();
-            totalFats += (Double) mealTable.tableContent.getColumns().get(5).getCellObservableValue(i).getValue();
-            totalWI += (Integer) mealTable.tableContent.getColumns().get(6).getCellObservableValue(i).getValue();
-            totalPrice += (Double) mealTable.tableContent.getColumns().get(7).getCellObservableValue(i).getValue();
+        for (Integer i = 0; i < mealTable.productsList.size(); i++) {
+            totalKcal += mealTable.productsList.get(i).getKcal();
+            totalProteins += mealTable.productsList.get(i).getProteins();
+            totalCarbs += mealTable.productsList.get(i).getCarbs();
+            totalFats += mealTable.productsList.get(i).getFats();
+            totalWI += mealTable.productsList.get(i).getWholesomenessIndex();
+            totalPrice += mealTable.productsList.get(i).getPrice();
         }
         Product totalProduct = new Product("Total", totalKcal, totalProteins, totalCarbs, totalFats, "", "", totalWI.intValue(), "", "", totalPrice);
-
         tableSummary.getItems().add(totalProduct);
         mealTable.tableContainer.getChildren().add(tableSummary);
-
+        System.out.println(mealTable.tableContent.getItems());
     }
 
     class SummaryTableView extends TableView { // table with no header - useful as table summary
