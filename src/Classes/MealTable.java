@@ -1,7 +1,9 @@
 package Classes;
 
-import javafx.fxml.FXML;
+import Controllers.AddProductController;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -11,8 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class MealTable {
     VBox tableContainer;
@@ -24,11 +25,36 @@ public class MealTable {
     private final Integer tableContainerWidth = 507;
     private final Integer tableContainerHeight = 110;
     public ArrayList<Product> productsList = new ArrayList<>();
-    public Map<Product, Double> productsDictionary = new HashMap<>(); // the easiest way to store information about specific product quantity
+    Button addProductButton, deleteProductButton, deleteMealButton;
+    AddProductController addProductController;
 
-    public MealTable(Integer mealNum, Integer tableContainerLayoutX, Integer tableContainerLayoutY) {
+    public MealTable(Integer mealNum, Integer tableContainerLayoutX, Integer tableContainerLayoutY, AddProductController addProductController) {
         this.mealNum = mealNum;
         this.tableContainerLayoutX = tableContainerLayoutX;
+        this.tableContainerLayoutY = tableContainerLayoutY;
+        this.addProductController = addProductController;
+    }
+    public Integer getMealNum() {
+        return mealNum;
+    }
+
+    public void setMealNum(Integer mealNum) {
+        this.mealNum = mealNum;
+    }
+
+    public Integer getTableContainerLayoutX() {
+        return tableContainerLayoutX;
+    }
+
+    public void setTableContainerLayoutX(Integer tableContainerLayoutX) {
+        this.tableContainerLayoutX = tableContainerLayoutX;
+    }
+
+    public Integer getTableContainerLayoutY() {
+        return tableContainerLayoutY;
+    }
+
+    public void setTableContainerLayoutY(Integer tableContainerLayoutY) {
         this.tableContainerLayoutY = tableContainerLayoutY;
     }
 
@@ -42,7 +68,16 @@ public class MealTable {
         mealNameContainer = new HBox();
         mealNameContainer.setAlignment(Pos.CENTER);
         mealName = new Label("Meal" + mealNum);
-        mealNameContainer.getChildren().add(mealName);
+        addProductButton = new Button("Add product");
+        addProductButton.setOnAction(e -> addProductButtonOnAction());
+        deleteProductButton = new Button("Delete");
+        deleteProductButton.setOnAction(e -> deleteProductButtonOnAction());
+        deleteMealButton = new Button("DELETE MEAL");
+        mealNameContainer.getChildren().addAll(deleteMealButton, mealName, addProductButton, deleteProductButton);
+        mealNameContainer.setAlignment(Pos.CENTER_RIGHT);
+        mealNameContainer.setMargin(addProductButton, new Insets(0, 10, 0, 0));
+        mealNameContainer.setMargin(mealName, new Insets(0, 90, 0, 0));
+        mealNameContainer.setMargin(deleteMealButton, new Insets(0, 150, 0, 0));
 
         tableContent = new TableView();
         tableContent.setMinHeight(147);
@@ -92,18 +127,36 @@ public class MealTable {
         table.getColumns().addAll(quantityColumn, nameColumn, kcalColumn, proteinsColumn, carbsColumn, fatsColumn, WIColumn, priceColumn);
     }
 
-    public void insertRow(Map<Product, Double> productsDictionary, ArrayList<Product> productsList, Product product, Double quantity, TableView table) {
+    public void insertRow(ArrayList<Product> productsList, Product product, Double quantity, TableView table) {
         table.getItems().clear();
         Product productCopy = new Product(product.getName(), product.getKcal(), product.getProteins(), product.getCarbs(), product.getFats(), product.getMacronutrientCategory(), product.getCategory(), product.getWholesomenessIndex(), product.getUnitType(), product.getUnitQuantity(), product.getPrice());
-        productCopy.setUnitQuantity(productsDictionary.get(product) + " " + product.getShorterUnit());
-        productCopy.setKcal(product.getKcal() * productsDictionary.get(product));
-        productCopy.setProteins(product.getProteins() * productsDictionary.get(product));
-        productCopy.setCarbs(product.getCarbs() * productsDictionary.get(product));
-        productCopy.setFats(product.getFats() * productsDictionary.get(product));
-        productCopy.setPrice(product.getPrice() * productsDictionary.get(product));
+        productCopy.setUnitQuantity(quantity + " " + product.getShorterUnit());
+        productCopy.setKcal(product.getKcal() * quantity);
+        productCopy.setProteins(product.getProteins() * quantity);
+        productCopy.setCarbs(product.getCarbs() * quantity);
+        productCopy.setFats(product.getFats() * quantity);
+        productCopy.setPrice(product.getPrice() * quantity);
         productCopy.setQuantity(quantity);
         productsList.remove(product);
         productsList.add(productCopy);
         table.getItems().addAll(productsList);
+    }
+
+    private void addProductButtonOnAction() {
+        addProductController.MTIndex = mealNum;
+        addProductController.showStage();
+    }
+
+    private void deleteProductButtonOnAction() {
+        Product selectedProduct = (Product) tableContent.getSelectionModel().getSelectedItem();
+        if (productsList.contains(selectedProduct)) {
+            tableContent.getItems().remove(selectedProduct);
+            productsList.remove(selectedProduct);
+            addProductController.mealTableSummary.update(this);
+        }
+        else {
+            System.out.println("AHU");
+        }
+
     }
 }

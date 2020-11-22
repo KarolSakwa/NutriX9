@@ -21,13 +21,15 @@ public class AddProductController {
     private final DietViewController dietViewController;
     DatabaseConnection databaseConnection = new DatabaseConnection();
     Connection con = databaseConnection.getConnection();
+    public Integer MTIndex; // for now it helps to recognize where to add products
     @FXML Button closeButton, addSelectedButton;
     @FXML ChoiceBox selectColumnChoiceBox;
-    MealTableSummary mealTableSummary;
+    public MealTableSummary mealTableSummary;
     @FXML TableView productsTableView;
     @FXML TextField searchProductTextField, quantityTextField;
     @FXML TableColumn productNameColumn, quantityTableColumn, kcalColumn, proteinsColumn, carbohydratesColumn,
             fatsColumn, macronutrientColumn, categoryColumn, wholesomenessIndexColumn, priceColumn;
+    @FXML Label qualityAlertLabel;
 
 
     public AddProductController(DietViewController dietViewController) {
@@ -40,11 +42,16 @@ public class AddProductController {
         selectColumnChoiceBox.setValue(productNameColumn.getText());
         changeUnitInQuantityPromptText();
         addSelectedButton.setOnAction(e -> {
-                if (dietViewController.meal1Table.productsList.size() < 5)
-                    addSelectedButtonOnAction(dietViewController.meal1Table);
-                else
-                    addSelectedButtonOnAction(dietViewController.meal2Table);
-
+            if (MTIndex == 1)
+                addSelectedButtonOnAction(dietViewController.meal1Table);
+            else if (MTIndex == 2)
+                addSelectedButtonOnAction(dietViewController.meal2Table);
+            else if (MTIndex == 3)
+                addSelectedButtonOnAction(dietViewController.meal3Table);
+            else if (MTIndex == 4)
+                addSelectedButtonOnAction(dietViewController.meal4Table);
+            else if (MTIndex == 5)
+                addSelectedButtonOnAction(dietViewController.meal5Table);
         });
     }
 
@@ -53,28 +60,26 @@ public class AddProductController {
         stage.close();
     }
 
-
-
-
     public void addSelectedButtonOnAction(MealTable mealTable) {
-        Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
-        if (mealTable.productsList.size() == 0) {
-            mealTable.create(dietViewController.dietViewPane);
-            dietViewController.mealsList.add(mealTable.productsList);
-        }
-        mealTable.productsDictionary.put(selectedProduct, Double.valueOf(quantityTextField.getText()));
-        mealTable.productsList.add(selectedProduct);
-        mealTable.insertRow(mealTable.productsDictionary, mealTable.productsList, selectedProduct, Double.valueOf(quantityTextField.getText()), mealTable.tableContent);
-        if (mealTable.productsList.size() == 1) {
-            mealTableSummary = new MealTableSummary();
-            mealTableSummary.create(mealTable);
-        }
-        else if (mealTable.productsList.size() > 1)
-            mealTableSummary.update(mealTable);
+        if (!quantityTextField.getText().trim().isEmpty()) {
+            Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
+            mealTable.productsList.add(selectedProduct);
+            mealTable.insertRow(mealTable.productsList, selectedProduct, Double.valueOf(quantityTextField.getText()), mealTable.tableContent);
+            if (mealTable.productsList.size() == 1) {
+                mealTableSummary = new MealTableSummary();
+                mealTableSummary.create(mealTable);
+            } else if (mealTable.productsList.size() > 1)
+                mealTableSummary.update(mealTable);
 
-        Stage stage = (Stage) addSelectedButton.getScene().getWindow();
-        stage.close();
-        quantityTextField.setText("");
+            Stage stage = (Stage) addSelectedButton.getScene().getWindow();
+            stage.close();
+            quantityTextField.setText("");
+            System.out.println(mealTable.productsList);
+            qualityAlertLabel.setVisible(false);
+        }
+        else {
+            qualityAlertLabel.setVisible(true);
+        }
     }
 
     public void showStage(){
@@ -138,23 +143,5 @@ public class AddProductController {
             quantityTextField.setPromptText("Quantity (" + product.getUnitType() + ")");
         });
     }
-/*
-    private void changeLabels(Group header, Group rowGroup, Label quantityLabel, Label productLabel, Label kcalLabel, Label carbsLabel, Label proteinsLabel, Label fatsLabel, Label WILabel, Label priceLabel) {
-        Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
-        Double productQuantity = Double.parseDouble(quantityTextField.getText());
-        header.setVisible(true);
-        rowGroup.setVisible(true);
-        quantityLabel.setText(quantityTextField.getText() + " " + selectedProduct.getShorterUnit());
-        productLabel.setText(selectedProduct.getName());
-        kcalLabel.setText(String.valueOf(Math.round(selectedProduct.getKcal() * productQuantity)));
-        proteinsLabel.setText(String.valueOf(Math.round(selectedProduct.getProteins() * productQuantity)));
-        carbsLabel.setText(String.valueOf(Math.round(selectedProduct.getCarbohydrates() * productQuantity)));
-        fatsLabel.setText((String.valueOf(Math.round(selectedProduct.getFats() * productQuantity))));
-        priceLabel.setText((String.valueOf(Math.round(selectedProduct.getPrice() * productQuantity))));
-        WILabel.setText(selectedProduct.getWholesomenessIndex().toString());
-    }
-
- */
-
 }
 

@@ -35,6 +35,7 @@ public class MealTableSummary {
         tableSummary = new SummaryTableView();
         summaryContainer.getChildren().add(tableSummary);
 
+
         kcalSummary.setCellValueFactory(new PropertyValueFactory<>("kcal"));
         proteinsSummary.setCellValueFactory(new PropertyValueFactory<>("proteins"));
         carbsSummary.setCellValueFactory(new PropertyValueFactory<>("carbs"));
@@ -58,11 +59,6 @@ public class MealTableSummary {
         totalPrice = 0.0;
 
         Product product = mealTable.productsList.get(0);
-        product.setKcal(product.getKcal() * product.getQuantity());
-        product.setProteins(product.getProteins() * product.getQuantity());
-        product.setCarbs(product.getCarbs() * product.getQuantity());
-        product.setFats(product.getFats() * product.getQuantity());
-        product.setPrice(product.getPrice() * product.getQuantity());
 
         tableSummary.getColumns().addAll(emptyColumn, kcalSummary, proteinsSummary, carbsSummary, fatsSummary, WISummary, priceSummary);
         tableSummary.getStyleClass().add(("table-summary"));
@@ -98,6 +94,7 @@ public class MealTableSummary {
 
         tableSummary.getItems().add(totalProduct);
         mealTable.tableContainer.getChildren().add(tableSummary);
+
     }
 
     class SummaryTableView extends TableView { // table with no header - useful as table summary

@@ -26,17 +26,18 @@ public class DietViewController {
     @FXML Group meal1Header, meal1Row1;
     @FXML ImageView minus1ImageView;
     @FXML Label dietNameLabel, meal1Label, product1Label, quantity1Label, kcal1Label, proteins1Label, carbs1Label, fats1Label, WI1Label;
-    @FXML Button addMealButton, meal1AddProductButton;
+    @FXML Button meal1AddProductButton;
     @FXML Pane dietViewPane;
-    public MealTable meal1Table, meal2Table;
+    public MealTable meal1Table, meal2Table, meal3Table, meal4Table, meal5Table;
     ArrayList<ArrayList> mealsList = new ArrayList<>();
+    public ArrayList<MealTable> mealTableList = new ArrayList<>();
     AddProductController addProductController = new AddProductController(this);
 
     public DietViewController(SelectProfileController selectProfileController) {
         this.selectProfileController = selectProfileController;
         thisStage = new Stage();
         ChildrenWindow dietViewWindow = new ChildrenWindow();
-        dietViewWindow.create("../fxml/dietView.fxml", this, thisStage, false, 1038, 793);
+        dietViewWindow.create("../fxml/dietView.fxml", this, thisStage, false, 1600, 1200);
         String username = selectProfileController.getUsername();
         String query = "SELECT * FROM diets WHERE username = '" + username + "';";
         try {
@@ -56,17 +57,33 @@ public class DietViewController {
 
     public void addMealButtonOnAction() {
         if (mealsList.size() == 0) {
-            meal1Table = new MealTable(1, 100, 150);
-            meal1AddProductButton.setVisible(true);
+            meal1Table = new MealTable(1, 1, 1, addProductController); // just sample arguments to initiate, corrected in function
+            createMealTable(meal1Table);
         }
-        else if (mealsList.size() == 1)
-            meal2Table = new MealTable(mealsList.size()+1, 100,  (mealsList.size()+1) * 200);
-
-
+        else if (mealsList.size() == 1) {
+            meal2Table = new MealTable(1, 1, 1, addProductController);
+            createMealTable(meal2Table);
+        }
+        else if (mealsList.size() == 2) {
+            meal3Table = new MealTable(1, 1, 1, addProductController);
+            createMealTable(meal3Table);
+        }
+        else if (mealsList.size() == 3) {
+            meal4Table = new MealTable(1, 1, 1, addProductController);
+            createMealTable(meal4Table);
+        }
+        else if (mealsList.size() == 4) {
+            meal5Table = new MealTable(1, 1, 1, addProductController);
+            createMealTable(meal5Table);
+        }
     }
 
-    public void meal1AddProductButtonOnAction() {
-        addProductController.showStage();
+    private void createMealTable(MealTable mealTable) {
+        mealTable.setMealNum(mealsList.size() + 1);
+        mealTable.setTableContainerLayoutX(100);
+        mealTable.setTableContainerLayoutY((mealsList.size() + 1) * 210);
+        mealTable.create(dietViewPane);
+        mealsList.add(mealTable.productsList);
     }
 
     public void testButtonOnAction() {
