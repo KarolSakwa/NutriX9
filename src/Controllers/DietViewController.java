@@ -2,6 +2,9 @@ package Controllers;
 
 import Classes.ChildrenWindow;
 import Classes.MealTable;
+import Classes.Product;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -29,7 +32,7 @@ public class DietViewController {
     @FXML Button meal1AddProductButton;
     @FXML Pane dietViewPane;
     public MealTable meal1Table, meal2Table, meal3Table, meal4Table, meal5Table;
-    ArrayList<ArrayList> mealsList = new ArrayList<>();
+    ObservableList<ObservableList> mealsList = FXCollections.observableArrayList();
     public ArrayList<MealTable> mealTableList = new ArrayList<>();
     AddProductController addProductController = new AddProductController(this);
 

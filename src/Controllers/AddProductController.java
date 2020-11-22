@@ -2,6 +2,7 @@ package Controllers;
 
 import Classes.*;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
@@ -80,6 +81,12 @@ public class AddProductController {
         else {
             qualityAlertLabel.setVisible(true);
         }
+        mealTable.productsList.addListener(new ListChangeListener() {
+            @Override
+            public void onChanged(ListChangeListener.Change change) {
+                mealTableSummary.update(mealTable);
+            }
+        });
     }
 
     public void showStage(){

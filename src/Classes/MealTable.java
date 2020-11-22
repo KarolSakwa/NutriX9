@@ -1,6 +1,9 @@
 package Classes;
 
 import Controllers.AddProductController;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -19,12 +22,12 @@ public class MealTable {
     VBox tableContainer;
     HBox mealNameContainer;
     Label mealName;
-    public TableView<Product> tableContent;
+    public ObservableList<Product> productsList = FXCollections.observableArrayList();
+    public TableView<Product> tableContent = new TableView<>(productsList);
     TableColumn quantityColumn, nameColumn, kcalColumn, proteinsColumn, carbsColumn, fatsColumn, WIColumn, priceColumn;
     Integer mealNum, tableContainerLayoutX, tableContainerLayoutY;
     private final Integer tableContainerWidth = 507;
     private final Integer tableContainerHeight = 110;
-    public ArrayList<Product> productsList = new ArrayList<>();
     Button addProductButton, deleteProductButton, deleteMealButton;
     AddProductController addProductController;
 
@@ -59,7 +62,6 @@ public class MealTable {
     }
 
     public void create(Pane pane) {
-
         tableContainer = new VBox();
         tableContainer.setPrefWidth(tableContainerWidth);
         tableContainer.setMaxHeight(tableContainerHeight);
@@ -127,7 +129,7 @@ public class MealTable {
         table.getColumns().addAll(quantityColumn, nameColumn, kcalColumn, proteinsColumn, carbsColumn, fatsColumn, WIColumn, priceColumn);
     }
 
-    public void insertRow(ArrayList<Product> productsList, Product product, Double quantity, TableView table) {
+    public void insertRow(ObservableList<Product> productsList, Product product, Double quantity, TableView table) {
         table.getItems().clear();
         Product productCopy = new Product(product.getName(), product.getKcal(), product.getProteins(), product.getCarbs(), product.getFats(), product.getMacronutrientCategory(), product.getCategory(), product.getWholesomenessIndex(), product.getUnitType(), product.getUnitQuantity(), product.getPrice());
         productCopy.setUnitQuantity(quantity + " " + product.getShorterUnit());
