@@ -3,25 +3,20 @@ package Classes;
 import Controllers.AddProductController;
 import Controllers.DietViewController;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-
-import java.util.ArrayList;
 
 
 public class MealTable {
-    VBox tableContainer;
+    public VBox tableContainer;
     HBox mealNameContainer;
     Label mealName;
     public ObservableList<Product> productsList = FXCollections.observableArrayList();
@@ -34,14 +29,16 @@ public class MealTable {
     AddProductController addProductController;
     MealTableSummary mealTableSummary;
     DietViewController dietViewController;
+    MealTablesContainer mealTablesContainer;
 
 
-    public MealTable(Integer mealNum, Integer tableContainerLayoutX, Integer tableContainerLayoutY, DietViewController dietViewController, AddProductController addProductController) {
+    public MealTable(Integer mealNum, Integer tableContainerLayoutX, Integer tableContainerLayoutY, MealTablesContainer mealTablesContainer, AddProductController addProductController) {
         this.mealNum = mealNum;
         this.tableContainerLayoutX = tableContainerLayoutX;
         this.tableContainerLayoutY = tableContainerLayoutY;
         this.addProductController = addProductController;
-        this.dietViewController = dietViewController;
+        //this.dietViewController = dietViewController;
+        this.mealTablesContainer = mealTablesContainer;
     }
     public Integer getMealNum() {
         return mealNum;
@@ -67,7 +64,7 @@ public class MealTable {
         this.tableContainerLayoutY = tableContainerLayoutY;
     }
 
-    public void create(Pane pane) {
+    public void create() {
         tableContainer = new VBox();
         tableContainer.setPrefWidth(tableContainerWidth);
         tableContainer.setMaxHeight(tableContainerHeight);
@@ -81,7 +78,7 @@ public class MealTable {
         deleteProductButton = new Button("Delete");
         deleteProductButton.setOnAction(e -> deleteProductButtonOnAction());
         deleteMealButton = new Button("DELETE MEAL");
-        deleteMealButton.setOnAction(e -> deleteMealButtonOnAction(pane));
+        deleteMealButton.setOnAction(e -> deleteMealButtonOnAction(mealTablesContainer));
         mealNameContainer.getChildren().addAll(deleteMealButton, mealName, addProductButton, deleteProductButton);
         mealNameContainer.setAlignment(Pos.CENTER_RIGHT);
         mealNameContainer.setMargin(addProductButton, new Insets(0, 10, 0, 0));
@@ -99,7 +96,7 @@ public class MealTable {
 
         tableContainer.getChildren().addAll(mealNameContainer, tableContent, mealTableSummary.tableSummary);
 
-        pane.getChildren().add(tableContainer);
+        //mealTablesContainer.vBox.getChildren().add(tableContainer);
     }
 
     private void createColumns(TableView table) {
@@ -170,9 +167,9 @@ public class MealTable {
         }
     }
 
-    private void deleteMealButtonOnAction(Pane pane) {
-        System.out.println(pane.getChildren());
-        dietViewController.mealsList.get(0).remove(this.productsList);
-        pane.getChildren().remove(this.tableContainer);
+    private void deleteMealButtonOnAction(MealTablesContainer mealTablesContainer) {
+        System.out.println(mealTablesContainer.vBox.getChildren());
+        dietViewController.mealTablesContainer.mealsList.get(0).remove(this.productsList);
+        mealTablesContainer.vBox.getChildren().remove(this.tableContainer);
     }
 }

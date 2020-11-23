@@ -1,8 +1,6 @@
 package Controllers;
 
-import Classes.ChildrenWindow;
-import Classes.MealTable;
-import Classes.Product;
+import Classes.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,8 +12,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import Classes.DatabaseConnection;
 
+import javax.annotation.Generated;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -26,21 +24,19 @@ public class DietViewController {
     private final SelectProfileController selectProfileController;
     DatabaseConnection databaseConnection = new DatabaseConnection();
     Connection con = databaseConnection.getConnection();
-    @FXML Group meal1Header, meal1Row1;
-    @FXML ImageView minus1ImageView;
-    @FXML Label dietNameLabel, meal1Label, product1Label, quantity1Label, kcal1Label, proteins1Label, carbs1Label, fats1Label, WI1Label;
-    @FXML Button meal1AddProductButton;
+    @FXML Label dietNameLabel;
     @FXML Pane dietViewPane;
     public MealTable meal1Table, meal2Table, meal3Table, meal4Table, meal5Table;
-    public ObservableList<ObservableList> mealsList = FXCollections.observableArrayList();
-    public ArrayList<MealTable> mealTableList = new ArrayList<>();
+    //public ArrayList<MealTable> mealTableList = new ArrayList<>();
     AddProductController addProductController = new AddProductController(this);
+    public MealTablesContainer mealTablesContainer = new MealTablesContainer(this, 0, 0, 10, 6);
 
     public DietViewController(SelectProfileController selectProfileController) {
-        this.selectProfileController = selectProfileController;
         thisStage = new Stage();
+        this.selectProfileController = selectProfileController;
+        mealTablesContainer.create();
         ChildrenWindow dietViewWindow = new ChildrenWindow();
-        dietViewWindow.create("../fxml/dietView.fxml", this, thisStage, false, 1600, 1200);
+        dietViewWindow.create("../fxml/dietView.fxml", this, thisStage, false, 1600, 900);
         String username = selectProfileController.getUsername();
         String query = "SELECT * FROM diets WHERE username = '" + username + "';";
         try {
@@ -52,6 +48,7 @@ public class DietViewController {
             e.printStackTrace();
             e.getCause();
         }
+        //        dietViewPane.getChildren().add(mealTablesContainer.vBox);
     }
 
     public void showStage(){
@@ -59,34 +56,34 @@ public class DietViewController {
     }
 
     public void addMealButtonOnAction() {
-        if (mealsList.size() == 0) {
-            meal1Table = new MealTable(1, 1, 1, this, addProductController); // just sample arguments to initiate, corrected in function
+        if (mealTablesContainer.mealsList.size() == 0) {
+            meal1Table = new MealTable(1, 1, 1, mealTablesContainer, addProductController); // just sample arguments to initiate, corrected in function
             createMealTable(meal1Table);
         }
-        else if (mealsList.size() == 1) {
-            meal2Table = new MealTable(1, 1, 1, this, addProductController);
+        else if (mealTablesContainer.mealsList.size() == 1) {
+            meal2Table = new MealTable(1, 1, 1, mealTablesContainer, addProductController);
             createMealTable(meal2Table);
         }
-        else if (mealsList.size() == 2) {
-            meal3Table = new MealTable(1, 1, 1, this, addProductController);
+        else if (mealTablesContainer.mealsList.size() == 2) {
+            meal3Table = new MealTable(1, 1, 1, mealTablesContainer, addProductController);
             createMealTable(meal3Table);
         }
-        else if (mealsList.size() == 3) {
-            meal4Table = new MealTable(1, 1, 1, this, addProductController);
+        else if (mealTablesContainer.mealsList.size() == 3) {
+            meal4Table = new MealTable(1, 1, 1, mealTablesContainer, addProductController);
             createMealTable(meal4Table);
         }
-        else if (mealsList.size() == 4) {
-            meal5Table = new MealTable(1, 1, 1, this, addProductController);
+        else if (mealTablesContainer.mealsList.size() == 4) {
+            meal5Table = new MealTable(1, 1, 1, mealTablesContainer, addProductController);
             createMealTable(meal5Table);
         }
     }
 
     private void createMealTable(MealTable mealTable) {
-        mealTable.setMealNum(mealsList.size() + 1);
-        mealTable.setTableContainerLayoutX(100);
-        mealTable.setTableContainerLayoutY((mealsList.size() + 1) * 210);
-        mealTable.create(dietViewPane);
-        mealsList.add(mealTable.productsList);
+        mealTable.setMealNum(mealTablesContainer.mealsList.size() + 1);
+        mealTable.create();
+        mealTablesContainer.mealsList.add(mealTable.productsList);
+        mealTablesContainer.vBox.getChildren().add(mealTable.tableContainer);
+        System.out.println(mealTablesContainer.vBox.getChildren());
     }
 
     public void testButtonOnAction() {
