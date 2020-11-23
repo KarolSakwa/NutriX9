@@ -80,7 +80,6 @@ public class MealTableSummary {
         summaryContainer.setMaxHeight(26);
         tableSummary.setMaxHeight(26); // for some reason it resizes on adding another row, need to resize it back
 
-        mealTable.tableContainer.getChildren().remove(tableSummary);
         tableSummary.getItems().clear();
         totalKcal = 0.0;
         totalProteins = 0.0;
@@ -99,8 +98,6 @@ public class MealTableSummary {
         }
         Product totalProduct = new Product("Total", totalKcal, totalProteins, totalCarbs, totalFats, "", "", totalWI.intValue(), "", "", totalPrice);
         tableSummary.getItems().add(totalProduct);
-        mealTable.tableContainer.getChildren().add(tableSummary);
-        System.out.println(mealTable.tableContent.getItems());
     }
 
     class SummaryTableView extends TableView { // table with no header - useful as table summary

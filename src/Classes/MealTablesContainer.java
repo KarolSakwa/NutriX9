@@ -3,6 +3,7 @@ package Classes;
 import Controllers.DietViewController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class MealTablesContainer {
@@ -23,8 +24,8 @@ public class MealTablesContainer {
         vBox = new VBox();
         vBox.setLayoutX(layoutX);
         vBox.setLayoutY(layoutY);
-        vBox.setMaxHeight(height);
-        vBox.setMaxWidth(width);
+        vBox.setMinHeight(height);
+        vBox.setMinWidth(width);
 
 
         //vBox.getStyleClass().add("test");

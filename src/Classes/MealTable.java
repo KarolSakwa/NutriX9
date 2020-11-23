@@ -6,10 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -30,6 +27,7 @@ public class MealTable {
     MealTableSummary mealTableSummary;
     DietViewController dietViewController;
     MealTablesContainer mealTablesContainer;
+    Separator separator;
 
 
     public MealTable(Integer mealNum, Integer tableContainerLayoutX, Integer tableContainerLayoutY, MealTablesContainer mealTablesContainer, AddProductController addProductController) {
@@ -93,8 +91,10 @@ public class MealTable {
         mealTableSummary = new MealTableSummary();
         mealTableSummary.create(this);
 
+        separator = new Separator();
+        separator.setMinHeight(30);
 
-        tableContainer.getChildren().addAll(mealNameContainer, tableContent, mealTableSummary.tableSummary);
+        tableContainer.getChildren().addAll(mealNameContainer, tableContent, mealTableSummary.tableSummary, separator);
 
         //mealTablesContainer.vBox.getChildren().add(tableContainer);
     }
@@ -163,13 +163,13 @@ public class MealTable {
         if (productsList.contains(selectedProduct)) {
             tableContent.getItems().remove(selectedProduct);
             productsList.remove(selectedProduct);
-            addProductController.mealTableSummary.update(this);
+            mealTableSummary.update(this);
         }
     }
 
     private void deleteMealButtonOnAction(MealTablesContainer mealTablesContainer) {
-        System.out.println(mealTablesContainer.vBox.getChildren());
-        dietViewController.mealTablesContainer.mealsList.get(0).remove(this.productsList);
-        mealTablesContainer.vBox.getChildren().remove(this.tableContainer);
+        mealTablesContainer.mealsList.remove(this.productsList);
+        mealTablesContainer.vBox.getChildren().removeAll(this.tableContainer, this.mealTableSummary.tableSummary, this.mealNameContainer);
+        System.out.println(mealTablesContainer.mealsList);
     }
 }

@@ -5,11 +5,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -24,20 +22,34 @@ public class DietViewController {
     private final SelectProfileController selectProfileController;
     DatabaseConnection databaseConnection = new DatabaseConnection();
     Connection con = databaseConnection.getConnection();
-    @FXML Label dietNameLabel;
+    @FXML Group meal1Header, meal1Row1;
+    @FXML ImageView minus1ImageView;
+    @FXML Label dietNameLabel, meal1Label, product1Label, quantity1Label, kcal1Label, proteins1Label, carbs1Label, fats1Label, WI1Label;
+    @FXML Button meal1AddProductButton;
     @FXML Pane dietViewPane;
     public MealTable meal1Table, meal2Table, meal3Table, meal4Table, meal5Table;
-    //public ArrayList<MealTable> mealTableList = new ArrayList<>();
+    public ObservableList<ObservableList> mealsList = FXCollections.observableArrayList();
+    public ArrayList<MealTable> mealTableList = new ArrayList<>();
     AddProductController addProductController = new AddProductController(this);
-    public MealTablesContainer mealTablesContainer = new MealTablesContainer(this, 0, 0, 10, 6);
+    public MealTablesContainer mealTablesContainer = new MealTablesContainer(this, 100, 200, 300, 400);
+    Separator separator;
+    HBox tablesContainer;
+
 
     public DietViewController(SelectProfileController selectProfileController) {
-        thisStage = new Stage();
         this.selectProfileController = selectProfileController;
-        mealTablesContainer.create();
+        thisStage = new Stage();
         ChildrenWindow dietViewWindow = new ChildrenWindow();
-        dietViewWindow.create("../fxml/dietView.fxml", this, thisStage, false, 1600, 900);
+        dietViewWindow.create("../fxml/dietView.fxml", this, thisStage, false, 1600, 1000);
         String username = selectProfileController.getUsername();
+        mealTablesContainer.create();
+        tablesContainer = new HBox();
+        tablesContainer.setMaxHeight(100);
+        tablesContainer.setMaxWidth(100);
+        tablesContainer.setLayoutX(100);
+        tablesContainer.setLayoutY(300);
+        tablesContainer.getChildren().add(mealTablesContainer.vBox);
+        dietViewPane.getChildren().add(tablesContainer);
         String query = "SELECT * FROM diets WHERE username = '" + username + "';";
         try {
             Statement statement = con.createStatement();
@@ -48,7 +60,6 @@ public class DietViewController {
             e.printStackTrace();
             e.getCause();
         }
-        //        dietViewPane.getChildren().add(mealTablesContainer.vBox);
     }
 
     public void showStage(){
@@ -83,11 +94,10 @@ public class DietViewController {
         mealTable.create();
         mealTablesContainer.mealsList.add(mealTable.productsList);
         mealTablesContainer.vBox.getChildren().add(mealTable.tableContainer);
-        System.out.println(mealTablesContainer.vBox.getChildren());
     }
 
     public void testButtonOnAction() {
-
+        System.out.println(mealTablesContainer.mealsList);
     }
     
 }
