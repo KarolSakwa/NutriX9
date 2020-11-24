@@ -1,6 +1,7 @@
 package Classes;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -12,6 +13,7 @@ public class DailySummary {
     TextFlow totalDaily = new TextFlow(), dailyRequirement;
     Text totalHeader, dailyRequirementHeader, kcalText, proteinsText, carbsText, fatsText, kcalValue = new Text(),
             proteinsValue = new Text(), carbsValue = new Text(), fatsValue = new Text();
+    Button addFirstMeal;
 
 
     public DailySummary(MealTablesContainer mealTablesContainer) {
@@ -25,25 +27,13 @@ public class DailySummary {
 
 
         // I want to apply different style for values and labels, so I need to divide it into individual parts
-        totalHeader = new Text("You have eaten today: ");
+        totalHeader = new Text("You have no meals in today's nutritional diary.");
 
-        calculateTotalMacro();
-        kcalText = new Text(" kcal ");
-        proteinsText = new Text(" proteins ");
-        carbsText = new Text(" carbohydrates ");
-        fatsText = new Text(" fats ");
-        kcalText.getStyleClass().add("daily-text");
-        proteinsText.getStyleClass().add("daily-text");
-        carbsText.getStyleClass().add("daily-text");
-        fatsText.getStyleClass().add("daily-text");
-        totalDaily.getChildren().addAll(kcalValue, kcalText, proteinsValue, proteinsText, carbsValue, carbsText, fatsValue, fatsText);
-        totalDaily.setTextAlignment(TextAlignment.CENTER);
-
-        dailyRequirementHeader = new Text("Your daily requirement: ");
-        
+        addFirstMeal = new Button("Add meal");
+        addFirstMeal.setOnAction(e -> addFirstMealButtonOnAction());
 
 
-        dailySummaryContainer.getChildren().addAll(totalHeader, totalDaily, dailyRequirementHeader);
+        dailySummaryContainer.getChildren().addAll(totalHeader, addFirstMeal);
     }
 
     public void calculateTotalMacro() {
@@ -65,6 +55,27 @@ public class DailySummary {
         proteinsValue.getStyleClass().add("daily-value");
         carbsValue.getStyleClass().add("daily-value");
         fatsValue.getStyleClass().add("daily-value");
+    }
+
+    private void addFirstMealButtonOnAction() {
+        dailySummaryContainer.getChildren().remove(addFirstMeal);
+        totalHeader.setText("You have eaten today: ");
+
+        calculateTotalMacro();
+        kcalText = new Text(" kcal ");
+        proteinsText = new Text(" proteins ");
+        carbsText = new Text(" carbohydrates ");
+        fatsText = new Text(" fats ");
+        kcalText.getStyleClass().add("daily-text");
+        proteinsText.getStyleClass().add("daily-text");
+        carbsText.getStyleClass().add("daily-text");
+        fatsText.getStyleClass().add("daily-text");
+        totalDaily.getChildren().addAll(kcalValue, kcalText, proteinsValue, proteinsText, carbsValue, carbsText, fatsValue, fatsText);
+        totalDaily.setTextAlignment(TextAlignment.CENTER);
+
+        dailyRequirementHeader = new Text("Your daily requirement: ");
+
+        dailySummaryContainer.getChildren().addAll(totalDaily, dailyRequirement);
     }
 
 }

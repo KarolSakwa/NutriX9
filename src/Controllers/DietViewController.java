@@ -5,34 +5,26 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
-import javafx.scene.Group;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import javax.annotation.Generated;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 public class DietViewController {
     private Stage thisStage;
     private final SelectProfileController selectProfileController;
     DatabaseConnection databaseConnection = new DatabaseConnection();
     Connection con = databaseConnection.getConnection();
-    @FXML Group meal1Header, meal1Row1;
-    @FXML ImageView minus1ImageView;
-    @FXML Label dietNameLabel, meal1Label, product1Label, quantity1Label, kcal1Label, proteins1Label, carbs1Label, fats1Label, WI1Label;
-    @FXML Button meal1AddProductButton;
+    @FXML Label dietNameLabel;
     @FXML Pane dietViewPane;
     public MealTable meal1Table, meal2Table, meal3Table, meal4Table, meal5Table;
     public ObservableList<ObservableList> mealsList = FXCollections.observableArrayList();
-    public ArrayList<MealTable> mealTableList = new ArrayList<>();
     AddProductController addProductController = new AddProductController(this);
-    public MealTablesContainer mealTablesContainer = new MealTablesContainer(this, 300, 100, 300, 400);
+    public MealTablesContainer mealTablesContainer = new MealTablesContainer(this);
     Separator separator;
     HBox tablesContainer;
     public DailySummary dailySummary = new DailySummary(mealTablesContainer);
@@ -47,9 +39,9 @@ public class DietViewController {
         mealTablesContainer.create();
         dailySummary.create();
         tablesContainer = new HBox();
-        tablesContainer.setMinHeight(300);
-        tablesContainer.setMinWidth(300);
-        tablesContainer.setLayoutX(500);
+        tablesContainer.setMinHeight(950);
+        tablesContainer.setMinWidth(700);
+        tablesContainer.setLayoutX(600);
         tablesContainer.setLayoutY(100);
         separator = new Separator();
         separator.setOrientation(Orientation.VERTICAL);
@@ -89,10 +81,6 @@ public class DietViewController {
         else if (mealTablesContainer.mealsList.size() == 3) {
             meal4Table = new MealTable(this,1, 1, mealTablesContainer, addProductController);
             createMealTable(meal4Table);
-        }
-        else if (mealTablesContainer.mealsList.size() == 4) {
-            meal5Table = new MealTable(this,1, 1, mealTablesContainer, addProductController);
-            createMealTable(meal5Table);
         }
     }
 

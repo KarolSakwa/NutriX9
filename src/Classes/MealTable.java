@@ -30,7 +30,7 @@ public class MealTable {
     DietViewController dietViewController;
     MealTablesContainer mealTablesContainer;
     Separator separator;
-    final Integer MAX_MEALS_NUM = 5;
+    final Integer MAX_MEALS_NUM = 4;
 
 
     public MealTable(DietViewController dietViewController, Integer tableContainerLayoutX, Integer tableContainerLayoutY, MealTablesContainer mealTablesContainer, AddProductController addProductController) {
@@ -67,19 +67,23 @@ public class MealTable {
 
     public void create() {
         tableContainer = new VBox();
-        tableContainer.setPrefWidth(tableContainerWidth);
+        tableContainer.setMaxWidth(tableContainerWidth);
         tableContainer.setMaxHeight(tableContainerHeight);
         tableContainer.setLayoutX(tableContainerLayoutX);
         tableContainer.setLayoutY(tableContainerLayoutY);
         mealNameContainer = new HBox();
         mealNameContainer.setAlignment(Pos.CENTER);
         mealNum = setMealNumber(this);
-        mealName = new Label("Meal" + mealNum);
+        mealName = new Label("Meal " + (mealNum+1));
+        mealName.setMinWidth(36);
         addProductButton = new Button("Add product");
         addProductButton.setOnAction(e -> addProductButtonOnAction());
+        addProductButton.setMinWidth(83);
         deleteProductButton = new Button("Delete");
         deleteProductButton.setOnAction(e -> deleteProductButtonOnAction());
+        deleteProductButton.setMinWidth(51);
         deleteMealButton = new Button("DELETE MEAL");
+        deleteMealButton.setMinWidth(90);
         deleteMealButton.setOnAction(e -> deleteMealButtonOnAction(mealTablesContainer));
         mealNameContainer.getChildren().addAll(deleteMealButton, mealName, addProductButton, deleteProductButton);
         mealNameContainer.setAlignment(Pos.CENTER_RIGHT);
@@ -158,7 +162,8 @@ public class MealTable {
     }
 
     private void addProductButtonOnAction() {
-        addProductController.MTIndex = mealNum;
+        addProductController.MTIndex = setMealNumber(this);
+        System.out.println(setMealNumber(this));
         addProductController.showStage();
     }
 
@@ -182,8 +187,9 @@ public class MealTable {
         for (MealTable mT: mealTablesContainer.mealTablesList){
             if (!takenNums.contains(mT.mealNum))
                 takenNums.add(mT.mealNum);
+            System.out.println(takenNums);
         }
-        for (Integer i = 1; i < MAX_MEALS_NUM + 1; i++) {
+        for (Integer i = 0; i < MAX_MEALS_NUM+1; i++) {
             if(!takenNums.contains(i))
                 return i;
         }
