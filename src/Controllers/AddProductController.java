@@ -62,8 +62,8 @@ public class AddProductController {
     }
 
     public void addSelectedButtonOnAction(MealTable mealTable) {
-        if (!quantityTextField.getText().trim().isEmpty()) {
-            Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
+        Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
+        if (!quantityTextField.getText().trim().isEmpty() && selectedProduct != null) {
             mealTable.productsList.add(selectedProduct);
             mealTable.insertRow(mealTable.productsList, selectedProduct, Double.valueOf(quantityTextField.getText()), mealTable.tableContent);
             Stage stage = (Stage) addSelectedButton.getScene().getWindow();
@@ -74,7 +74,6 @@ public class AddProductController {
         else {
             qualityAlertLabel.setVisible(true);
         }
-
     }
 
     public void showStage(){

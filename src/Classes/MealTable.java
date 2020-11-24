@@ -11,6 +11,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.util.ArrayList;
+
 
 public class MealTable {
     public VBox tableContainer;
@@ -28,9 +30,10 @@ public class MealTable {
     DietViewController dietViewController;
     MealTablesContainer mealTablesContainer;
     Separator separator;
+    final Integer MAX_MEALS_NUM = 5;
 
 
-    public MealTable(Integer mealNum, Integer tableContainerLayoutX, Integer tableContainerLayoutY, MealTablesContainer mealTablesContainer, AddProductController addProductController) {
+    public MealTable(Integer tableContainerLayoutX, Integer tableContainerLayoutY, MealTablesContainer mealTablesContainer, AddProductController addProductController) {
         this.mealNum = mealNum;
         this.tableContainerLayoutX = tableContainerLayoutX;
         this.tableContainerLayoutY = tableContainerLayoutY;
@@ -70,6 +73,7 @@ public class MealTable {
         tableContainer.setLayoutY(tableContainerLayoutY);
         mealNameContainer = new HBox();
         mealNameContainer.setAlignment(Pos.CENTER);
+        mealNum = setMealNumber(this);
         mealName = new Label("Meal" + mealNum);
         addProductButton = new Button("Add product");
         addProductButton.setOnAction(e -> addProductButtonOnAction());
@@ -96,7 +100,7 @@ public class MealTable {
 
         tableContainer.getChildren().addAll(mealNameContainer, tableContent, mealTableSummary.tableSummary, separator);
 
-        //mealTablesContainer.vBox.getChildren().add(tableContainer);
+        mealTablesContainer.vBox.getChildren().add(tableContainer);
     }
 
     private void createColumns(TableView table) {
@@ -170,6 +174,19 @@ public class MealTable {
     private void deleteMealButtonOnAction(MealTablesContainer mealTablesContainer) {
         mealTablesContainer.mealsList.remove(this.productsList);
         mealTablesContainer.vBox.getChildren().removeAll(this.tableContainer, this.mealTableSummary.tableSummary, this.mealNameContainer);
-        System.out.println(mealTablesContainer.mealsList);
+        mealTablesContainer.mealTablesList.remove(this);
+    }
+
+    public Integer setMealNumber(MealTable mealTable) {
+        ArrayList<Integer> takenNums = new ArrayList<>();
+        for (MealTable mT: mealTablesContainer.mealTablesList){
+            if (!takenNums.contains(mT.mealNum))
+                takenNums.add(mT.mealNum);
+        }
+        for (Integer i = 1; i < MAX_MEALS_NUM + 1; i++) {
+            if(!takenNums.contains(i))
+                return i;
+        }
+        return 6;
     }
 }

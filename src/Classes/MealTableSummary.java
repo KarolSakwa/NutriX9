@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class MealTableSummary {
     TableColumn kcalSummary, proteinsSummary, carbsSummary, fatsSummary, WISummary, priceSummary, emptyColumn;
-    TableView tableSummary;
+    SummaryTableView tableSummary;
 
     HBox summaryContainer;
     Double totalKcal;
@@ -40,7 +40,7 @@ public class MealTableSummary {
 
         summaryContainer = new HBox();
         tableSummary = new SummaryTableView();
-        summaryContainer.getChildren().add(tableSummary);
+
 
 
         kcalSummary.setCellValueFactory(new PropertyValueFactory<>("kcal"));
@@ -72,6 +72,7 @@ public class MealTableSummary {
         tableSummary.getStyleClass().add(("table-summary"));
 
         tableSummary.getItems().add(product);
+        summaryContainer.getChildren().add(tableSummary);
     }
 
     public void update(MealTable mealTable) {
@@ -87,6 +88,7 @@ public class MealTableSummary {
         totalFats = 0.0;
         totalWI = 0;
         totalPrice = 0.0;
+
 
         for (Integer i = 0; i < mealTable.productsList.size(); i++) {
             totalKcal += mealTable.productsList.get(i).getKcal();

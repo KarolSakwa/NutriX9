@@ -11,6 +11,7 @@ public class MealTablesContainer {
     DietViewController dietViewController;
     Integer layoutX, layoutY, height, width;
     public ObservableList<ObservableList> mealsList = FXCollections.observableArrayList();
+    public ObservableList<MealTable> mealTablesList = FXCollections.observableArrayList();
 
     public MealTablesContainer(DietViewController dietViewController, Integer layoutX, Integer layoutY, Integer height, Integer width) {
         this.dietViewController = dietViewController;
@@ -29,5 +30,6 @@ public class MealTablesContainer {
 
 
         //vBox.getStyleClass().add("test");
+
     }
 }

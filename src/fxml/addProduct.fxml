@@ -44,9 +44,9 @@
                <tooltip>
                   <Tooltip text="Enter the quantity of the product you want to add" />
                </tooltip></TextField>
-            <Label fx:id="qualityAlertLabel" layoutX="692.0" layoutY="15.0" text="You have to enter quantity!" textFill="RED" visible="false">
+            <Label fx:id="qualityAlertLabel" layoutX="667.0" layoutY="19.0" text="You have to select product and enter quantity!" textFill="RED" visible="false">
                <font>
-                  <Font size="18.0" />
+                  <Font size="13.0" />
                </font>
             </Label>
          </children>
