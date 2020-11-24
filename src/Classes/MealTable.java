@@ -33,12 +33,12 @@ public class MealTable {
     final Integer MAX_MEALS_NUM = 5;
 
 
-    public MealTable(Integer tableContainerLayoutX, Integer tableContainerLayoutY, MealTablesContainer mealTablesContainer, AddProductController addProductController) {
+    public MealTable(DietViewController dietViewController, Integer tableContainerLayoutX, Integer tableContainerLayoutY, MealTablesContainer mealTablesContainer, AddProductController addProductController) {
         this.mealNum = mealNum;
         this.tableContainerLayoutX = tableContainerLayoutX;
         this.tableContainerLayoutY = tableContainerLayoutY;
         this.addProductController = addProductController;
-        //this.dietViewController = dietViewController;
+        this.dietViewController = dietViewController;
         this.mealTablesContainer = mealTablesContainer;
     }
     public Integer getMealNum() {
@@ -92,7 +92,7 @@ public class MealTable {
         tableContent.setMaxHeight(147);
         createColumns(tableContent);
 
-        mealTableSummary = new MealTableSummary();
+        mealTableSummary = new MealTableSummary(dietViewController);
         mealTableSummary.create(this);
 
         separator = new Separator();

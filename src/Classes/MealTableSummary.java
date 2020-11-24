@@ -1,5 +1,6 @@
 package Classes;
 
+import Controllers.DietViewController;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.TableColumn;
@@ -21,12 +22,18 @@ public class MealTableSummary {
     Double totalFats;
     Integer totalWI;
     Double totalPrice;
+    DietViewController dietViewController;
+
+    public MealTableSummary(DietViewController dietViewController) {
+        this.dietViewController = dietViewController;
+    }
 
     public void create(MealTable mealTable) {
         mealTable.productsList.addListener(new ListChangeListener() {
             @Override
             public void onChanged(ListChangeListener.Change change) {
                 mealTable.mealTableSummary.update(mealTable);
+                dietViewController.dailySummary.calculateTotalMacro();
             }
         });
 

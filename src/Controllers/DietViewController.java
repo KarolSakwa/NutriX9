@@ -35,7 +35,7 @@ public class DietViewController {
     public MealTablesContainer mealTablesContainer = new MealTablesContainer(this, 300, 100, 300, 400);
     Separator separator;
     HBox tablesContainer;
-    DailySummary dailySummary = new DailySummary(mealTablesContainer);
+    public DailySummary dailySummary = new DailySummary(mealTablesContainer);
 
 
     public DietViewController(SelectProfileController selectProfileController) {
@@ -75,23 +75,23 @@ public class DietViewController {
 
     public void addMealButtonOnAction() {
         if (mealTablesContainer.mealsList.size() == 0) {
-            meal1Table = new MealTable( 1, 1, mealTablesContainer, addProductController); // just sample arguments to initiate, corrected in function
+            meal1Table = new MealTable(this,1, 1, mealTablesContainer, addProductController); // just sample arguments to initiate, corrected in function
             createMealTable(meal1Table);
         }
         else if (mealTablesContainer.mealsList.size() == 1) {
-            meal2Table = new MealTable(1, 1, mealTablesContainer, addProductController);
+            meal2Table = new MealTable(this,1, 1, mealTablesContainer, addProductController);
             createMealTable(meal2Table);
         }
         else if (mealTablesContainer.mealsList.size() == 2) {
-            meal3Table = new MealTable(1, 1, mealTablesContainer, addProductController);
+            meal3Table = new MealTable(this,1, 1, mealTablesContainer, addProductController);
             createMealTable(meal3Table);
         }
         else if (mealTablesContainer.mealsList.size() == 3) {
-            meal4Table = new MealTable(1, 1, mealTablesContainer, addProductController);
+            meal4Table = new MealTable(this,1, 1, mealTablesContainer, addProductController);
             createMealTable(meal4Table);
         }
         else if (mealTablesContainer.mealsList.size() == 4) {
-            meal5Table = new MealTable(1, 1, mealTablesContainer, addProductController);
+            meal5Table = new MealTable(this,1, 1, mealTablesContainer, addProductController);
             createMealTable(meal5Table);
         }
     }
@@ -105,5 +105,5 @@ public class DietViewController {
     public void testButtonOnAction() {
         System.out.println(mealTablesContainer.mealsList);
     }
-    
+
 }
