@@ -16,7 +16,7 @@ import java.sql.Statement;
 
 public class DietViewController {
     private Stage thisStage;
-    private final SelectProfileController selectProfileController;
+    public final SelectProfileController selectProfileController;
     DatabaseConnection databaseConnection = new DatabaseConnection();
     Connection con = databaseConnection.getConnection();
     @FXML Label dietNameLabel;
@@ -25,7 +25,7 @@ public class DietViewController {
     public ObservableList<ObservableList> mealsList = FXCollections.observableArrayList();
     AddProductController addProductController = new AddProductController(this);
     public MealTablesContainer mealTablesContainer = new MealTablesContainer(this);
-    Separator separator;
+    public Separator separator;
     HBox tablesContainer;
     public DailySummary dailySummary = new DailySummary(mealTablesContainer);
 
@@ -46,6 +46,7 @@ public class DietViewController {
         separator = new Separator();
         separator.setOrientation(Orientation.VERTICAL);
         separator.setMinWidth(50);
+        separator.setVisible(false);
 
         tablesContainer.getChildren().addAll(mealTablesContainer.vBox, separator, dailySummary.dailySummaryContainer);
         dietViewPane.getChildren().add(tablesContainer);
@@ -91,7 +92,6 @@ public class DietViewController {
     }
 
     public void testButtonOnAction() {
-        System.out.println(mealTablesContainer.mealsList);
     }
 
 }

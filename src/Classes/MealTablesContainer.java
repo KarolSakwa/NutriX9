@@ -2,6 +2,7 @@ package Classes;
 
 import Controllers.DietViewController;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.VBox;
 
@@ -21,8 +22,15 @@ public class MealTablesContainer {
     }
 
     public void create() {
+        // need mealslist listener as well as productlist listener because I want macronutrient counter to be updated every time not only product is added or removed, but also meal
+        mealsList.addListener(new ListChangeListener() {
+            @Override
+            public void onChanged(ListChangeListener.Change change) {
+                dietViewController.dailySummary.calculateTotalMacro();
+            }
+        });
+
         vBox = new VBox();
-        vBox.getChildren().addAll();
 
     }
 }

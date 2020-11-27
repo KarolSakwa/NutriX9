@@ -163,7 +163,6 @@ public class MealTable {
 
     private void addProductButtonOnAction() {
         addProductController.MTIndex = setMealNumber(this);
-        System.out.println(setMealNumber(this));
         addProductController.showStage();
     }
 
@@ -187,7 +186,6 @@ public class MealTable {
         for (MealTable mT: mealTablesContainer.mealTablesList){
             if (!takenNums.contains(mT.mealNum))
                 takenNums.add(mT.mealNum);
-            System.out.println(takenNums);
         }
         for (Integer i = 0; i < MAX_MEALS_NUM+1; i++) {
             if(!takenNums.contains(i))
