@@ -58,6 +58,11 @@ public class AddNewDietController {
 
     public void submitButtonOnAction() {
         addDataToDB();
+        if(!ageErrorLabel.isVisible() && !heightErrorLabel.isVisible() && !weightErrorLabel.isVisible() && !nameErrorLabel.isVisible()) {
+            thisStage.close();
+            DietViewController dietViewController = new DietViewController(selectProfileController);
+            dietViewController.showStage();
+        }
     }
 
     private void addDataToDB() {
@@ -85,8 +90,9 @@ public class AddNewDietController {
             weightErrorLabel.setVisible(true);
         String dietName = TextFieldSanitizer.sanitizeStringTextField(dietNameTextField);
         String dietType = dietTypeComboBox.getValue().toString();
+
         if (dietName != null) {
-            databaseConnection.executeQuery(con, "UPDATE diets SET diet_name = '" + dietName + "', diet_type = '" + dietType + "' WHERE username = '" + username + "';");
+            databaseConnection.executeQuery(con, "INSERT INTO diets (diet_name, diet_type, username) VALUES ('" + dietName + "', '" + dietType + "', '" + username + "');");
             nameErrorLabel.setVisible(false);
         }
         else
@@ -94,7 +100,6 @@ public class AddNewDietController {
         String bodyType = bodyTypeComboBox.getValue().toString();
         String trainingIntensity = trainingIntensityComboBox.getValue().toString();
         Integer numTrainings = Integer.parseInt(numTrainingsComboBox.getValue().toString());
-
 
         databaseConnection.executeQuery(con, "UPDATE users SET body_type = '" + bodyType + "', training_intensity = '" + trainingIntensity + "', number_of_trainings = '" + numTrainings + "' WHERE username = '" + username + "';");
     }
