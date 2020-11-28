@@ -2,22 +2,28 @@ package Controllers;
 
 import Classes.ChildrenWindow;
 import Classes.DatabaseConnection;
+import Classes.TextFieldSanitizer;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.function.UnaryOperator;
 
 public class AddNewDietController {
-    @FXML Button closeButton, submitButton;
-    @FXML TextField ageTextField, heightTextField, weightTextField, dietNameTextField;
-    @FXML ComboBox bodyTypeComboBox, trainingIntensityComboBox, numTrainingsComboBox, dietTypeComboBox;
+    @FXML
+    Button closeButton, submitButton;
+    @FXML
+    TextField ageTextField, heightTextField, weightTextField, dietNameTextField;
+    @FXML
+    ComboBox bodyTypeComboBox, trainingIntensityComboBox, numTrainingsComboBox, dietTypeComboBox;
+    @FXML Label ageErrorLabel, heightErrorLabel, weightErrorLabel, nameErrorLabel;
     private Stage thisStage;
     private final SelectProfileController selectProfileController;
     ObservableList<String> bodyTypeOptions = FXCollections.observableArrayList("Option 1", "Option 2", "Option 3");
@@ -27,21 +33,21 @@ public class AddNewDietController {
     DatabaseConnection databaseConnection = new DatabaseConnection();
     Connection con = databaseConnection.getConnection();
 
-    public AddNewDietController(SelectProfileController selectProfileController){
+    public AddNewDietController(SelectProfileController selectProfileController) {
         this.selectProfileController = selectProfileController;
         thisStage = new Stage();
         ChildrenWindow addNewDietWindow = new ChildrenWindow();
         addNewDietWindow.create("../fxml/addNewDiet.fxml", this, thisStage, false, 410, 573);
     }
 
-    public void initialize(){
+    public void initialize() {
         bodyTypeComboBox.getItems().addAll(bodyTypeOptions);
         trainingIntensityComboBox.getItems().addAll(trainingIntensityOptions);
         numTrainingsComboBox.getItems().addAll(numTrainingsOptions);
         dietTypeComboBox.getItems().addAll(dietTypeOptions);
     }
 
-    public void showStage(){
+    public void showStage() {
         thisStage.showAndWait();
     }
 
@@ -55,19 +61,41 @@ public class AddNewDietController {
     }
 
     private void addDataToDB() {
-        Integer age = Integer.parseInt(ageTextField.getText());
-        Integer height = Integer.parseInt(heightTextField.getText());
-        Integer weight = Integer.parseInt(weightTextField.getText());
+        String username = selectProfileController.getUsername();
+        Integer age = TextFieldSanitizer.sanitizeIntegerTextField(ageTextField);
+        if (age != null) {
+            databaseConnection.executeQuery(con, "UPDATE users SET age = '" + age + "' WHERE username = '" + username + "';");
+            ageErrorLabel.setVisible(false);
+        }
+        else
+            ageErrorLabel.setVisible(true);
+        Integer height = TextFieldSanitizer.sanitizeIntegerTextField(heightTextField);
+        if (height != null) {
+            databaseConnection.executeQuery(con, "UPDATE users SET height = '" + height + "' WHERE username = '" + username + "';");
+            heightErrorLabel.setVisible(false);
+        }
+        else
+            heightErrorLabel.setVisible(true);
+        Integer weight = TextFieldSanitizer.sanitizeIntegerTextField(weightTextField);
+        if (weight != null) {
+            databaseConnection.executeQuery(con, "UPDATE users SET weight = '" + weight + "' WHERE username = '" + username + "';");
+            weightErrorLabel.setVisible(false);
+        }
+        else
+            weightErrorLabel.setVisible(true);
+        String dietName = TextFieldSanitizer.sanitizeStringTextField(dietNameTextField);
+        String dietType = dietTypeComboBox.getValue().toString();
+        if (dietName != null) {
+            databaseConnection.executeQuery(con, "UPDATE diets SET diet_name = '" + dietName + "', diet_type = '" + dietType + "' WHERE username = '" + username + "';");
+            nameErrorLabel.setVisible(false);
+        }
+        else
+            nameErrorLabel.setVisible(true);
         String bodyType = bodyTypeComboBox.getValue().toString();
         String trainingIntensity = trainingIntensityComboBox.getValue().toString();
         Integer numTrainings = Integer.parseInt(numTrainingsComboBox.getValue().toString());
-        String dietType = dietTypeComboBox.getValue().toString();
-        String dietName = dietNameTextField.getText(); // set to max 10 characters
-        String username = selectProfileController.getUsername();
-        String queryPersonal = "UPDATE users SET age = '" + age + "', height = '" + height + "', weight = '" + weight + "', body_type = '" + bodyType + "', training_intensity = '" + trainingIntensity + "', number_of_trainings = '" + numTrainings + "' WHERE username = '" + username + "';";
-        databaseConnection.executeQuery(con, queryPersonal);
-        String queryDiet = "INSERT INTO diets (diet_name, diet_type, username) VALUES ('" + dietName + "', '" + dietType + "', '" + username + "');";
-        databaseConnection.executeQuery(con, queryDiet);
-    }
 
+
+        databaseConnection.executeQuery(con, "UPDATE users SET body_type = '" + bodyType + "', training_intensity = '" + trainingIntensity + "', number_of_trainings = '" + numTrainings + "' WHERE username = '" + username + "';");
+    }
 }
