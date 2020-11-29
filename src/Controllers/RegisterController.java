@@ -53,14 +53,7 @@ public class RegisterController {
         String insertValues = firstName + "', '" + lastName + "', '" + username + "', '" + password + "')";
         String insertToRegister = insertFields + insertValues;
 
-        try {
-            Statement statement = con.createStatement();
-            statement.executeUpdate(insertToRegister);
-            registrationMessageLabel.setText("The user has been registered successfully!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            e.getCause();
-        }
+
     }
 
 

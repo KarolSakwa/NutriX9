@@ -14,7 +14,10 @@ import javafx.util.converter.IntegerStringConverter;
 
 import java.sql.Connection;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.function.UnaryOperator;
+
+import static jdk.nashorn.internal.objects.NativeMath.round;
 
 public class AddNewDietController {
     @FXML
@@ -22,14 +25,15 @@ public class AddNewDietController {
     @FXML
     TextField ageTextField, heightTextField, weightTextField, dietNameTextField;
     @FXML
-    ComboBox bodyTypeComboBox, trainingIntensityComboBox, numTrainingsComboBox, dietTypeComboBox;
+    ComboBox bodyTypeComboBox, trainingIntensityComboBox, numTrainingsComboBox, dietTypeComboBox, trainingLengthComboBox;
     @FXML Label ageErrorLabel, heightErrorLabel, weightErrorLabel, nameErrorLabel;
     private Stage thisStage;
     private final SelectProfileController selectProfileController;
-    ObservableList<String> bodyTypeOptions = FXCollections.observableArrayList("Option 1", "Option 2", "Option 3");
-    ObservableList<String> trainingIntensityOptions = FXCollections.observableArrayList("Option 1", "Option 2", "Option 3");
-    ObservableList<String> numTrainingsOptions = FXCollections.observableArrayList("1", "2", "3");
-    ObservableList<String> dietTypeOptions = FXCollections.observableArrayList("Option 1", "Option 2", "Option 3");
+    ObservableList<String> bodyTypeOptions = FXCollections.observableArrayList("Ectomorph", "Mesomorph", "Endomorph");
+    ObservableList<String> trainingIntensityOptions = FXCollections.observableArrayList("Low", "Medium", "High");
+    ObservableList<Integer> trainingLengthOptions = FXCollections.observableArrayList(30, 40, 50, 60, 70);
+    ObservableList<String> numTrainingsOptions = FXCollections.observableArrayList("1", "2", "3", "4", "5", "6", "7");
+    ObservableList<String> dietTypeOptions = FXCollections.observableArrayList("Reduction", "Mass");
     DatabaseConnection databaseConnection = new DatabaseConnection();
     Connection con = databaseConnection.getConnection();
 
@@ -37,7 +41,7 @@ public class AddNewDietController {
         this.selectProfileController = selectProfileController;
         thisStage = new Stage();
         ChildrenWindow addNewDietWindow = new ChildrenWindow();
-        addNewDietWindow.create("../fxml/addNewDiet.fxml", this, thisStage, false, 410, 573);
+        addNewDietWindow.create("../fxml/addNewDiet.fxml", this, thisStage, false, 410, 661);
     }
 
     public void initialize() {
@@ -45,6 +49,7 @@ public class AddNewDietController {
         trainingIntensityComboBox.getItems().addAll(trainingIntensityOptions);
         numTrainingsComboBox.getItems().addAll(numTrainingsOptions);
         dietTypeComboBox.getItems().addAll(dietTypeOptions);
+        trainingLengthComboBox.getItems().addAll(trainingLengthOptions);
     }
 
     public void showStage() {
@@ -59,9 +64,10 @@ public class AddNewDietController {
     public void submitButtonOnAction() {
         addDataToDB();
         if(!ageErrorLabel.isVisible() && !heightErrorLabel.isVisible() && !weightErrorLabel.isVisible() && !nameErrorLabel.isVisible()) {
-            thisStage.close();
+            Stage stage = (Stage) submitButton.getScene().getWindow();
             DietViewController dietViewController = new DietViewController(selectProfileController);
             dietViewController.showStage();
+            stage.close();
         }
     }
 
@@ -88,11 +94,15 @@ public class AddNewDietController {
         }
         else
             weightErrorLabel.setVisible(true);
+        Integer trainingLength = Integer.parseInt(trainingLengthComboBox.getValue().toString());
+        databaseConnection.executeQuery(con, "UPDATE users SET training_length = '" + trainingLength + "' WHERE username = '" + username + "';");
+
         String dietName = TextFieldSanitizer.sanitizeStringTextField(dietNameTextField);
         String dietType = dietTypeComboBox.getValue().toString();
 
         if (dietName != null) {
-            databaseConnection.executeQuery(con, "INSERT INTO diets (diet_name, diet_type, username) VALUES ('" + dietName + "', '" + dietType + "', '" + username + "');");
+            databaseConnection.executeQuery(con, "INSERT INTO diets (diet_name, diet_type, username) VALUES ('" + dietName + "', '" + dietType + "', '"
+                    + username + "');");
             nameErrorLabel.setVisible(false);
         }
         else
@@ -101,6 +111,33 @@ public class AddNewDietController {
         String trainingIntensity = trainingIntensityComboBox.getValue().toString();
         Integer numTrainings = Integer.parseInt(numTrainingsComboBox.getValue().toString());
 
-        databaseConnection.executeQuery(con, "UPDATE users SET body_type = '" + bodyType + "', training_intensity = '" + trainingIntensity + "', number_of_trainings = '" + numTrainings + "' WHERE username = '" + username + "';");
+
+        databaseConnection.executeQuery(con, "UPDATE users SET body_type = '" + bodyType + "', training_intensity = '"
+                + trainingIntensity + "', number_of_trainings = '" + numTrainings + "' WHERE username = '" + username + "';");
+        System.out.println(calculateTotalKcalRequirement(age, height, weight, bodyType, trainingIntensity, trainingLength, numTrainings));
     }
+
+    private Double calculateTotalKcalRequirement(Integer age, Integer height, Integer weight, String bodyType, String trainingIntensity,
+                                                 Integer trainingLength, Integer numTrainings) {
+        Double basicMetabolism = (9.99 * weight) + (6.25 * height) - (4.92 * age) - 161;
+        Double bodyTypeCalories;
+        if (bodyType == "Ectomorph")
+            bodyTypeCalories = 700.0;
+        else if (bodyType == "Mesomorph")
+            bodyTypeCalories = 400.0;
+        else
+            bodyTypeCalories = 200.0;
+        Integer trainingIntensityCaloriesPerMin;
+        if (trainingIntensity == "Low")
+            trainingIntensityCaloriesPerMin = 7;
+        else if (trainingIntensity == "Medium")
+            trainingIntensityCaloriesPerMin = 10;
+        else
+            trainingIntensityCaloriesPerMin = 12;
+        Integer totalTrainingCaloriesPerDay = ((trainingIntensityCaloriesPerMin * trainingLength) * numTrainings) / 7;
+        Double foodThermicEffect = (basicMetabolism + bodyTypeCalories + totalTrainingCaloriesPerDay) / 10;
+
+        return basicMetabolism + bodyTypeCalories + totalTrainingCaloriesPerDay + foodThermicEffect;
+    }
+
 }

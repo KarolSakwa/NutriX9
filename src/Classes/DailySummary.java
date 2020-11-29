@@ -125,4 +125,5 @@ public class DailySummary {
         carbsReqText = new Text(carbsReq.toString());
         fatsReqText = new Text(fatsReq.toString());
     }
+
 }

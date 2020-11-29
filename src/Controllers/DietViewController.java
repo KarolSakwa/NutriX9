@@ -62,8 +62,8 @@ public class DietViewController {
         }
     }
 
-    public void showStage(){
-        thisStage.showAndWait();
+    public void showStage() {
+        thisStage.show();
     }
 
     public void addMealButtonOnAction() {
