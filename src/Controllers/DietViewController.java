@@ -28,6 +28,7 @@ public class DietViewController {
     public Separator separator;
     HBox tablesContainer;
     public DailySummary dailySummary = new DailySummary(mealTablesContainer);
+    public Diet diet;
 
 
     public DietViewController(SelectProfileController selectProfileController) {
@@ -54,7 +55,9 @@ public class DietViewController {
             Statement statement = con.createStatement();
             ResultSet usersDiet = statement.executeQuery(query);
             usersDiet.next();
-            dietNameLabel.setText(usersDiet.getString("diet_name"));
+            diet = new Diet(con, usersDiet.getString("diet_name"), username);
+            dietNameLabel.setText(diet.name);
+
         } catch (Exception e) {
             e.printStackTrace();
             e.getCause();

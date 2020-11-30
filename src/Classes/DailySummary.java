@@ -46,10 +46,10 @@ public class DailySummary {
 
     public void calculateTotalMacro() {
         // this method is called whenever meal or products list is changed. I need to reset every macronutrient counter everytime and calculate it again
-        Double totalKcal = 0.0;
-        Double totalProteins = 0.0;
-        Double totalCarbs = 0.0;
-        Double totalFats = 0.0;
+        Float totalKcal = 0.0F;
+        Float totalProteins = 0.0F;
+        Float totalCarbs = 0.0F;
+        Float totalFats = 0.0F;
 
         for (ObservableList<Product> productsList : mealTablesContainer.mealsList) {
             for (Product product : productsList) {
@@ -81,7 +81,7 @@ public class DailySummary {
         calculateTotalMacro();
         kcalText = new Text(" kcal ");
         proteinsText = new Text(" proteins ");
-        carbsText = new Text(" carbohydrates ");
+        carbsText = new Text(" carbs ");
         fatsText = new Text(" fats ");
         kcalText.getStyleClass().add("daily-text");
         proteinsText.getStyleClass().add("daily-text");
@@ -92,7 +92,7 @@ public class DailySummary {
 
         Text kcalText2 = new Text(" kcal ");
         Text proteinsText2 = new Text(" proteins ");
-        Text carbsText2 = new Text(" carbohydrates ");
+        Text carbsText2 = new Text(" carbs ");
         Text fatsText2 = new Text(" fats ");
         dailyRequirementHeader = new Text("Your daily requirement: ");
         dailyRequirement.setTextAlignment(TextAlignment.CENTER);
@@ -113,7 +113,7 @@ public class DailySummary {
             while (diet.next()) {
                 kcalReq = diet.getInt("kcal");
                 proteinsReq = diet.getInt("proteins");
-                carbsReq = diet.getInt("carbohydrates");
+                carbsReq = diet.getInt("carbs");
                 fatsReq = diet.getInt("fats");
             }
         } catch (Exception e) {

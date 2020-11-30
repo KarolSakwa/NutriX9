@@ -2,26 +2,23 @@ package Classes;
 
 import Controllers.DietViewController;
 import javafx.collections.ListChangeListener;
-import javafx.geometry.NodeOrientation;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
-import java.util.ArrayList;
-
 public class MealTableSummary {
     TableColumn kcalSummary, proteinsSummary, carbsSummary, fatsSummary, WISummary, priceSummary, emptyColumn;
     SummaryTableView tableSummary;
 
     HBox summaryContainer;
-    Double totalKcal;
-    Double totalProteins;
-    Double totalCarbs;
-    Double totalFats;
+    Float totalKcal;
+    Float totalProteins;
+    Float totalCarbs;
+    Float totalFats;
     Integer totalWI;
-    Double totalPrice;
+    Float totalPrice;
     DietViewController dietViewController;
 
     public MealTableSummary(DietViewController dietViewController) {
@@ -65,15 +62,15 @@ public class MealTableSummary {
         WISummary.setMaxWidth(mealTable.WIColumn.getWidth());
         priceSummary.setMaxWidth(mealTable.priceColumn.getWidth());
 
-        totalKcal = 0.0;
-        totalProteins = 0.0;
-        totalCarbs = 0.0;
-        totalFats = 0.0;
+        totalKcal = 0.0F;
+        totalProteins = 0.0F;
+        totalCarbs = 0.0F;
+        totalFats = 0.0F;
         totalWI = 0;
-        totalPrice = 0.0;
+        totalPrice = 0.0F;
 
-        Product product = new Product("" , 0.0, 0.0, 0.0, 0.0, "",
-                "", 0, "", "", 0.0); // just to display zeros instead of blank space
+        Product product = new Product("" , 0.0F, 0.0F, 0.0F, 0.0F, "",
+                "", 0, "", "", 0.0F); // just to display zeros instead of blank space
 
         tableSummary.getColumns().addAll(emptyColumn, kcalSummary, proteinsSummary, carbsSummary, fatsSummary, WISummary, priceSummary);
         tableSummary.getStyleClass().add(("table-summary"));
@@ -89,12 +86,12 @@ public class MealTableSummary {
         tableSummary.setMaxHeight(26); // for some reason it resizes on adding another row, need to resize it back
 
         tableSummary.getItems().clear();
-        totalKcal = 0.0;
-        totalProteins = 0.0;
-        totalCarbs = 0.0;
-        totalFats = 0.0;
+        totalKcal = 0.0F;
+        totalProteins = 0.0F;
+        totalCarbs = 0.0F;
+        totalFats = 0.0F;
         totalWI = 0;
-        totalPrice = 0.0;
+        totalPrice = 0.0F;
 
 
         for (Integer i = 0; i < mealTable.productsList.size(); i++) {

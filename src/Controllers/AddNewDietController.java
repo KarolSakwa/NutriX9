@@ -2,6 +2,7 @@ package Controllers;
 
 import Classes.ChildrenWindow;
 import Classes.DatabaseConnection;
+import Classes.Diet;
 import Classes.TextFieldSanitizer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -13,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.function.UnaryOperator;
@@ -36,6 +38,8 @@ public class AddNewDietController {
     ObservableList<String> dietTypeOptions = FXCollections.observableArrayList("Reduction", "Mass");
     DatabaseConnection databaseConnection = new DatabaseConnection();
     Connection con = databaseConnection.getConnection();
+    public Diet diet;
+
 
     public AddNewDietController(SelectProfileController selectProfileController) {
         this.selectProfileController = selectProfileController;
@@ -60,7 +64,7 @@ public class AddNewDietController {
         stage.close();
     }
 
-    public void submitButtonOnAction() {
+    public void submitButtonOnAction() throws SQLException {
         addDataToDB();
         if(!ageErrorLabel.isVisible() && !heightErrorLabel.isVisible() && !weightErrorLabel.isVisible() && !nameErrorLabel.isVisible()) {
             Stage stage = (Stage) submitButton.getScene().getWindow();
@@ -70,7 +74,7 @@ public class AddNewDietController {
         }
     }
 
-    private void addDataToDB() {
+    private void addDataToDB() throws SQLException {
         String username = selectProfileController.getUsername();
         Integer age = TextFieldSanitizer.sanitizeIntegerTextField(ageTextField);
         if (age != null) {
@@ -116,16 +120,16 @@ public class AddNewDietController {
         System.out.println(calculateTotalKcalRequirement(age, height, weight, bodyType, trainingIntensity, trainingLength, numTrainings));
     }
 
-    private Double calculateTotalKcalRequirement(Integer age, Integer height, Integer weight, String bodyType, String trainingIntensity,
+    private Float calculateTotalKcalRequirement(Integer age, Integer height, Integer weight, String bodyType, String trainingIntensity,
                                                  Integer trainingLength, Integer numTrainings) {
-        Double basicMetabolism = (9.99 * weight) + (6.25 * height) - (4.92 * age) - 161;
-        Double bodyTypeCalories;
+        Float basicMetabolism = (9.99F * weight) + (6.25F * height) - (4.92F * age) - 161;
+        Float bodyTypeCalories;
         if (bodyType == "Ectomorph")
-            bodyTypeCalories = 700.0;
+            bodyTypeCalories = 700.0F;
         else if (bodyType == "Mesomorph")
-            bodyTypeCalories = 400.0;
+            bodyTypeCalories = 400.0F;
         else
-            bodyTypeCalories = 200.0;
+            bodyTypeCalories = 200.0F;
         Integer trainingIntensityCaloriesPerMin;
         if (trainingIntensity == "Low")
             trainingIntensityCaloriesPerMin = 7;
@@ -134,7 +138,7 @@ public class AddNewDietController {
         else
             trainingIntensityCaloriesPerMin = 12;
         Integer totalTrainingCaloriesPerDay = ((trainingIntensityCaloriesPerMin * trainingLength) * numTrainings) / 7;
-        Double foodThermicEffect = (basicMetabolism + bodyTypeCalories + totalTrainingCaloriesPerDay) / 10;
+        Float foodThermicEffect = (basicMetabolism + bodyTypeCalories + totalTrainingCaloriesPerDay) / 10;
 
         return basicMetabolism + bodyTypeCalories + totalTrainingCaloriesPerDay + foodThermicEffect;
     }

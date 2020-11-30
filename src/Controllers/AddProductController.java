@@ -28,7 +28,7 @@ public class AddProductController {
     public MealTableSummary mealTableSummary;
     @FXML TableView productsTableView;
     @FXML TextField searchProductTextField, quantityTextField;
-    @FXML TableColumn productNameColumn, quantityTableColumn, kcalColumn, proteinsColumn, carbohydratesColumn,
+    @FXML TableColumn productNameColumn, quantityTableColumn, kcalColumn, proteinsColumn, carbsColumn,
             fatsColumn, macronutrientColumn, categoryColumn, wholesomenessIndexColumn, priceColumn;
     @FXML Label qualityAlertLabel;
 
@@ -64,7 +64,7 @@ public class AddProductController {
         Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
         if (!quantityTextField.getText().trim().isEmpty() && selectedProduct != null) {
             mealTable.productsList.add(selectedProduct);
-            mealTable.insertRow(mealTable.productsList, selectedProduct, Double.valueOf(quantityTextField.getText()), mealTable.tableContent);
+            mealTable.insertRow(mealTable.productsList, selectedProduct, Float.valueOf(quantityTextField.getText()), mealTable.tableContent);
             Stage stage = (Stage) addSelectedButton.getScene().getWindow();
             stage.close();
             quantityTextField.setText("");
@@ -85,7 +85,7 @@ public class AddProductController {
         quantityTableColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("unitQuantity"));
         kcalColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("kcal"));
         proteinsColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("proteins"));
-        carbohydratesColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("carbs"));
+        carbsColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("carbs"));
         fatsColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("fats"));
         macronutrientColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("macronutrientCategory"));
         categoryColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("category"));
@@ -99,16 +99,16 @@ public class AddProductController {
             ResultSet product = statement.executeQuery(query);
             while (product.next()) {
                 products.addAll(new Product(product.getString("name"),
-                        Double.parseDouble(product.getString("kcal")),
-                        Double.parseDouble(product.getString("proteins")),
-                        Double.parseDouble(product.getString("carbohydrates")),
-                        Double.parseDouble(product.getString("fats")),
+                        Float.parseFloat(product.getString("kcal")),
+                        Float.parseFloat(product.getString("proteins")),
+                        Float.parseFloat(product.getString("carbs")),
+                        Float.parseFloat(product.getString("fats")),
                         product.getString("macronutrient_category"),
                         product.getString("category"),
                         Integer.parseInt(product.getString("wholesomeness_index")),
                         product.getString("unit_type"),
                         product.getString("unit_quantity"),
-                        Double.parseDouble(product.getString("price"))
+                        Float.parseFloat(product.getString("price"))
                         ));
             }
         } catch (Exception e) {

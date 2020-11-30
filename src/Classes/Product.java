@@ -2,14 +2,14 @@ package Classes;
 
 public class Product {
     private String name, macronutrientCategory, category, unitType, unitQuantity;
-    private Double kcal;
-    private Double proteins;
-    private Double carbohydrates;
-    private Double fats;
-    private Double price;
+    private Float kcal;
+    private Float proteins;
+    private Float carbs;
+    private Float fats;
+    private Float price;
 
 
-    private Double quantity;
+    private Float quantity;
     private Integer wholesomenessIndex;
     public final String kcalAbbr = "K";
     public final String proteinsAbbr = "P";
@@ -18,35 +18,35 @@ public class Product {
     public final String priceAbbr = "zł";
 
 
-    public Double getKcal() {
+    public Float getKcal() {
         return kcal;
     }
 
-    public void setKcal(Double kcal) {
+    public void setKcal(Float kcal) {
         this.kcal = kcal;
     }
 
-    public Double getProteins() {
+    public Float getProteins() {
         return proteins;
     }
 
-    public void setProteins(Double proteins) {
+    public void setProteins(Float proteins) {
         this.proteins = proteins;
     }
 
-    public Double getCarbs() {
-        return carbohydrates;
+    public Float getCarbs() {
+        return carbs;
     }
 
-    public void setCarbs(Double carbohydrates) {
-        this.carbohydrates = carbohydrates;
+    public void setCarbs(Float carbs) {
+        this.carbs = carbs;
     }
 
-    public Double getFats() {
+    public Float getFats() {
         return fats;
     }
 
-    public void setFats(Double fats) {
+    public void setFats(Float fats) {
         this.fats = fats;
     }
 
@@ -106,27 +106,27 @@ public class Product {
         this.name = name;
     }
 
-    public Double getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
-    public Double getQuantity() {
+    public Float getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Double quantity) {
+    public void setQuantity(Float quantity) {
         this.quantity = quantity;
     }
 
-    public Product(String name, Double kcal, Double proteins, Double carbohydrates, Double fats, String macronutrientCategory, String category, Integer wholesomenessIndex, String unitType, String unitQuantity, Double price) {
+    public Product(String name, Float kcal, Float proteins, Float carbs, Float fats, String macronutrientCategory, String category, Integer wholesomenessIndex, String unitType, String unitQuantity, Float price) {
         this.name = name;
         this.kcal = kcal;
         this.proteins = proteins;
-        this.carbohydrates = carbohydrates;
+        this.carbs = carbs;
         this.fats = fats;
         this.macronutrientCategory = macronutrientCategory;
         this.category = category;

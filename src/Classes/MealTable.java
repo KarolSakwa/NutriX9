@@ -146,7 +146,7 @@ public class MealTable {
         table.getColumns().addAll(quantityColumn, nameColumn, kcalColumn, proteinsColumn, carbsColumn, fatsColumn, WIColumn, priceColumn);
     }
 
-    public void insertRow(ObservableList<Product> productsList, Product product, Double quantity, TableView table) {
+    public void insertRow(ObservableList<Product> productsList, Product product, Float quantity, TableView table) {
         table.getItems().clear();
         Product productCopy = new Product(product.getName(), product.getKcal(), product.getProteins(), product.getCarbs(), product.getFats(), product.getMacronutrientCategory(), product.getCategory(), product.getWholesomenessIndex(), product.getUnitType(), product.getUnitQuantity(), product.getPrice());
         productCopy.setUnitQuantity(quantity + " " + product.getShorterUnit());
