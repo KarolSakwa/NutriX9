@@ -9,9 +9,9 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 
 public class ChildrenWindow {
-    public void create(String fxmlPath, Object className, Stage stage, Boolean modality, Integer width, Integer height) {
+    public static void create(String fxmlPath, Object className, Stage stage, Boolean modality, Integer width, Integer height) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            FXMLLoader loader = new FXMLLoader(ChildrenWindow.class.getResource(fxmlPath));
             loader.setController(className);
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(loader.load(), width, height));

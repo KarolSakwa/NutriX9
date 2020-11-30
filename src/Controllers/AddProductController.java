@@ -36,8 +36,7 @@ public class AddProductController {
     public AddProductController(DietViewController dietViewController) {
         this.dietViewController = dietViewController;
         thisStage = new Stage();
-        ChildrenWindow addProductWindow = new ChildrenWindow();
-        addProductWindow.create("../fxml/addProduct.fxml", this, thisStage, true, 1011, 750);
+        ChildrenWindow.create("../fxml/addProduct.fxml", this, thisStage, true, 1011, 750);
         addToTable();
         selectColumnChoiceBox.getItems().addAll(productNameColumn.getText(), macronutrientColumn.getText(), categoryColumn.getText(), wholesomenessIndexColumn.getText());
         selectColumnChoiceBox.setValue(productNameColumn.getText());

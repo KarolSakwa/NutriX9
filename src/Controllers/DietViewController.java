@@ -33,8 +33,7 @@ public class DietViewController {
     public DietViewController(SelectProfileController selectProfileController) {
         this.selectProfileController = selectProfileController;
         thisStage = new Stage();
-        ChildrenWindow dietViewWindow = new ChildrenWindow();
-        dietViewWindow.create("../fxml/dietView.fxml", this, thisStage, false, 1680, 1050);
+        ChildrenWindow.create("../fxml/dietView.fxml", this, thisStage, false, 1680, 1050);
         String username = selectProfileController.getUsername();
         mealTablesContainer.create();
         dailySummary.create();

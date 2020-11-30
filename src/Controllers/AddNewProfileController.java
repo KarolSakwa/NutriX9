@@ -30,8 +30,7 @@ public class AddNewProfileController {
 
     public AddNewProfileController(SelectProfileController selectProfileController) {
         this.selectProfileController = selectProfileController;
-        ChildrenWindow addNewProfileWindow = new ChildrenWindow();
-        addNewProfileWindow.create("../fxml/addNewProfile.fxml", this, thisStage, true, 520, 368);
+        ChildrenWindow.create("../fxml/addNewProfile.fxml", this, thisStage, true, 520, 368);
     }
 
     public void showStage(){

@@ -40,8 +40,7 @@ public class AddNewDietController {
     public AddNewDietController(SelectProfileController selectProfileController) {
         this.selectProfileController = selectProfileController;
         thisStage = new Stage();
-        ChildrenWindow addNewDietWindow = new ChildrenWindow();
-        addNewDietWindow.create("../fxml/addNewDiet.fxml", this, thisStage, false, 410, 661);
+        ChildrenWindow.create("../fxml/addNewDiet.fxml", this, thisStage, false, 410, 661);
     }
 
     public void initialize() {
