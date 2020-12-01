@@ -1,5 +1,6 @@
 package Classes;
 
+import Controllers.DietViewController;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -31,16 +32,9 @@ public class DailySummary {
 
     public void create() {
         diet = mealTablesContainer.dietViewController.diet;
-        kcalReqText = new Text(diet.kcal.toString());
-        proteinsReqText = new Text(diet.proteins.toString());
-        carbsReqText = new Text(diet.carbs.toString());
-        fatsReqText = new Text(diet.fats.toString());
         dailySummaryContainer = new VBox(20);
         dailySummaryContainer.setAlignment(Pos.CENTER);
         dailySummaryContainer.setPrefWidth(500);
-
-
-
         // I want to apply different style for values and labels, so I need to divide it into individual parts
         totalHeader = new Text("You have no meals in today's nutritional diary.");
 
@@ -71,7 +65,7 @@ public class DailySummary {
         proteinsValue.setText(totalProteins.toString());
         carbsValue.setText(totalCarbs.toString());
         fatsValue.setText(totalFats.toString());
-        if (totalKcal < kcalReq)
+        if (totalKcal < diet.kcal)
             kcalValue.getStyleClass().add("daily-value-lower");
         else
             kcalValue.getStyleClass().add("daily-value-higher");
@@ -83,6 +77,7 @@ public class DailySummary {
     private void addFirstMealButtonOnAction() {
         dailySummaryContainer.getChildren().remove(addFirstMeal);
         totalHeader.setText("You have eaten today: ");
+
 
         calculateTotalMacro();
         kcalText = new Text(" kcal ");
@@ -96,6 +91,11 @@ public class DailySummary {
         fatsText.getStyleClass().add("daily-text");
         totalDaily.getChildren().addAll(kcalValue, kcalText, proteinsValue, proteinsText, carbsValue, carbsText, fatsValue, fatsText);
         totalDaily.setTextAlignment(TextAlignment.CENTER);
+
+        kcalReqText = new Text(diet.kcal.toString());
+        proteinsReqText = new Text(diet.proteins.toString());
+        carbsReqText = new Text(diet.carbs.toString());
+        fatsReqText = new Text(diet.fats.toString());
 
         Text kcalText2 = new Text(" kcal ");
         Text proteinsText2 = new Text(" proteins ");

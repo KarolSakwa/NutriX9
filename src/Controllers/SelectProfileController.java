@@ -43,7 +43,7 @@ public class SelectProfileController {
         stage.close();
     }
 
-    public void selectButtonOnAction(ActionEvent event)  {
+    public void selectButtonOnAction(ActionEvent event) throws SQLException {
         String username = selectProfileComboBox.getValue().toString();
         try {
             Statement statement = con.createStatement();
@@ -81,7 +81,7 @@ public class SelectProfileController {
         addNewDietController.showStage();
     }
 
-    private void openDietView() {
+    private void openDietView() throws SQLException {
         DietViewController dietViewController = new DietViewController(this);
         dietViewController.showStage();
     }

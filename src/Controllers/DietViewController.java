@@ -39,7 +39,6 @@ public class DietViewController {
         thisStage = new Stage();
         ChildrenWindow.create("../fxml/dietView.fxml", this, thisStage, false, 1680, 1050);
         mealTablesContainer.create();
-        dailySummary.create();
         tablesContainer = new HBox();
         tablesContainer.setMinHeight(950);
         tablesContainer.setMinWidth(700);
@@ -49,20 +48,22 @@ public class DietViewController {
         separator.setOrientation(Orientation.VERTICAL);
         separator.setMinWidth(50);
         separator.setVisible(false);
-
-        tablesContainer.getChildren().addAll(mealTablesContainer.vBox, separator, dailySummary.dailySummaryContainer);
-        dietViewPane.getChildren().add(tablesContainer);
         String query = "SELECT * FROM diets WHERE username = '" + username + "';";
         try {
             Statement statement = con.createStatement();
             ResultSet usersDiet = statement.executeQuery(query);
             usersDiet.next();
             diet = new Diet(con, usersDiet.getString("diet_name"), username);
+            System.out.println(diet.kcal);
             dietNameLabel.setText(diet.name);
         } catch (Exception e) {
             e.printStackTrace();
             e.getCause();
         }
+        dailySummary.create();
+        tablesContainer.getChildren().addAll(mealTablesContainer.vBox, separator, dailySummary.dailySummaryContainer);
+        dietViewPane.getChildren().add(tablesContainer);
+
     }
 
     public void showStage() {

@@ -8,8 +8,10 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class AddNewDietController {
+
     @FXML
     Button closeButton, submitButton;
     @FXML
@@ -53,7 +55,7 @@ public class AddNewDietController {
         stage.close();
     }
 
-    public void submitButtonOnAction() {
+    public void submitButtonOnAction() throws SQLException {
         addDataToDB();
         if(!ageErrorLabel.isVisible() && !heightErrorLabel.isVisible() && !weightErrorLabel.isVisible() && !nameErrorLabel.isVisible()) {
             Stage stage = (Stage) submitButton.getScene().getWindow();
@@ -114,6 +116,12 @@ public class AddNewDietController {
     }
 
     private void calculateTotalMacronutrientRequirement(User user) {
+        final Integer proteinkcal = 4;
+        final Integer fatkcal = 9;
+        final Integer carbkcal = 4;
+        final Float protPerKg = 1.8F;
+        final Float fatPerKg = 2F;
+
         // kcal requirement calculation
         Float basicMetabolism = (9.99F * user.weight) + (6.25F * user.height) - (4.92F * user.age) - 161;
         Float bodyTypeCalories;
@@ -133,8 +141,8 @@ public class AddNewDietController {
         Integer totalTrainingCaloriesPerDay = ((trainingIntensityCaloriesPerMin * user.trainingLength) * user.numberOfTrainings) / 7;
         Float foodThermicEffect = (basicMetabolism + bodyTypeCalories + totalTrainingCaloriesPerDay) / 10;
         kcalReq = basicMetabolism + bodyTypeCalories + totalTrainingCaloriesPerDay + foodThermicEffect;
-        proteinsReq = user.weight * 1.8F;
-        fatsReq = user.weight * 2F;
-        carbsReq = kcalReq - proteinsReq - fatsReq;
+        proteinsReq = user.weight * protPerKg;
+        fatsReq = user.weight * fatPerKg;
+        carbsReq = Float.valueOf(Math.round((kcalReq - (proteinsReq * proteinkcal) - (fatsReq * fatkcal)) / carbkcal));
     }
 }
