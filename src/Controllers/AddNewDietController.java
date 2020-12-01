@@ -1,25 +1,13 @@
 package Controllers;
 
-import Classes.ChildrenWindow;
-import Classes.DatabaseConnection;
-import Classes.Diet;
-import Classes.TextFieldSanitizer;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import Classes.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.util.converter.IntegerStringConverter;
 
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.DecimalFormat;
-import java.util.function.UnaryOperator;
-
-import static jdk.nashorn.internal.objects.NativeMath.round;
 
 public class AddNewDietController {
     @FXML
@@ -39,6 +27,7 @@ public class AddNewDietController {
     DatabaseConnection databaseConnection = new DatabaseConnection();
     Connection con = databaseConnection.getConnection();
     public Diet diet;
+    Float kcalReq, proteinsReq, carbsReq, fatsReq;
 
 
     public AddNewDietController(SelectProfileController selectProfileController) {
@@ -64,7 +53,7 @@ public class AddNewDietController {
         stage.close();
     }
 
-    public void submitButtonOnAction() throws SQLException {
+    public void submitButtonOnAction() {
         addDataToDB();
         if(!ageErrorLabel.isVisible() && !heightErrorLabel.isVisible() && !weightErrorLabel.isVisible() && !nameErrorLabel.isVisible()) {
             Stage stage = (Stage) submitButton.getScene().getWindow();
@@ -74,7 +63,7 @@ public class AddNewDietController {
         }
     }
 
-    private void addDataToDB() throws SQLException {
+    private void addDataToDB() {
         String username = selectProfileController.getUsername();
         Integer age = TextFieldSanitizer.sanitizeIntegerTextField(ageTextField);
         if (age != null) {
@@ -117,30 +106,35 @@ public class AddNewDietController {
 
         databaseConnection.executeQuery(con, "UPDATE users SET body_type = '" + bodyType + "', training_intensity = '"
                 + trainingIntensity + "', number_of_trainings = '" + numTrainings + "' WHERE username = '" + username + "';");
-        System.out.println(calculateTotalKcalRequirement(age, height, weight, bodyType, trainingIntensity, trainingLength, numTrainings));
+
+        User user = new User(con, username); // created just for calculation purposes
+        calculateTotalMacronutrientRequirement(user);
+        databaseConnection.executeQuery(con, "UPDATE diets SET kcal = '" + kcalReq + "', proteins = '" + proteinsReq +
+                "', carbs = '" + carbsReq + "', fats = '" + fatsReq + "';");
     }
 
-    private Float calculateTotalKcalRequirement(Integer age, Integer height, Integer weight, String bodyType, String trainingIntensity,
-                                                 Integer trainingLength, Integer numTrainings) {
-        Float basicMetabolism = (9.99F * weight) + (6.25F * height) - (4.92F * age) - 161;
+    private void calculateTotalMacronutrientRequirement(User user) {
+        // kcal requirement calculation
+        Float basicMetabolism = (9.99F * user.weight) + (6.25F * user.height) - (4.92F * user.age) - 161;
         Float bodyTypeCalories;
-        if (bodyType == "Ectomorph")
+        if (user.bodyType == "Ectomorph")
             bodyTypeCalories = 700.0F;
-        else if (bodyType == "Mesomorph")
+        else if (user.bodyType == "Mesomorph")
             bodyTypeCalories = 400.0F;
         else
             bodyTypeCalories = 200.0F;
         Integer trainingIntensityCaloriesPerMin;
-        if (trainingIntensity == "Low")
+        if (user.trainingIntensity == "Low")
             trainingIntensityCaloriesPerMin = 7;
-        else if (trainingIntensity == "Medium")
+        else if (user.trainingIntensity == "Medium")
             trainingIntensityCaloriesPerMin = 10;
         else
             trainingIntensityCaloriesPerMin = 12;
-        Integer totalTrainingCaloriesPerDay = ((trainingIntensityCaloriesPerMin * trainingLength) * numTrainings) / 7;
+        Integer totalTrainingCaloriesPerDay = ((trainingIntensityCaloriesPerMin * user.trainingLength) * user.numberOfTrainings) / 7;
         Float foodThermicEffect = (basicMetabolism + bodyTypeCalories + totalTrainingCaloriesPerDay) / 10;
-
-        return basicMetabolism + bodyTypeCalories + totalTrainingCaloriesPerDay + foodThermicEffect;
+        kcalReq = basicMetabolism + bodyTypeCalories + totalTrainingCaloriesPerDay + foodThermicEffect;
+        proteinsReq = user.weight * 1.8F;
+        fatsReq = user.weight * 2F;
+        carbsReq = kcalReq - proteinsReq - fatsReq;
     }
-
 }

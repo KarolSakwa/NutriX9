@@ -22,6 +22,7 @@ public class DailySummary {
     Text totalHeader, dailyRequirementHeader, kcalText, proteinsText, carbsText, fatsText, kcalReqText, proteinsReqText, carbsReqText, fatsReqText, kcalValue = new Text(),
             proteinsValue = new Text(), carbsValue = new Text(), fatsValue = new Text();
     Button addFirstMeal;
+    Diet diet;
 
 
     public DailySummary(MealTablesContainer mealTablesContainer) {
@@ -29,10 +30,15 @@ public class DailySummary {
     }
 
     public void create() {
-        setDailyRequirement();
+        diet = mealTablesContainer.dietViewController.diet;
+        kcalReqText = new Text(diet.kcal.toString());
+        proteinsReqText = new Text(diet.proteins.toString());
+        carbsReqText = new Text(diet.carbs.toString());
+        fatsReqText = new Text(diet.fats.toString());
         dailySummaryContainer = new VBox(20);
         dailySummaryContainer.setAlignment(Pos.CENTER);
         dailySummaryContainer.setPrefWidth(500);
+
 
 
         // I want to apply different style for values and labels, so I need to divide it into individual parts
@@ -84,6 +90,7 @@ public class DailySummary {
         carbsText = new Text(" carbs ");
         fatsText = new Text(" fats ");
         kcalText.getStyleClass().add("daily-text");
+
         proteinsText.getStyleClass().add("daily-text");
         carbsText.getStyleClass().add("daily-text");
         fatsText.getStyleClass().add("daily-text");
@@ -103,27 +110,6 @@ public class DailySummary {
         mealTablesContainer.dietViewController.separator.setVisible(true);
 
         dailySummaryContainer.getChildren().addAll(totalDaily, dailyRequirementHeader, dailyRequirement);
-    }
-
-    private void setDailyRequirement() {
-        try {
-            Statement statement = con.createStatement();
-            String query = "SELECT * FROM diets WHERE username = '" + mealTablesContainer.dietViewController.selectProfileController.getUsername() + "';";
-            ResultSet diet = statement.executeQuery(query);
-            while (diet.next()) {
-                kcalReq = diet.getInt("kcal");
-                proteinsReq = diet.getInt("proteins");
-                carbsReq = diet.getInt("carbs");
-                fatsReq = diet.getInt("fats");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            e.getCause();
-        }
-        kcalReqText = new Text(kcalReq.toString());
-        proteinsReqText = new Text(proteinsReq.toString());
-        carbsReqText = new Text(carbsReq.toString());
-        fatsReqText = new Text(fatsReq.toString());
     }
 
 }

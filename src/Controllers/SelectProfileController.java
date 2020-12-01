@@ -43,7 +43,7 @@ public class SelectProfileController {
         stage.close();
     }
 
-    public void selectButtonOnAction(ActionEvent event) throws IOException, SQLException {
+    public void selectButtonOnAction(ActionEvent event)  {
         String username = selectProfileComboBox.getValue().toString();
         try {
             Statement statement = con.createStatement();
@@ -56,7 +56,6 @@ public class SelectProfileController {
             e.printStackTrace();
             e.getCause();
         }
-        user = new User(con, username);
         Stage stage = (Stage) selectButton.getScene().getWindow();
         stage.close();
         if (userDietsNum(username) == 0)

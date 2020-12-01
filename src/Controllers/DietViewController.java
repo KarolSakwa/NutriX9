@@ -29,13 +29,15 @@ public class DietViewController {
     HBox tablesContainer;
     public DailySummary dailySummary = new DailySummary(mealTablesContainer);
     public Diet diet;
+    public User user;
 
 
     public DietViewController(SelectProfileController selectProfileController) {
+        String username = selectProfileController.getUsername();
+        user = new User(con, username);
         this.selectProfileController = selectProfileController;
         thisStage = new Stage();
         ChildrenWindow.create("../fxml/dietView.fxml", this, thisStage, false, 1680, 1050);
-        String username = selectProfileController.getUsername();
         mealTablesContainer.create();
         dailySummary.create();
         tablesContainer = new HBox();
@@ -57,7 +59,6 @@ public class DietViewController {
             usersDiet.next();
             diet = new Diet(con, usersDiet.getString("diet_name"), username);
             dietNameLabel.setText(diet.name);
-
         } catch (Exception e) {
             e.printStackTrace();
             e.getCause();

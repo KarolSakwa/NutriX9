@@ -16,11 +16,12 @@ public class Diet {
     public String name, dietUsername, dietType;
     public Float kcal, proteins, carbs, fats;
 
-    public Diet(Connection con, String dietName, String username) throws SQLException {
+    public Diet(Connection con, String dietName, String username) {
         query = "SELECT * from diets WHERE diet_name = '" + dietName + "' AND username = '" + username + "';";
-        statement = con.createStatement();
-        dietData = statement.executeQuery(query);
-        while (dietData.next()) {
+        try {
+            statement = con.createStatement();
+            dietData = statement.executeQuery(query);
+            dietData.next();
             name = dietData.getString("diet_name");
             dietUsername = dietData.getString("username");
             dietType = dietData.getString("diet_type");
@@ -28,7 +29,9 @@ public class Diet {
             proteins = dietData.getFloat("proteins");
             carbs = dietData.getFloat("carbs");
             fats = dietData.getFloat("fats");
-
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
         }
     }
 }

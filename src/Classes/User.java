@@ -16,11 +16,12 @@ public class User {
     public String name, bodyType, trainingIntensity;
     public Integer age, weight, height, numberOfTrainings, trainingLength;
 
-    public User(Connection con, String username) throws SQLException {
+    public User(Connection con, String username) {
         query = "SELECT * from users WHERE username = '" + username + "';";
-        statement = con.createStatement();
-        userData = statement.executeQuery(query);
-        while (userData.next()) {
+        try {
+            statement = con.createStatement();
+            userData = statement.executeQuery(query);
+            userData.next();
             name = userData.getString("username");
             bodyType = userData.getString("body_type");
             trainingIntensity = userData.getString("training_intensity");
@@ -29,6 +30,9 @@ public class User {
             height = userData.getInt("height");
             numberOfTrainings = userData.getInt("number_of_trainings");
             trainingLength = userData.getInt("training_length");
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
         }
     }
 }
