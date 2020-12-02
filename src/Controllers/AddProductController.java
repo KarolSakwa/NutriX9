@@ -99,17 +99,16 @@ public class AddProductController {
             ResultSet product = statement.executeQuery(query);
             while (product.next()) {
                 products.addAll(new Product(product.getString("name"),
-                        Float.valueOf(Math.round(product.getFloat("kcal"))),
-                        Float.valueOf(Math.round(product.getFloat("proteins"))),
-                        Float.valueOf(Math.round(product.getFloat("carbs"))),
-                        Float.valueOf(Math.round(product.getFloat("fats"))),
+                        product.getFloat("kcal"),
+                        product.getFloat("proteins"),
+                        product.getFloat("carbs"),
+                        product.getFloat("fats"),
                         product.getString("macronutrient_category"),
                         product.getString("category"),
-                        Integer.parseInt(product.getString("wholesomeness_index")),
+                        product.getInt("wholesomeness_index"),
                         product.getString("unit_type"),
                         product.getString("unit_quantity"),
-                        Float.valueOf(Math.round(product.getFloat("price")))
-
+                        product.getFloat("price")
                         ));
             }
         } catch (Exception e) {

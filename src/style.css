@@ -1,12 +1,12 @@
 .table-summary {
     -fx-font-weight: 900;
 }
-.daily-value-lower {
+.daily-value-higher {
     -fx-fill: red;
     -fx-font-weight: 900;
     -fx-font-size: 16;
 }
-.daily-value-higher {
+.daily-value-lower {
     -fx-fill: green;
     -fx-font-weight: 900;
     -fx-font-size: 16;

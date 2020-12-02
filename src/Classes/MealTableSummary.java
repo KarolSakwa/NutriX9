@@ -8,6 +8,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
+import java.math.BigDecimal;
+
 public class MealTableSummary {
     TableColumn kcalSummary, proteinsSummary, carbsSummary, fatsSummary, WISummary, priceSummary, emptyColumn;
     SummaryTableView tableSummary;
@@ -95,12 +97,12 @@ public class MealTableSummary {
 
 
         for (Integer i = 0; i < mealTable.productsList.size(); i++) {
-            totalKcal += mealTable.productsList.get(i).getKcal();
-            totalProteins += mealTable.productsList.get(i).getProteins();
-            totalCarbs += mealTable.productsList.get(i).getCarbs();
-            totalFats += mealTable.productsList.get(i).getFats();
+            totalKcal += Helper.twoDecimalsFloat(mealTable.productsList.get(i).getKcal());
+            totalProteins += Helper.twoDecimalsFloat(mealTable.productsList.get(i).getProteins());
+            totalCarbs += Helper.twoDecimalsFloat(mealTable.productsList.get(i).getCarbs());
+            totalFats += Helper.twoDecimalsFloat(mealTable.productsList.get(i).getFats());
             totalWI += mealTable.productsList.get(i).getWholesomenessIndex();
-            totalPrice += mealTable.productsList.get(i).getPrice();
+            totalPrice += Helper.twoDecimalsFloat(mealTable.productsList.get(i).getPrice());
         }
         Product totalProduct = new Product("Total", totalKcal, totalProteins, totalCarbs, totalFats, "", "", totalWI.intValue(), "", "", totalPrice);
         tableSummary.getItems().add(totalProduct);
@@ -117,6 +119,4 @@ public class MealTableSummary {
             header.setVisible(false);
         }
     }
-
-
 }

@@ -54,7 +54,6 @@ public class DietViewController {
             ResultSet usersDiet = statement.executeQuery(query);
             usersDiet.next();
             diet = new Diet(con, usersDiet.getString("diet_name"), username);
-            System.out.println(diet.kcal);
             dietNameLabel.setText(diet.name);
         } catch (Exception e) {
             e.printStackTrace();

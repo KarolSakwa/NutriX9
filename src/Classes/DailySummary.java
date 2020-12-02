@@ -16,7 +16,6 @@ import java.sql.Statement;
 public class DailySummary {
     DatabaseConnection databaseConnection = new DatabaseConnection();
     Connection con = databaseConnection.getConnection();
-    Integer kcalReq, proteinsReq, carbsReq, fatsReq;
     public VBox dailySummaryContainer;
     MealTablesContainer mealTablesContainer;
     TextFlow totalDaily = new TextFlow(), dailyRequirement = new TextFlow();
@@ -54,24 +53,21 @@ public class DailySummary {
         for (ObservableList<Product> productsList : mealTablesContainer.mealsList) {
             for (Product product : productsList) {
                 totalKcal += product.getKcal();
-                System.out.println(totalKcal);
                 totalProteins += product.getProteins();
                 totalCarbs += product.getCarbs();
                 totalFats += product.getFats();
             }
         }
 
-        kcalValue.setText(totalKcal.toString());
-        proteinsValue.setText(totalProteins.toString());
-        carbsValue.setText(totalCarbs.toString());
-        fatsValue.setText(totalFats.toString());
-        if (totalKcal < diet.kcal)
-            kcalValue.getStyleClass().add("daily-value-lower");
-        else
-            kcalValue.getStyleClass().add("daily-value-higher");
-        proteinsValue.getStyleClass().add("daily-value");
-        carbsValue.getStyleClass().add("daily-value");
-        fatsValue.getStyleClass().add("daily-value");
+        kcalValue.setText(Helper.twoDecimalsFloat(totalKcal).toString());
+        proteinsValue.setText(Helper.twoDecimalsFloat(totalProteins).toString());
+        carbsValue.setText(Helper.twoDecimalsFloat(totalCarbs).toString());
+        fatsValue.setText(Helper.twoDecimalsFloat(totalFats).toString());
+        setStyleClassByRequirements(totalKcal, diet.kcal, kcalValue);
+        setStyleClassByRequirements(totalProteins, diet.proteins, proteinsValue);
+        setStyleClassByRequirements(totalCarbs, diet.carbs, carbsValue);
+        setStyleClassByRequirements(totalFats, diet.fats, fatsValue);
+
     }
 
     private void addFirstMealButtonOnAction() {
@@ -110,6 +106,16 @@ public class DailySummary {
         mealTablesContainer.dietViewController.separator.setVisible(true);
 
         dailySummaryContainer.getChildren().addAll(totalDaily, dailyRequirementHeader, dailyRequirement);
+    }
+    private void setStyleClassByRequirements(Float provided, Float required, Text text) {
+        if (provided < required) {
+            text.getStyleClass().add("daily-value-lower");
+            text.getStyleClass().remove("daily-value-higher");
+        }
+        else {
+            text.getStyleClass().add("daily-value-higher");
+            text.getStyleClass().remove("daily-value-lower");
+        }
     }
 
 }

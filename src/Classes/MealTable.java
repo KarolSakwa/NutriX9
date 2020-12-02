@@ -111,11 +111,12 @@ public class MealTable {
         quantityColumn = new TableColumn();
         nameColumn = new TableColumn();
         kcalColumn = new TableColumn("kcal");
-        proteinsColumn = new TableColumn("Proteins");
+        proteinsColumn = new TableColumn("Prot.");
         carbsColumn = new TableColumn("Carbs");
         fatsColumn = new TableColumn("Fats");
         WIColumn = new TableColumn("WI*");
         priceColumn = new TableColumn("Price");
+
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("unitQuantity"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         kcalColumn.setCellValueFactory(new PropertyValueFactory<>("kcal"));
@@ -127,7 +128,7 @@ public class MealTable {
 
         quantityColumn.setMinWidth(85);
         nameColumn.setMinWidth(120);
-        kcalColumn.setMaxWidth(50);
+        kcalColumn.setMaxWidth(53);
         proteinsColumn.setMaxWidth(50);
         carbsColumn.setMaxWidth(50);
         fatsColumn.setMaxWidth(50);
@@ -150,11 +151,11 @@ public class MealTable {
         table.getItems().clear();
         Product productCopy = new Product(product.getName(), product.getKcal(), product.getProteins(), product.getCarbs(), product.getFats(), product.getMacronutrientCategory(), product.getCategory(), product.getWholesomenessIndex(), product.getUnitType(), product.getUnitQuantity(), product.getPrice());
         productCopy.setUnitQuantity(quantity + " " + product.getShorterUnit());
-        productCopy.setKcal(product.getKcal() * quantity);
-        productCopy.setProteins(product.getProteins() * quantity);
-        productCopy.setCarbs(product.getCarbs() * quantity);
-        productCopy.setFats(product.getFats() * quantity);
-        productCopy.setPrice(product.getPrice() * quantity);
+        productCopy.setKcal(Helper.twoDecimalsFloat(product.getKcal() * quantity));
+        productCopy.setProteins(Helper.twoDecimalsFloat(product.getProteins() * quantity));
+        productCopy.setCarbs(Helper.twoDecimalsFloat(product.getCarbs() * quantity));
+        productCopy.setFats(Helper.twoDecimalsFloat(product.getFats() * quantity));
+        productCopy.setPrice(Helper.twoDecimalsFloat(product.getPrice() * quantity));
         productCopy.setQuantity(quantity);
         productsList.remove(product);
         productsList.add(productCopy);
