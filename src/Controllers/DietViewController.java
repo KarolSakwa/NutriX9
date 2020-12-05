@@ -22,12 +22,11 @@ public class DietViewController {
     @FXML Label dietNameLabel;
     @FXML Pane dietViewPane;
     public MealTable meal1Table, meal2Table, meal3Table, meal4Table, meal5Table;
-    public ObservableList<ObservableList> mealsList = FXCollections.observableArrayList();
     AddProductController addProductController = new AddProductController(this);
     public MealTablesContainer mealTablesContainer = new MealTablesContainer(this);
     public Separator separator;
     HBox tablesContainer;
-    public DailySummary dailySummary = new DailySummary(mealTablesContainer);
+    public DailySummary dailySummary;
     public Diet diet;
     public User user;
 
@@ -35,6 +34,7 @@ public class DietViewController {
     public DietViewController(SelectProfileController selectProfileController) {
         String username = selectProfileController.getUsername();
         user = new User(con, username);
+        dailySummary = new DailySummary(this);
         this.selectProfileController = selectProfileController;
         thisStage = new Stage();
         ChildrenWindow.create("../fxml/dietView.fxml", this, thisStage, false, 1680, 1050);
@@ -70,27 +70,30 @@ public class DietViewController {
     }
 
     public void addMealButtonOnAction() {
-        if (mealTablesContainer.mealsList.size() == 0) {
-            meal1Table = new MealTable(this,1, 1, mealTablesContainer, addProductController); // just sample arguments to initiate, corrected in function
-            createMealTable(meal1Table);
+
+        if (user.mealsList.size() == 0) {
+            // just sample arguments to initiate, corrected in function
+            createMealTable();
         }
-        else if (mealTablesContainer.mealsList.size() == 1) {
+        else if (user.mealsList.size() == 1) {
             meal2Table = new MealTable(this,1, 1, mealTablesContainer, addProductController);
             createMealTable(meal2Table);
         }
-        else if (mealTablesContainer.mealsList.size() == 2) {
+        else if (user.mealsList.size() == 2) {
             meal3Table = new MealTable(this,1, 1, mealTablesContainer, addProductController);
             createMealTable(meal3Table);
         }
-        else if (mealTablesContainer.mealsList.size() == 3) {
+        else if (user.mealsList.size() == 3) {
             meal4Table = new MealTable(this,1, 1, mealTablesContainer, addProductController);
             createMealTable(meal4Table);
         }
     }
 
-    private void createMealTable(MealTable mealTable) {
+    private void createMealTable() {
+        Meal meal = new Meal();
+        user.mealsList.add(meal);
+        MealTable mealTable = new MealTable(meal, this,1, 1, mealTablesContainer, addProductController);
         mealTable.create();
-        mealTablesContainer.mealsList.add(mealTable.productsList);
         mealTablesContainer.mealTablesList.add(mealTable);
     }
 

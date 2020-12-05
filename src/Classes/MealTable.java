@@ -18,8 +18,7 @@ public class MealTable {
     public VBox tableContainer;
     HBox mealNameContainer;
     Label mealName;
-    public ObservableList<Product> productsList = FXCollections.observableArrayList();
-    public TableView<Product> tableContent = new TableView<>(productsList);
+    public TableView<Product> tableContent;
     TableColumn quantityColumn, nameColumn, kcalColumn, proteinsColumn, carbsColumn, fatsColumn, WIColumn, priceColumn;
     Integer mealNum, tableContainerLayoutX, tableContainerLayoutY;
     private final Integer tableContainerWidth = 507;
@@ -31,15 +30,18 @@ public class MealTable {
     MealTablesContainer mealTablesContainer;
     Separator separator;
     final Integer MAX_MEALS_NUM = 4;
+    public Meal meal;
 
 
-    public MealTable(DietViewController dietViewController, Integer tableContainerLayoutX, Integer tableContainerLayoutY, MealTablesContainer mealTablesContainer, AddProductController addProductController) {
+    public MealTable(Meal meal, DietViewController dietViewController, Integer tableContainerLayoutX, Integer tableContainerLayoutY, MealTablesContainer mealTablesContainer, AddProductController addProductController) {
+        this.meal = meal;
         this.mealNum = mealNum;
         this.tableContainerLayoutX = tableContainerLayoutX;
         this.tableContainerLayoutY = tableContainerLayoutY;
         this.addProductController = addProductController;
         this.dietViewController = dietViewController;
         this.mealTablesContainer = mealTablesContainer;
+        tableContent = new TableView<>(dietViewController.user.productsList);
     }
     public Integer getMealNum() {
         return mealNum;
@@ -97,7 +99,7 @@ public class MealTable {
         createColumns(tableContent);
 
         mealTableSummary = new MealTableSummary(dietViewController);
-        mealTableSummary.create(this);
+        mealTableSummary.create(meal, this);
 
         separator = new Separator();
         separator.setMinHeight(30);

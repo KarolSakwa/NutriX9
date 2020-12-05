@@ -10,7 +10,6 @@ public class MealTablesContainer {
     public VBox vBox;
     DietViewController dietViewController;
     Integer layoutX, layoutY, height, width;
-    public ObservableList<ObservableList> mealsList = FXCollections.observableArrayList();
     public ObservableList<MealTable> mealTablesList = FXCollections.observableArrayList();
 
     public MealTablesContainer(DietViewController dietViewController) {

@@ -17,20 +17,20 @@ public class DailySummary {
     DatabaseConnection databaseConnection = new DatabaseConnection();
     Connection con = databaseConnection.getConnection();
     public VBox dailySummaryContainer;
-    MealTablesContainer mealTablesContainer;
     TextFlow totalDaily = new TextFlow(), dailyRequirement = new TextFlow();
     Text totalHeader, dailyRequirementHeader, kcalText, proteinsText, carbsText, fatsText, kcalReqText, proteinsReqText, carbsReqText, fatsReqText, kcalValue = new Text(),
             proteinsValue = new Text(), carbsValue = new Text(), fatsValue = new Text();
     Button addFirstMeal;
     Diet diet;
+    DietViewController dietViewController;
 
 
-    public DailySummary(MealTablesContainer mealTablesContainer) {
-        this.mealTablesContainer = mealTablesContainer;
+    public DailySummary(DietViewController dietViewController) {
+        this.dietViewController = dietViewController;
     }
 
     public void create() {
-        diet = mealTablesContainer.dietViewController.diet;
+        diet = dietViewController.diet;
         dailySummaryContainer = new VBox(20);
         dailySummaryContainer.setAlignment(Pos.CENTER);
         dailySummaryContainer.setPrefWidth(500);
@@ -50,7 +50,7 @@ public class DailySummary {
         Float totalCarbs = 0.0F;
         Float totalFats = 0.0F;
 
-        for (ObservableList<Product> productsList : mealTablesContainer.mealsList) {
+        for (ObservableList<Product> productsList : dietViewController.user.mealsList) {
             for (Product product : productsList) {
                 totalKcal += product.getKcal();
                 totalProteins += product.getProteins();
@@ -102,8 +102,8 @@ public class DailySummary {
         dailyRequirement.getStyleClass().add("daily-text");
         dailyRequirement.getChildren().addAll(kcalReqText, kcalText2, proteinsReqText, proteinsText2, carbsReqText, carbsText2, fatsReqText, fatsText2);
 
-        mealTablesContainer.dietViewController.addMealButtonOnAction();
-        mealTablesContainer.dietViewController.separator.setVisible(true);
+        dietViewController.addMealButtonOnAction();
+        dietViewController.separator.setVisible(true);
 
         dailySummaryContainer.getChildren().addAll(totalDaily, dailyRequirementHeader, dailyRequirement);
     }

@@ -22,16 +22,18 @@ public class MealTableSummary {
     Integer totalWI;
     Float totalPrice;
     DietViewController dietViewController;
+    MealTableSummary thisMealTableSummary; // I can't use "this" in method onChanged because it would refer to another class, so I created this variable
 
     public MealTableSummary(DietViewController dietViewController) {
         this.dietViewController = dietViewController;
     }
 
-    public void create(MealTable mealTable) {
-        mealTable.productsList.addListener(new ListChangeListener() {
+    public void create(Meal meal, MealTable mealTable) {
+        thisMealTableSummary = this;
+        meal.productsList.addListener(new ListChangeListener() {
             @Override
             public void onChanged(ListChangeListener.Change change) {
-                mealTable.mealTableSummary.update(mealTable);
+                thisMealTableSummary.update(meal);
                 dietViewController.dailySummary.calculateTotalMacro();
             }
         });
@@ -81,7 +83,7 @@ public class MealTableSummary {
         summaryContainer.getChildren().add(tableSummary);
     }
 
-    public void update(MealTable mealTable) {
+    public void update(Meal meal) {
         summaryContainer.setMinHeight(26);
         tableSummary.setMinHeight(26);
         summaryContainer.setMaxHeight(26);
@@ -96,13 +98,13 @@ public class MealTableSummary {
         totalPrice = 0.0F;
 
 
-        for (Integer i = 0; i < mealTable.productsList.size(); i++) {
-            totalKcal += Helper.twoDecimalsFloat(mealTable.productsList.get(i).getKcal());
-            totalProteins += Helper.twoDecimalsFloat(mealTable.productsList.get(i).getProteins());
-            totalCarbs += Helper.twoDecimalsFloat(mealTable.productsList.get(i).getCarbs());
-            totalFats += Helper.twoDecimalsFloat(mealTable.productsList.get(i).getFats());
-            totalWI += mealTable.productsList.get(i).getWholesomenessIndex();
-            totalPrice += Helper.twoDecimalsFloat(mealTable.productsList.get(i).getPrice());
+        for (Integer i = 0; i < meal.productsList.size(); i++) {
+            totalKcal += Helper.twoDecimalsFloat(meal.productsList.get(i).getKcal());
+            totalProteins += Helper.twoDecimalsFloat(meal.productsList.get(i).getProteins());
+            totalCarbs += Helper.twoDecimalsFloat(meal.productsList.get(i).getCarbs());
+            totalFats += Helper.twoDecimalsFloat(meal.productsList.get(i).getFats());
+            totalWI += meal.productsList.get(i).getWholesomenessIndex();
+            totalPrice += Helper.twoDecimalsFloat(meal.productsList.get(i).getPrice());
         }
         Product totalProduct = new Product("Total", totalKcal, totalProteins, totalCarbs, totalFats, "", "", totalWI.intValue(), "", "", totalPrice);
         tableSummary.getItems().add(totalProduct);

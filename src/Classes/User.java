@@ -1,5 +1,8 @@
 package Classes;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +18,7 @@ public class User {
     Statement statement;
     public String name, bodyType, trainingIntensity;
     public Integer age, weight, height, numberOfTrainings, trainingLength;
+    public ObservableList<Meal> mealsList = FXCollections.observableArrayList();
 
     public User(Connection con, String username) {
         query = "SELECT * from users WHERE username = '" + username + "';";
