@@ -41,7 +41,7 @@ public class MealTable {
         this.addProductController = addProductController;
         this.dietViewController = dietViewController;
         this.mealTablesContainer = mealTablesContainer;
-        tableContent = new TableView<>(dietViewController.user.productsList);
+        tableContent = new TableView<>(meal.productsList);
     }
     public Integer getMealNum() {
         return mealNum;
@@ -171,15 +171,15 @@ public class MealTable {
 
     private void deleteProductButtonOnAction() {
         Product selectedProduct = (Product) tableContent.getSelectionModel().getSelectedItem();
-        if (productsList.contains(selectedProduct)) {
+        if (meal.productsList.contains(selectedProduct)) {
             tableContent.getItems().remove(selectedProduct);
-            productsList.remove(selectedProduct);
-            mealTableSummary.update(this);
+            meal.productsList.remove(selectedProduct);
+            mealTableSummary.update(meal);
         }
     }
 
     private void deleteMealButtonOnAction(MealTablesContainer mealTablesContainer) {
-        mealTablesContainer.mealsList.remove(this.productsList);
+        dietViewController.user.mealsList.remove(this.meal);
         mealTablesContainer.vBox.getChildren().removeAll(this.tableContainer, this.mealTableSummary.tableSummary, this.mealNameContainer);
         mealTablesContainer.mealTablesList.remove(this);
     }

@@ -21,7 +21,6 @@ public class DietViewController {
     Connection con = databaseConnection.getConnection();
     @FXML Label dietNameLabel;
     @FXML Pane dietViewPane;
-    public MealTable meal1Table, meal2Table, meal3Table, meal4Table, meal5Table;
     AddProductController addProductController = new AddProductController(this);
     public MealTablesContainer mealTablesContainer = new MealTablesContainer(this);
     public Separator separator;
@@ -70,22 +69,8 @@ public class DietViewController {
     }
 
     public void addMealButtonOnAction() {
-
-        if (user.mealsList.size() == 0) {
-            // just sample arguments to initiate, corrected in function
+        if (user.mealsList.size() < 4) {
             createMealTable();
-        }
-        else if (user.mealsList.size() == 1) {
-            meal2Table = new MealTable(this,1, 1, mealTablesContainer, addProductController);
-            createMealTable(meal2Table);
-        }
-        else if (user.mealsList.size() == 2) {
-            meal3Table = new MealTable(this,1, 1, mealTablesContainer, addProductController);
-            createMealTable(meal3Table);
-        }
-        else if (user.mealsList.size() == 3) {
-            meal4Table = new MealTable(this,1, 1, mealTablesContainer, addProductController);
-            createMealTable(meal4Table);
         }
     }
 

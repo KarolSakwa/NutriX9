@@ -22,7 +22,7 @@ public class DailySummary {
             proteinsValue = new Text(), carbsValue = new Text(), fatsValue = new Text();
     Button addFirstMeal;
     Diet diet;
-    DietViewController dietViewController;
+    public DietViewController dietViewController;
 
 
     public DailySummary(DietViewController dietViewController) {
@@ -45,28 +45,29 @@ public class DailySummary {
 
     public void calculateTotalMacro() {
         // this method is called whenever meal or products list is changed. I need to reset every macronutrient counter everytime and calculate it again
-        Float totalKcal = 0.0F;
-        Float totalProteins = 0.0F;
-        Float totalCarbs = 0.0F;
-        Float totalFats = 0.0F;
+        User user = dietViewController.user;
+        user.kcalConsumed = 0.0F;
+        user.proteinsConsumed = 0.0F;
+        user.carbsConsumed = 0.0F;
+        user.fatsConsumed = 0.0F;
 
-        for (ObservableList<Product> productsList : dietViewController.user.mealsList) {
-            for (Product product : productsList) {
-                totalKcal += product.getKcal();
-                totalProteins += product.getProteins();
-                totalCarbs += product.getCarbs();
-                totalFats += product.getFats();
+        for (Meal meal : dietViewController.user.mealsList) {
+            for (Product product : meal.productsList) {
+                user.kcalConsumed += product.getKcal();
+                user.proteinsConsumed += product.getProteins();
+                user.carbsConsumed += product.getCarbs();
+                user.fatsConsumed += product.getFats();
             }
         }
 
-        kcalValue.setText(Helper.twoDecimalsFloat(totalKcal).toString());
-        proteinsValue.setText(Helper.twoDecimalsFloat(totalProteins).toString());
-        carbsValue.setText(Helper.twoDecimalsFloat(totalCarbs).toString());
-        fatsValue.setText(Helper.twoDecimalsFloat(totalFats).toString());
-        setStyleClassByRequirements(totalKcal, diet.kcal, kcalValue);
-        setStyleClassByRequirements(totalProteins, diet.proteins, proteinsValue);
-        setStyleClassByRequirements(totalCarbs, diet.carbs, carbsValue);
-        setStyleClassByRequirements(totalFats, diet.fats, fatsValue);
+        kcalValue.setText(Helper.twoDecimalsFloat(user.kcalConsumed).toString());
+        proteinsValue.setText(Helper.twoDecimalsFloat(user.proteinsConsumed).toString());
+        carbsValue.setText(Helper.twoDecimalsFloat(user.carbsConsumed).toString());
+        fatsValue.setText(Helper.twoDecimalsFloat(user.fatsConsumed).toString());
+        setStyleClassByRequirements(user.kcalConsumed, diet.kcal, kcalValue);
+        setStyleClassByRequirements(user.proteinsConsumed, diet.proteins, proteinsValue);
+        setStyleClassByRequirements(user.carbsConsumed, diet.carbs, carbsValue);
+        setStyleClassByRequirements(user.fatsConsumed, diet.fats, fatsValue);
 
     }
 

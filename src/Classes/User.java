@@ -1,6 +1,8 @@
 package Classes;
 
+import Controllers.DietViewController;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
 import java.sql.Connection;
@@ -19,6 +21,7 @@ public class User {
     public String name, bodyType, trainingIntensity;
     public Integer age, weight, height, numberOfTrainings, trainingLength;
     public ObservableList<Meal> mealsList = FXCollections.observableArrayList();
+    public Float kcalConsumed, proteinsConsumed, carbsConsumed, fatsConsumed;
 
     public User(Connection con, String username) {
         query = "SELECT * from users WHERE username = '" + username + "';";
@@ -39,4 +42,5 @@ public class User {
             e.getCause();
         }
     }
+
 }

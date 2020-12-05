@@ -42,16 +42,7 @@ public class AddProductController {
         selectColumnChoiceBox.setValue(productNameColumn.getText());
         changeUnitInQuantityPromptText();
         addSelectedButton.setOnAction(e -> {
-            if (MTIndex == 1)
-                addSelectedButtonOnAction(dietViewController.meal1Table);
-            else if (MTIndex == 2)
-                addSelectedButtonOnAction(dietViewController.meal2Table);
-            else if (MTIndex == 3)
-                addSelectedButtonOnAction(dietViewController.meal3Table);
-            else if (MTIndex == 4)
-                addSelectedButtonOnAction(dietViewController.meal4Table);
-            else if (MTIndex == 5)
-                addSelectedButtonOnAction(dietViewController.meal5Table);
+            addSelectedButtonOnAction(dietViewController.mealTablesContainer.mealTablesList.get(MTIndex-1));
         });
     }
 
@@ -63,8 +54,8 @@ public class AddProductController {
     public void addSelectedButtonOnAction(MealTable mealTable) {
         Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
         if (!quantityTextField.getText().trim().isEmpty() && selectedProduct != null) {
-            mealTable.productsList.add(selectedProduct);
-            mealTable.insertRow(mealTable.productsList, selectedProduct, Float.valueOf(quantityTextField.getText()), mealTable.tableContent);
+            mealTable.meal.productsList.add(selectedProduct);
+            mealTable.insertRow(mealTable.meal.productsList, selectedProduct, Float.valueOf(quantityTextField.getText()), mealTable.tableContent);
             Stage stage = (Stage) addSelectedButton.getScene().getWindow();
             stage.close();
             quantityTextField.setText("");
