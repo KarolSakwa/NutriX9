@@ -21,7 +21,7 @@ public class User {
     public String name, bodyType, trainingIntensity;
     public Integer age, weight, height, numberOfTrainings, trainingLength;
     public ObservableList<Meal> mealsList = FXCollections.observableArrayList();
-    public Float kcalConsumed, proteinsConsumed, carbsConsumed, fatsConsumed;
+    public Float kcalConsumed = 0F, proteinsConsumed = 0F, carbsConsumed = 0F, fatsConsumed = 0F;
 
     public User(Connection con, String username) {
         query = "SELECT * from users WHERE username = '" + username + "';";

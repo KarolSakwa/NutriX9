@@ -165,7 +165,7 @@ public class MealTable {
     }
 
     private void addProductButtonOnAction() {
-        addProductController.MTIndex = setMealNumber(this);
+        addProductController.MTIndex = getMealNum();
         addProductController.showStage();
     }
 

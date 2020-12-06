@@ -43,13 +43,10 @@ public class DailySummary {
         dailySummaryContainer.getChildren().addAll(totalHeader, addFirstMeal);
     }
 
-    public void calculateTotalMacro() {
+    public void calculateTotalMacro(Product addedProduct) {
         // this method is called whenever meal or products list is changed. I need to reset every macronutrient counter everytime and calculate it again
         User user = dietViewController.user;
-        user.kcalConsumed = 0.0F;
-        user.proteinsConsumed = 0.0F;
-        user.carbsConsumed = 0.0F;
-        user.fatsConsumed = 0.0F;
+
 
         for (Meal meal : dietViewController.user.mealsList) {
             for (Product product : meal.productsList) {
@@ -64,10 +61,10 @@ public class DailySummary {
         proteinsValue.setText(Helper.twoDecimalsFloat(user.proteinsConsumed).toString());
         carbsValue.setText(Helper.twoDecimalsFloat(user.carbsConsumed).toString());
         fatsValue.setText(Helper.twoDecimalsFloat(user.fatsConsumed).toString());
-        setStyleClassByRequirements(user.kcalConsumed, diet.kcal, kcalValue);
-        setStyleClassByRequirements(user.proteinsConsumed, diet.proteins, proteinsValue);
-        setStyleClassByRequirements(user.carbsConsumed, diet.carbs, carbsValue);
-        setStyleClassByRequirements(user.fatsConsumed, diet.fats, fatsValue);
+        setStyleClassByRequirements(user.kcalConsumed, diet.kcal, kcalValue, addedProduct);
+        setStyleClassByRequirements(user.proteinsConsumed, diet.proteins, proteinsValue, addedProduct);
+        setStyleClassByRequirements(user.carbsConsumed, diet.carbs, carbsValue, addedProduct);
+        setStyleClassByRequirements(user.fatsConsumed, diet.fats, fatsValue, addedProduct);
 
     }
 
@@ -75,8 +72,6 @@ public class DailySummary {
         dailySummaryContainer.getChildren().remove(addFirstMeal);
         totalHeader.setText("You have eaten today: ");
 
-
-        calculateTotalMacro();
         kcalText = new Text(" kcal ");
         proteinsText = new Text(" proteins ");
         carbsText = new Text(" carbs ");
@@ -108,7 +103,7 @@ public class DailySummary {
 
         dailySummaryContainer.getChildren().addAll(totalDaily, dailyRequirementHeader, dailyRequirement);
     }
-    private void setStyleClassByRequirements(Float provided, Float required, Text text) {
+    private void setStyleClassByRequirements(Float provided, Float required, Text text, Product addedProduct) {
         if (provided < required) {
             text.getStyleClass().add("daily-value-lower");
             text.getStyleClass().remove("daily-value-higher");

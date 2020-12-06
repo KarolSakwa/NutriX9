@@ -33,8 +33,14 @@ public class MealTableSummary {
         meal.productsList.addListener(new ListChangeListener() {
             @Override
             public void onChanged(ListChangeListener.Change change) {
-                thisMealTableSummary.update(meal);
-                dietViewController.dailySummary.calculateTotalMacro();
+                try {
+                    thisMealTableSummary.update(meal);
+                    change.next();
+                    dietViewController.dailySummary.calculateTotalMacro(meal.productsList.get(change.getFrom())); // passing recently added product
+                }
+                catch (IndexOutOfBoundsException e){
+                    System.out.println("List empty: " + e);
+                }
             }
         });
 
