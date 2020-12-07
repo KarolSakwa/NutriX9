@@ -26,7 +26,7 @@ public class MealTablesContainer {
             @Override
             public void onChanged(ListChangeListener.Change change) {
                 //dietViewController.dailySummary.calculateTotalMacro();
-                System.out.println("Product added");
+                System.out.println("Meal added");
             }
         });
 

@@ -1,6 +1,7 @@
 package Classes;
 
 import Controllers.DietViewController;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -43,18 +44,21 @@ public class DailySummary {
         dailySummaryContainer.getChildren().addAll(totalHeader, addFirstMeal);
     }
 
-    public void calculateTotalMacro(Product addedProduct) {
+    public void calculateTotalMacro(Product addedProduct, Boolean wasAdded) {
         // this method is called whenever meal or products list is changed. I need to reset every macronutrient counter everytime and calculate it again
         User user = dietViewController.user;
 
-
-        for (Meal meal : dietViewController.user.mealsList) {
-            for (Product product : meal.productsList) {
-                user.kcalConsumed += product.getKcal();
-                user.proteinsConsumed += product.getProteins();
-                user.carbsConsumed += product.getCarbs();
-                user.fatsConsumed += product.getFats();
-            }
+        if (wasAdded) {
+            user.kcalConsumed += addedProduct.getKcal();
+            user.proteinsConsumed += addedProduct.getProteins();
+            user.carbsConsumed += addedProduct.getCarbs();
+            user.fatsConsumed += addedProduct.getFats();
+        }
+        else {
+            user.kcalConsumed -= addedProduct.getKcal();
+            user.proteinsConsumed -= addedProduct.getProteins();
+            user.carbsConsumed -= addedProduct.getCarbs();
+            user.fatsConsumed -= addedProduct.getFats();
         }
 
         kcalValue.setText(Helper.twoDecimalsFloat(user.kcalConsumed).toString());
@@ -65,6 +69,35 @@ public class DailySummary {
         setStyleClassByRequirements(user.proteinsConsumed, diet.proteins, proteinsValue, addedProduct);
         setStyleClassByRequirements(user.carbsConsumed, diet.carbs, carbsValue, addedProduct);
         setStyleClassByRequirements(user.fatsConsumed, diet.fats, fatsValue, addedProduct);
+
+        /*
+                Float totalKcal = 0.0F;
+        Float totalProteins = 0.0F;
+        Float totalCarbs = 0.0F;
+        Float totalFats = 0.0F;
+
+        for (ObservableList<Product> productsList : mealTablesContainer.mealsList) {
+            for (Product product : productsList) {
+                totalKcal += product.getKcal();
+                System.out.println(totalKcal);
+                totalProteins += product.getProteins();
+                totalCarbs += product.getCarbs();
+                totalFats += product.getFats();
+            }
+        }
+
+        kcalValue.setText(totalKcal.toString());
+        proteinsValue.setText(totalProteins.toString());
+        carbsValue.setText(totalCarbs.toString());
+        fatsValue.setText(totalFats.toString());
+        if (totalKcal < diet.kcal)
+            kcalValue.getStyleClass().add("daily-value-lower");
+        else
+            kcalValue.getStyleClass().add("daily-value-higher");
+        proteinsValue.getStyleClass().add("daily-value");
+        carbsValue.getStyleClass().add("daily-value");
+        fatsValue.getStyleClass().add("daily-value");
+         */
 
     }
 

@@ -36,10 +36,11 @@ public class MealTableSummary {
                 try {
                     thisMealTableSummary.update(meal);
                     change.next();
-                    dietViewController.dailySummary.calculateTotalMacro(meal.productsList.get(change.getFrom())); // passing recently added product
+                    dietViewController.dailySummary.calculateTotalMacro(meal.productsList.get(change.getFrom()), change.wasAdded()); // passing recently added product, checking if was added if not to calculate macros correctly
                 }
-                catch (IndexOutOfBoundsException e){
-                    System.out.println("List empty: " + e);
+                catch (IndexOutOfBoundsException e) {
+                    Product removedProduct = (Product) change.getRemoved().get(0);
+                    dietViewController.dailySummary.calculateTotalMacro(removedProduct, change.wasAdded());
                 }
             }
         });
