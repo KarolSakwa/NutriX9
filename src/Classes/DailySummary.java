@@ -65,40 +65,11 @@ public class DailySummary {
         proteinsValue.setText(Helper.twoDecimalsFloat(user.proteinsConsumed).toString());
         carbsValue.setText(Helper.twoDecimalsFloat(user.carbsConsumed).toString());
         fatsValue.setText(Helper.twoDecimalsFloat(user.fatsConsumed).toString());
+
         setStyleClassByRequirements(user.kcalConsumed, diet.kcal, kcalValue, addedProduct);
         setStyleClassByRequirements(user.proteinsConsumed, diet.proteins, proteinsValue, addedProduct);
         setStyleClassByRequirements(user.carbsConsumed, diet.carbs, carbsValue, addedProduct);
         setStyleClassByRequirements(user.fatsConsumed, diet.fats, fatsValue, addedProduct);
-
-        /*
-                Float totalKcal = 0.0F;
-        Float totalProteins = 0.0F;
-        Float totalCarbs = 0.0F;
-        Float totalFats = 0.0F;
-
-        for (ObservableList<Product> productsList : mealTablesContainer.mealsList) {
-            for (Product product : productsList) {
-                totalKcal += product.getKcal();
-                System.out.println(totalKcal);
-                totalProteins += product.getProteins();
-                totalCarbs += product.getCarbs();
-                totalFats += product.getFats();
-            }
-        }
-
-        kcalValue.setText(totalKcal.toString());
-        proteinsValue.setText(totalProteins.toString());
-        carbsValue.setText(totalCarbs.toString());
-        fatsValue.setText(totalFats.toString());
-        if (totalKcal < diet.kcal)
-            kcalValue.getStyleClass().add("daily-value-lower");
-        else
-            kcalValue.getStyleClass().add("daily-value-higher");
-        proteinsValue.getStyleClass().add("daily-value");
-        carbsValue.getStyleClass().add("daily-value");
-        fatsValue.getStyleClass().add("daily-value");
-         */
-
     }
 
     private void addFirstMealButtonOnAction() {
@@ -137,13 +108,16 @@ public class DailySummary {
         dailySummaryContainer.getChildren().addAll(totalDaily, dailyRequirementHeader, dailyRequirement);
     }
     private void setStyleClassByRequirements(Float provided, Float required, Text text, Product addedProduct) {
+        // There is some issue with "getStyleClass().add" so I need to do it another way
         if (provided < required) {
-            text.getStyleClass().add("daily-value-lower");
-            text.getStyleClass().remove("daily-value-higher");
+            text.setStyle("-fx-fill: green;" +
+                    "-fx-font-weight: 900; " +
+                    "-fx-font-size: 16;");
         }
         else {
-            text.getStyleClass().add("daily-value-higher");
-            text.getStyleClass().remove("daily-value-lower");
+            text.setStyle("-fx-fill: red;" +
+                    "-fx-font-weight: 900; " +
+                    "-fx-font-size: 16;");
         }
     }
 
