@@ -33,15 +33,8 @@ public class MealTableSummary {
         meal.productsList.addListener(new ListChangeListener() {
             @Override
             public void onChanged(ListChangeListener.Change change) {
-                try {
-                    thisMealTableSummary.update(meal);
-                    change.next();
-                    dietViewController.dailySummary.calculateTotalMacro(meal.productsList.get(change.getFrom()), change.wasAdded()); // passing recently added product, checking if was added if not to calculate macros correctly
-                }
-                catch (IndexOutOfBoundsException e) {
-                    Product removedProduct = (Product) change.getRemoved().get(0);
-                    dietViewController.dailySummary.calculateTotalMacro(removedProduct, change.wasAdded());
-                }
+                thisMealTableSummary.update(meal);
+                dietViewController.dailySummary.calculateTotalMacro(); // passing recently added product, checking if was added if not to calculate macros correctly
             }
         });
 

@@ -44,21 +44,21 @@ public class DailySummary {
         dailySummaryContainer.getChildren().addAll(totalHeader, addFirstMeal);
     }
 
-    public void calculateTotalMacro(Product addedProduct, Boolean wasAdded) {
-        // this method is called whenever meal or products list is changed. I need to reset every macronutrient counter everytime and calculate it again
+    public void calculateTotalMacro() {
+        // this method is called whenever meal or products list is changed. I need to reset every macronutrient counter everytime and calculate it again\
         User user = dietViewController.user;
+        user.kcalConsumed = 0F;
+        user.proteinsConsumed = 0F;
+        user.carbsConsumed = 0F;
+        user.fatsConsumed = 0F;
 
-        if (wasAdded) {
-            user.kcalConsumed += addedProduct.getKcal();
-            user.proteinsConsumed += addedProduct.getProteins();
-            user.carbsConsumed += addedProduct.getCarbs();
-            user.fatsConsumed += addedProduct.getFats();
-        }
-        else {
-            user.kcalConsumed -= addedProduct.getKcal();
-            user.proteinsConsumed -= addedProduct.getProteins();
-            user.carbsConsumed -= addedProduct.getCarbs();
-            user.fatsConsumed -= addedProduct.getFats();
+        for (Meal meal : dietViewController.user.mealsList) {
+            for (Product product : meal.productsList) {
+                user.kcalConsumed += product.getKcal();
+                user.proteinsConsumed += product.getProteins();
+                user.carbsConsumed += product.getCarbs();
+                user.fatsConsumed += product.getFats();
+            }
         }
 
         kcalValue.setText(Helper.twoDecimalsFloat(user.kcalConsumed).toString());
@@ -66,10 +66,10 @@ public class DailySummary {
         carbsValue.setText(Helper.twoDecimalsFloat(user.carbsConsumed).toString());
         fatsValue.setText(Helper.twoDecimalsFloat(user.fatsConsumed).toString());
 
-        setStyleClassByRequirements(user.kcalConsumed, diet.kcal, kcalValue, addedProduct);
-        setStyleClassByRequirements(user.proteinsConsumed, diet.proteins, proteinsValue, addedProduct);
-        setStyleClassByRequirements(user.carbsConsumed, diet.carbs, carbsValue, addedProduct);
-        setStyleClassByRequirements(user.fatsConsumed, diet.fats, fatsValue, addedProduct);
+        setStyleClassByRequirements(user.kcalConsumed, diet.kcal, kcalValue);
+        setStyleClassByRequirements(user.proteinsConsumed, diet.proteins, proteinsValue);
+        setStyleClassByRequirements(user.carbsConsumed, diet.carbs, carbsValue);
+        setStyleClassByRequirements(user.fatsConsumed, diet.fats, fatsValue);
     }
 
     private void addFirstMealButtonOnAction() {
@@ -107,7 +107,7 @@ public class DailySummary {
 
         dailySummaryContainer.getChildren().addAll(totalDaily, dailyRequirementHeader, dailyRequirement);
     }
-    private void setStyleClassByRequirements(Float provided, Float required, Text text, Product addedProduct) {
+    private void setStyleClassByRequirements(Float provided, Float required, Text text) {
         // There is some issue with "getStyleClass().add" so I need to do it another way
         if (provided < required) {
             text.setStyle("-fx-fill: green;" +
