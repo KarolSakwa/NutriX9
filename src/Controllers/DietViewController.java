@@ -71,6 +71,7 @@ public class DietViewController {
     public void addMealButtonOnAction() {
         if (user.mealsList.size() < 4) {
             createMealTable();
+
         }
     }
 

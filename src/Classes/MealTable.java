@@ -75,8 +75,10 @@ public class MealTable {
         tableContainer.setLayoutY(tableContainerLayoutY);
         mealNameContainer = new HBox();
         mealNameContainer.setAlignment(Pos.CENTER);
-        mealNum = setMealNumber(this);
-        mealName = new Label("Meal " + (mealNum+1));
+        if (mealNum == null)
+            mealName = new Label("Meal 1");
+        else
+            mealName = new Label("Meal " + mealNum+1);
         mealName.setMinWidth(36);
         addProductButton = new Button("Add product");
         addProductButton.setOnAction(e -> addProductButtonOnAction());
@@ -184,16 +186,4 @@ public class MealTable {
         mealTablesContainer.mealTablesList.remove(this);
     }
 
-    public Integer setMealNumber(MealTable mealTable) {
-        ArrayList<Integer> takenNums = new ArrayList<>();
-        for (MealTable mT: mealTablesContainer.mealTablesList){
-            if (!takenNums.contains(mT.mealNum))
-                takenNums.add(mT.mealNum);
-        }
-        for (Integer i = 0; i < MAX_MEALS_NUM+1; i++) {
-            if(!takenNums.contains(i))
-                return i;
-        }
-        return 6;
-    }
 }

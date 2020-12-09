@@ -42,7 +42,10 @@ public class AddProductController {
         selectColumnChoiceBox.setValue(productNameColumn.getText());
         changeUnitInQuantityPromptText();
         addSelectedButton.setOnAction(e -> {
-            addSelectedButtonOnAction(dietViewController.mealTablesContainer.mealTablesList.get(MTIndex));
+            if (MTIndex == null)
+                addSelectedButtonOnAction(dietViewController.mealTablesContainer.mealTablesList.get(0));
+            else
+                addSelectedButtonOnAction(dietViewController.mealTablesContainer.mealTablesList.get(MTIndex));
         });
     }
     public void closeButtonOnAction(){

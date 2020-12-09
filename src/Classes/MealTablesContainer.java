@@ -25,8 +25,10 @@ public class MealTablesContainer {
         dietViewController.user.mealsList.addListener(new ListChangeListener() {
             @Override
             public void onChanged(ListChangeListener.Change change) {
-                //dietViewController.dailySummary.calculateTotalMacro();
-                System.out.println("Meal added");
+                for (Integer i = 0; i < mealTablesList.size(); i++) {
+                    mealTablesList.get(i).mealNum = i+1;
+                }
+                dietViewController.dailySummary.calculateTotalMacro();
             }
         });
 
