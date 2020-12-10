@@ -9,15 +9,10 @@ import javafx.scene.layout.VBox;
 public class MealTablesContainer {
     public VBox vBox;
     DietViewController dietViewController;
-    Integer layoutX, layoutY, height, width;
     public ObservableList<MealTable> mealTablesList = FXCollections.observableArrayList();
 
     public MealTablesContainer(DietViewController dietViewController) {
         this.dietViewController = dietViewController;
-        this.layoutX = layoutX;
-        this.layoutY = layoutY;
-        this.height = height;
-        this.width = width;
     }
 
     public void create() {
@@ -26,7 +21,8 @@ public class MealTablesContainer {
             @Override
             public void onChanged(ListChangeListener.Change change) {
                 for (Integer i = 0; i < mealTablesList.size(); i++) {
-                    mealTablesList.get(i).mealNum = i+1;
+                    mealTablesList.get(i).setMealNum(i);
+                    mealTablesList.get(i).mealName.setText("Meal " + (mealTablesList.get(i).getMealNum() + 1));
                 }
                 dietViewController.dailySummary.calculateTotalMacro();
             }

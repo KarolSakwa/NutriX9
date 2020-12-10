@@ -55,7 +55,7 @@ public class AddProductController {
 
     public void addSelectedButtonOnAction(MealTable mealTable) {
         Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
-        if (!quantityTextField.getText().trim().isEmpty() && selectedProduct != null) {
+        if (!quantityTextField.getText().trim().isEmpty() && selectedProduct != null && isNumeric(quantityTextField.getText())) {
             mealTable.meal.productsList.add(selectedProduct);
             mealTable.insertRow(mealTable.meal.productsList, selectedProduct, Float.valueOf(quantityTextField.getText()), mealTable.tableContent);
             Stage stage = (Stage) addSelectedButton.getScene().getWindow();
@@ -129,5 +129,17 @@ public class AddProductController {
             quantityTextField.setPromptText("Quantity (" + product.getUnitType() + ")");
         });
     }
+
+    private Boolean isNumeric(String string) {
+            if (string == null) {
+                return false;
+            }
+            try {
+                Double d = Double.parseDouble(string);
+            } catch (NumberFormatException nfe) {
+                return false;
+            }
+            return true;
+        }
 }
 

@@ -42,7 +42,7 @@ public class DietViewController {
         tablesContainer.setMinHeight(950);
         tablesContainer.setMinWidth(700);
         tablesContainer.setLayoutX(600);
-        tablesContainer.setLayoutY(100);
+        tablesContainer.setLayoutY(120);
         separator = new Separator();
         separator.setOrientation(Orientation.VERTICAL);
         separator.setMinWidth(50);
@@ -71,16 +71,15 @@ public class DietViewController {
     public void addMealButtonOnAction() {
         if (user.mealsList.size() < 4) {
             createMealTable();
-
         }
     }
 
-    private void createMealTable() {
+    public void createMealTable() {
         Meal meal = new Meal();
-        user.mealsList.add(meal);
         MealTable mealTable = new MealTable(meal, this,1, 1, mealTablesContainer, addProductController);
         mealTable.create();
         mealTablesContainer.mealTablesList.add(mealTable);
+        user.mealsList.add(meal);
     }
 
     public void testButtonOnAction() {

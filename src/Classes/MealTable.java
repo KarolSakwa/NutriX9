@@ -35,7 +35,6 @@ public class MealTable {
 
     public MealTable(Meal meal, DietViewController dietViewController, Integer tableContainerLayoutX, Integer tableContainerLayoutY, MealTablesContainer mealTablesContainer, AddProductController addProductController) {
         this.meal = meal;
-        this.mealNum = mealNum;
         this.tableContainerLayoutX = tableContainerLayoutX;
         this.tableContainerLayoutY = tableContainerLayoutY;
         this.addProductController = addProductController;
@@ -75,10 +74,7 @@ public class MealTable {
         tableContainer.setLayoutY(tableContainerLayoutY);
         mealNameContainer = new HBox();
         mealNameContainer.setAlignment(Pos.CENTER);
-        if (mealNum == null)
-            mealName = new Label("Meal 1");
-        else
-            mealName = new Label("Meal " + mealNum+1);
+        mealName = new Label("");
         mealName.setMinWidth(36);
         addProductButton = new Button("Add product");
         addProductButton.setOnAction(e -> addProductButtonOnAction());
@@ -98,6 +94,7 @@ public class MealTable {
         tableContent = new TableView();
         tableContent.setMinHeight(147);
         tableContent.setMaxHeight(147);
+        tableContent.setPlaceholder(new Label("The meal does not contain any products"));
         createColumns(tableContent);
 
         mealTableSummary = new MealTableSummary(dietViewController);
