@@ -4,11 +4,13 @@ import Controllers.DietViewController;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
 public class MealTablesContainer {
     public VBox vBox;
     DietViewController dietViewController;
+    public Button addMealButton;
     public ObservableList<MealTable> mealTablesList = FXCollections.observableArrayList();
 
     public MealTablesContainer(DietViewController dietViewController) {
@@ -24,11 +26,35 @@ public class MealTablesContainer {
                     mealTablesList.get(i).setMealNum(i);
                     mealTablesList.get(i).mealName.setText("Meal " + (mealTablesList.get(i).getMealNum() + 1));
                 }
+                if (dietViewController.user.mealsList.size() > 3)
+                    addMealButton.setVisible(false);
+                else
+                    addMealButton.setVisible(true);
+                if (dietViewController.user.mealsList.size() < 1) {
+                    dietViewController.dailySummary.rightPanelNoMeals();
+                    dietViewController.dailySummary.hideDailySummary();
+                }
+                else
+                    dietViewController.dailySummary.setRightPanelContent();
                 dietViewController.dailySummary.calculateTotalMacro();
             }
         });
 
         vBox = new VBox();
-
+        addMealButton = new Button("Add another meal");
+        addMealButton.setVisible(false); // will show up only when first meal is added
+        addMealButton.setOnAction(e -> addMealButtonOnAction());
+        vBox.getChildren().add(addMealButton);
     }
+
+    public void addMealButtonOnAction() {
+        if (dietViewController.user.mealsList.size() < 4) {
+            Meal meal = new Meal();
+            MealTable mealTable = new MealTable(meal, dietViewController,1, 1, this, dietViewController.addProductController);
+            mealTable.create();
+            mealTablesList.add(mealTable);
+            dietViewController.user.mealsList.add(meal);;
+        }
+    }
+
 }

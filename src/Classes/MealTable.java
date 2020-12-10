@@ -178,9 +178,9 @@ public class MealTable {
     }
 
     private void deleteMealButtonOnAction(MealTablesContainer mealTablesContainer) {
-        dietViewController.user.mealsList.remove(this.meal);
         mealTablesContainer.vBox.getChildren().removeAll(this.tableContainer, this.mealTableSummary.tableSummary, this.mealNameContainer);
         mealTablesContainer.mealTablesList.remove(this);
+        dietViewController.user.mealsList.remove(this.meal);
     }
 
 }

@@ -21,14 +21,13 @@ public class DietViewController {
     Connection con = databaseConnection.getConnection();
     @FXML Label dietNameLabel;
     @FXML Pane dietViewPane;
-    AddProductController addProductController = new AddProductController(this);
+    public AddProductController addProductController = new AddProductController(this);
     public MealTablesContainer mealTablesContainer = new MealTablesContainer(this);
     public Separator separator;
     HBox tablesContainer;
     public DailySummary dailySummary;
     public Diet diet;
     public User user;
-
 
     public DietViewController(SelectProfileController selectProfileController) {
         String username = selectProfileController.getUsername();
@@ -42,7 +41,7 @@ public class DietViewController {
         tablesContainer.setMinHeight(950);
         tablesContainer.setMinWidth(700);
         tablesContainer.setLayoutX(600);
-        tablesContainer.setLayoutY(120);
+        tablesContainer.setLayoutY(110);
         separator = new Separator();
         separator.setOrientation(Orientation.VERTICAL);
         separator.setMinWidth(50);
@@ -68,19 +67,6 @@ public class DietViewController {
         thisStage.show();
     }
 
-    public void addMealButtonOnAction() {
-        if (user.mealsList.size() < 4) {
-            createMealTable();
-        }
-    }
-
-    public void createMealTable() {
-        Meal meal = new Meal();
-        MealTable mealTable = new MealTable(meal, this,1, 1, mealTablesContainer, addProductController);
-        mealTable.create();
-        mealTablesContainer.mealTablesList.add(mealTable);
-        user.mealsList.add(meal);
-    }
 
     public void testButtonOnAction() {
     }
