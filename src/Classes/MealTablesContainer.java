@@ -12,6 +12,7 @@ public class MealTablesContainer {
     DietViewController dietViewController;
     public Button addMealButton;
     public ObservableList<MealTable> mealTablesList = FXCollections.observableArrayList();
+    final Integer MAX_MEALS_NUM = 4;
 
     public MealTablesContainer(DietViewController dietViewController) {
         this.dietViewController = dietViewController;
@@ -26,16 +27,22 @@ public class MealTablesContainer {
                     mealTablesList.get(i).setMealNum(i);
                     mealTablesList.get(i).mealName.setText("Meal " + (mealTablesList.get(i).getMealNum() + 1));
                 }
-                if (dietViewController.user.mealsList.size() > 3)
+                if (dietViewController.user.mealsList.size() <= MAX_MEALS_NUM) // addmealbutton displaying turned off if there's enough meals already
                     addMealButton.setVisible(false);
                 else
                     addMealButton.setVisible(true);
+
+                // change of right panel content based on whether there are meals in user's meals list or not
+
                 if (dietViewController.user.mealsList.size() < 1) {
-                    dietViewController.dailySummary.rightPanelNoMeals();
-                    dietViewController.dailySummary.hideDailySummary();
+                    dietViewController.dailySummary.hideDailySummaryContent();
+                    dietViewController.dailySummary.showRightPanelNoMealsContent();
                 }
-                else
-                    dietViewController.dailySummary.setRightPanelContent();
+                else {
+                    dietViewController.dailySummary.showDailySummaryContent();
+                    dietViewController.dailySummary.hideRightPanelNoMealsContent();
+                }
+
                 dietViewController.dailySummary.calculateTotalMacro();
             }
         });

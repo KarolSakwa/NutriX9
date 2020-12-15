@@ -4,7 +4,8 @@ import Controllers.DietViewController;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
@@ -23,6 +24,7 @@ public class DailySummary {
     Diet diet;
     public DietViewController dietViewController;
     User user;
+    public Boolean firstMealAdded = false;
 
 
     public DailySummary(DietViewController dietViewController) {
@@ -34,9 +36,13 @@ public class DailySummary {
         dailySummaryContainer = new VBox(20);
         dailySummaryContainer.setAlignment(Pos.CENTER);
         dailySummaryContainer.setPrefWidth(500);
+        setDailySummaryContent();
+        hideDailySummaryContent();
+        setRightPanelNoMeals();
+        dailySummaryContainer.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT))); // DEBUG
         user = dietViewController.user;
-        rightPanelNoMeals();
     }
+
 
     public void calculateTotalMacro() {
         // this method is called whenever meal or products list is changed. I need to reset every macronutrient counter everytime and calculate it again\
@@ -68,9 +74,11 @@ public class DailySummary {
     private void addFirstMealButtonOnAction() {
         addFirstMeal.setVisible(false);
         emptyHeader.setVisible(false);
-        setRightPanelContent();
+        showDailySummaryContent();
         dietViewController.mealTablesContainer.addMealButtonOnAction();
         dietViewController.mealTablesContainer.addMealButton.setVisible(true);
+        firstMealAdded = true;
+
 
     }
     private void setStyleClassByRequirements(Float provided, Float required, Text text) {
@@ -87,7 +95,7 @@ public class DailySummary {
         }
     }
 
-    public void setRightPanelContent() {
+    public void setDailySummaryContent() {
         totalHeader.setText("You have eaten today: ");
         kcalText.setText(" kcal ");
         proteinsText.setText(" proteins ");
@@ -98,8 +106,8 @@ public class DailySummary {
         proteinsText.getStyleClass().add("daily-text");
         carbsText.getStyleClass().add("daily-text");
         fatsText.getStyleClass().add("daily-text");
-        if(!totalDaily.getChildren().contains(kcalValue))
-            totalDaily.getChildren().addAll(kcalValue, kcalText, proteinsValue, proteinsText, carbsValue, carbsText, fatsValue, fatsText);
+
+        totalDaily.getChildren().addAll(kcalValue, kcalText, proteinsValue, proteinsText, carbsValue, carbsText, fatsValue, fatsText);
         totalDaily.setTextAlignment(TextAlignment.CENTER);
 
         kcalReqText.setText(diet.kcal.toString());
@@ -114,33 +122,49 @@ public class DailySummary {
         dailyRequirementHeader.setText("Your daily requirement: ");
         dailyRequirement.setTextAlignment(TextAlignment.CENTER);
         dailyRequirement.getStyleClass().add("daily-text");
-        if (!dailyRequirement.getChildren().contains(kcalReqText))
-            dailyRequirement.getChildren().addAll(kcalReqText, kcalText2, proteinsReqText, proteinsText2, carbsReqText, carbsText2, fatsReqText, fatsText2);
+
+        dailyRequirement.getChildren().addAll(kcalReqText, kcalText2, proteinsReqText, proteinsText2, carbsReqText, carbsText2, fatsReqText, fatsText2);
+
+        dietViewController.separator.setVisible(true);
+        dailySummaryContainer.getChildren().addAll(totalHeader, totalDaily, dailyRequirementHeader, dailyRequirement);
+
+    }
+
+    public void showDailySummaryContent() {
         for (Node children: totalDaily.getChildren())
             children.setVisible(true);
         for (Node children: dailyRequirement.getChildren())
             children.setVisible(true);
-
-        dietViewController.separator.setVisible(true);
-        if (!dailyRequirement.getChildren().contains(totalHeader))
-            dailySummaryContainer.getChildren().addAll(totalHeader, totalDaily, dailyRequirementHeader, dailyRequirement);
         for (Node children: dailySummaryContainer.getChildren())
             children.setVisible(true);
+        dietViewController.separator.setVisible(true);
     }
 
-    public void rightPanelNoMeals() {
+    public void hideDailySummaryContent() {
+        for (Node children: totalDaily.getChildren())
+            children.setVisible(false);
+        for (Node children: dailyRequirement.getChildren())
+            children.setVisible(false);
+        for (Node children: dailySummaryContainer.getChildren())
+            children.setVisible(false);
+        dietViewController.separator.setVisible(false);
+    }
+
+    public void setRightPanelNoMeals() {
         emptyHeader.setText("You have no meals in today's nutritional diary.");
         addFirstMeal.setText("Add meal");
         addFirstMeal.setOnAction(e -> addFirstMealButtonOnAction());
-        if(!dailySummaryContainer.getChildren().contains(emptyHeader))
-            dailySummaryContainer.getChildren().addAll(emptyHeader, addFirstMeal);
+        dailySummaryContainer.getChildren().addAll(emptyHeader, addFirstMeal);
     }
-    public void hideDailySummary() {
-        addFirstMeal.setVisible(true);
+
+    public void showRightPanelNoMealsContent() {
         emptyHeader.setVisible(true);
-        totalHeader.setVisible(false);
-        totalDaily.setVisible(false);
-        dailyRequirement.setVisible(false);
+        addFirstMeal.setVisible(true);
+    }
+
+    public void hideRightPanelNoMealsContent() {
+        emptyHeader.setVisible(false);
+        addFirstMeal.setVisible(false);
     }
 
 }

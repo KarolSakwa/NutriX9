@@ -29,7 +29,6 @@ public class MealTable {
     DietViewController dietViewController;
     MealTablesContainer mealTablesContainer;
     Separator separator;
-    final Integer MAX_MEALS_NUM = 4;
     public Meal meal;
 
 
