@@ -27,7 +27,7 @@ public class MealTablesContainer {
                     mealTablesList.get(i).setMealNum(i);
                     mealTablesList.get(i).mealName.setText("Meal " + (mealTablesList.get(i).getMealNum() + 1));
                 }
-                if (dietViewController.user.mealsList.size() <= MAX_MEALS_NUM) // addmealbutton displaying turned off if there's enough meals already
+                if (dietViewController.user.mealsList.size() == MAX_MEALS_NUM) // addmealbutton displaying turned off if there's enough meals already
                     addMealButton.setVisible(false);
                 else
                     addMealButton.setVisible(true);

@@ -7,6 +7,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 
@@ -31,6 +33,7 @@ public class AddProductController {
     @FXML TableColumn productNameColumn, quantityTableColumn, kcalColumn, proteinsColumn, carbsColumn,
             fatsColumn, macronutrientColumn, categoryColumn, wholesomenessIndexColumn, priceColumn;
     @FXML Label qualityAlertLabel;
+    @FXML BorderPane mainBorderPane;
 
 
     public AddProductController(DietViewController dietViewController) {
@@ -41,6 +44,7 @@ public class AddProductController {
         selectColumnChoiceBox.getItems().addAll(productNameColumn.getText(), macronutrientColumn.getText(), categoryColumn.getText(), wholesomenessIndexColumn.getText());
         selectColumnChoiceBox.setValue(productNameColumn.getText());
         changeUnitInQuantityPromptText();
+        mainBorderPane.setBorder(new Border(new BorderStroke(Color.rgb(0, 0, 0, 0.3), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         addSelectedButton.setOnAction(e -> {
             if (MTIndex == null)
                 addSelectedButtonOnAction(dietViewController.mealTablesContainer.mealTablesList.get(0));
