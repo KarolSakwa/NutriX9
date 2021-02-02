@@ -53,10 +53,10 @@ public class DietViewController {
             e.getCause();
         }
         dailySummary.create();
-        styleTopBar();
+        //styleTopBar();
         tablesContainer.getChildren().addAll(mealTablesContainer.vBox, separator, dailySummary.dailySummaryContainer);
         dietViewPane.setStyle("-fx-background-color: #fff;");
-        dietViewPane.getChildren().addAll(topBar, tablesContainer);
+        dietViewPane.getChildren().addAll(tablesContainer);
 
     }
 
@@ -83,11 +83,11 @@ public class DietViewController {
         topBar.setStyle("-fx-background-color: " + MAINCOLOR);
         topBar.setLayoutX(0);
         topBar.setLayoutY(0);
-        topBar.setBorder(new Border(new BorderStroke(Color.rgb(0, 0, 0, 0.1), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-        dietImage = new ImageView("/img/diet.png");
-        dietImage.setFitHeight(60);
-        dietImage.setFitWidth(60);
-        topBar.getChildren().addAll(dietImage, dietNameLabel);
+        //topBar.setBorder(new Border(new BorderStroke(Color.rgb(0, 0, 0, 0.1), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        //dietImage = new ImageView("/img/diet.png");
+        //dietImage.setFitHeight(60);
+        //dietImage.setFitWidth(60);
+        topBar.getChildren().addAll(dietNameLabel);
     }
 
 

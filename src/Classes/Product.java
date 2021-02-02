@@ -94,8 +94,6 @@ public class Product {
                 return "gr";
             case "milliliter":
                 return "ml";
-            case "unit":
-                return "U";
             default:
                 return "";
         }

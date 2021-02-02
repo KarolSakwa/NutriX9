@@ -4,6 +4,7 @@ import Controllers.DietViewController;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
@@ -48,10 +49,12 @@ public class MealTablesContainer {
         });
 
         vBox = new VBox();
-        addMealButton = new Button("Add another meal");
+        addMealButton = new Button("ADD ANOTHER MEAL");
         addMealButton.setVisible(false); // will show up only when first meal is added
         addMealButton.setOnAction(e -> addMealButtonOnAction());
         vBox.getChildren().add(addMealButton);
+        vBox.setAlignment(Pos.TOP_CENTER);
+        vBox.setSpacing(10);
     }
 
     public void addMealButtonOnAction() {

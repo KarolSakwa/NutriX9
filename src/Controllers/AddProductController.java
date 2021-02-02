@@ -44,7 +44,7 @@ public class AddProductController {
         selectColumnChoiceBox.getItems().addAll(productNameColumn.getText(), macronutrientColumn.getText(), categoryColumn.getText(), wholesomenessIndexColumn.getText());
         selectColumnChoiceBox.setValue(productNameColumn.getText());
         changeUnitInQuantityPromptText();
-        mainBorderPane.setBorder(new Border(new BorderStroke(Color.rgb(0, 0, 0, 0.3), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        //mainBorderPane.setBorder(new Border(new BorderStroke(Color.rgb(0, 0, 0, 0.3), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         addSelectedButton.setOnAction(e -> {
             if (MTIndex == null)
                 addSelectedButtonOnAction(dietViewController.mealTablesContainer.mealTablesList.get(0));
@@ -59,9 +59,13 @@ public class AddProductController {
 
     public void addSelectedButtonOnAction(MealTable mealTable) {
         Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
+        Integer realUnitQuantity = Integer.parseInt(selectedProduct.getUnitQuantity().replaceAll("[^0-9]", ""));
         if (!quantityTextField.getText().trim().isEmpty() && selectedProduct != null && isNumeric(quantityTextField.getText())) {
             mealTable.meal.productsList.add(selectedProduct);
-            mealTable.insertRow(mealTable.meal.productsList, selectedProduct, Float.valueOf(quantityTextField.getText()), mealTable.tableContent);
+            if (realUnitQuantity <= 1)
+                mealTable.insertRow(mealTable.meal.productsList, selectedProduct, Float.valueOf(quantityTextField.getText()), mealTable.tableContent);
+            else
+                mealTable.insertRow(mealTable.meal.productsList, selectedProduct, Float.valueOf(quantityTextField.getText())/realUnitQuantity, mealTable.tableContent);
             Stage stage = (Stage) addSelectedButton.getScene().getWindow();
             stage.close();
             quantityTextField.setText("");

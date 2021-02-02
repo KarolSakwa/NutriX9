@@ -126,7 +126,7 @@ public class MealTable {
         WIColumn.setCellValueFactory(new PropertyValueFactory<>("wholesomenessIndex"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        quantityColumn.setMinWidth(85);
+        quantityColumn.setMinWidth(55);
         nameColumn.setMinWidth(120);
         kcalColumn.setMaxWidth(53);
         proteinsColumn.setMaxWidth(50);
@@ -144,13 +144,25 @@ public class MealTable {
         WIColumn.setResizable(false);
         priceColumn.setResizable(false);
 
+        quantityColumn.setStyle( "-fx-alignment: CENTER;");
+        kcalColumn.setStyle( "-fx-alignment: CENTER;");
+        proteinsColumn.setStyle( "-fx-alignment: CENTER;");
+        carbsColumn.setStyle( "-fx-alignment: CENTER;");
+        fatsColumn.setStyle( "-fx-alignment: CENTER;");
+        WIColumn.setStyle( "-fx-alignment: CENTER;");
+        priceColumn.setStyle( "-fx-alignment: CENTER;");
+
         table.getColumns().addAll(quantityColumn, nameColumn, kcalColumn, proteinsColumn, carbsColumn, fatsColumn, WIColumn, priceColumn);
     }
 
     public void insertRow(ObservableList<Product> productsList, Product product, Float quantity, TableView table) {
         table.getItems().clear();
         Product productCopy = new Product(product.getName(), product.getKcal(), product.getProteins(), product.getCarbs(), product.getFats(), product.getMacronutrientCategory(), product.getCategory(), product.getWholesomenessIndex(), product.getUnitType(), product.getUnitQuantity(), product.getPrice());
-        productCopy.setUnitQuantity(quantity + " " + product.getShorterUnit());
+        Integer realUnitQuantity = Integer.parseInt(productCopy.getUnitQuantity().replaceAll("[^0-9]", ""));
+        if (realUnitQuantity <= 1)
+            productCopy.setUnitQuantity(Math.round(quantity) + " " + product.getShorterUnit());
+        else
+            productCopy.setUnitQuantity(Math.round(quantity * realUnitQuantity) + " " + product.getShorterUnit());
         productCopy.setKcal(Helper.twoDecimalsFloat(product.getKcal() * quantity));
         productCopy.setProteins(Helper.twoDecimalsFloat(product.getProteins() * quantity));
         productCopy.setCarbs(Helper.twoDecimalsFloat(product.getCarbs() * quantity));

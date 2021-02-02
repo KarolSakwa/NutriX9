@@ -16,6 +16,6 @@
             <Font name="System Bold" size="12.0" />
          </font></Label>
       <Label fx:id="kcal1Label" layoutX="253.0" layoutY="150.0" text="Label" visible="false" />
-      <Button fx:id="testButton" layoutX="130.0" layoutY="713.0" mnemonicParsing="false" onAction="#testButtonOnAction" text="Test Button" />
+      <Button fx:id="testButton" layoutX="130.0" layoutY="713.0" mnemonicParsing="false" onAction="#testButtonOnAction" text="Test Button" visible="false" />
    </children>
 </Pane>

@@ -66,6 +66,13 @@ public class MealTableSummary {
         WISummary.setMaxWidth(mealTable.WIColumn.getWidth());
         priceSummary.setMaxWidth(mealTable.priceColumn.getWidth());
 
+        kcalSummary.setStyle( "-fx-alignment: CENTER;");
+        proteinsSummary.setStyle( "-fx-alignment: CENTER;");
+        carbsSummary.setStyle( "-fx-alignment: CENTER;");
+        fatsSummary.setStyle( "-fx-alignment: CENTER;");
+        WISummary.setStyle( "-fx-alignment: CENTER;");
+        priceSummary.setStyle( "-fx-alignment: CENTER;");
+
         totalKcal = 0.0F;
         totalProteins = 0.0F;
         totalCarbs = 0.0F;
@@ -74,7 +81,7 @@ public class MealTableSummary {
         totalPrice = 0.0F;
 
         Product product = new Product("" , 0.0F, 0.0F, 0.0F, 0.0F, "",
-                "", 0, "", "", 0.0F); // just to display zeros instead of blank space
+                "", 0, "", "", 0.0F); // just to display zeros instead of blanks
 
         tableSummary.getColumns().addAll(emptyColumn, kcalSummary, proteinsSummary, carbsSummary, fatsSummary, WISummary, priceSummary);
         tableSummary.getStyleClass().add(("table-summary"));
@@ -103,10 +110,11 @@ public class MealTableSummary {
             totalProteins += Helper.twoDecimalsFloat(meal.productsList.get(i).getProteins());
             totalCarbs += Helper.twoDecimalsFloat(meal.productsList.get(i).getCarbs());
             totalFats += Helper.twoDecimalsFloat(meal.productsList.get(i).getFats());
-            totalWI += meal.productsList.get(i).getWholesomenessIndex();
+            totalWI += meal.productsList.get(i).getWholesomenessIndex().intValue();
             totalPrice += Helper.twoDecimalsFloat(meal.productsList.get(i).getPrice());
         }
-        Product totalProduct = new Product("Total", totalKcal, totalProteins, totalCarbs, totalFats, "", "", totalWI.intValue(), "", "", totalPrice);
+        totalWI = totalWI != 0 ? totalWI / meal.productsList.size() : totalWI;
+        Product totalProduct = new Product("Total", totalKcal, totalProteins, totalCarbs, totalFats, "", "", totalWI, "", "", totalPrice);
         tableSummary.getItems().add(totalProduct);
     }
 

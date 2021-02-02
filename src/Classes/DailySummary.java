@@ -39,7 +39,7 @@ public class DailySummary {
         setDailySummaryContent();
         hideDailySummaryContent();
         setRightPanelNoMeals();
-        dailySummaryContainer.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT))); // DEBUG
+        //dailySummaryContainer.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT))); // DEBUG
         user = dietViewController.user;
     }
 
