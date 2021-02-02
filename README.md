@@ -1,3 +1,5 @@
+![NutriX9 select profile](https://github.com/KarolSakwa/NutriX9/blob/branch2/NutriX9%20screen.png?raw=true "NutriX9")
+
 # NutriX9
 Dekstop diet application
 
