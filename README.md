@@ -1,4 +1,8 @@
-![NutriX9 select profile](https://github.com/KarolSakwa/NutriX9/blob/branch2/NutriX9%20screen.png?raw=true "NutriX9")
+![NutriX9 select profile](https://github.com/KarolSakwa/NutriX9/blob/branch2/NutriX9%20screen.png?raw=true "NutriX9 select profile view")
+
+![NutriX9 add product view](https://github.com/KarolSakwa/NutriX9/blob/branch2/addProductView.JPG?raw=true "NutriX9 add product view")
+
+![NutriX9 diet view](https://github.com/KarolSakwa/NutriX9/blob/branch2/dietView.JPG?raw=true "NutriX9 diet view")
 
 # NutriX9
 Dekstop diet application
