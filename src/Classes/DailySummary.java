@@ -5,7 +5,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
@@ -25,6 +24,7 @@ public class DailySummary {
     public DietViewController dietViewController;
     User user;
     public Boolean firstMealAdded = false;
+    VBox welcomeTextContainer;
 
 
     public DailySummary(DietViewController dietViewController) {
@@ -34,8 +34,9 @@ public class DailySummary {
     public void create() {
         diet = dietViewController.diet;
         dailySummaryContainer = new VBox(20);
-        dailySummaryContainer.setAlignment(Pos.CENTER);
+        dailySummaryContainer.setAlignment(Pos.TOP_LEFT);
         dailySummaryContainer.setPrefWidth(500);
+        dailySummaryContainer.setPrefHeight(1000);
         setDailySummaryContent();
         hideDailySummaryContent();
         setRightPanelNoMeals();
@@ -72,13 +73,12 @@ public class DailySummary {
     }
 
     private void addFirstMealButtonOnAction() {
-        addFirstMeal.setVisible(false);
-        emptyHeader.setVisible(false);
+        welcomeTextContainer.setVisible(false);
         showDailySummaryContent();
         dietViewController.mealTablesContainer.addMealButtonOnAction();
         dietViewController.mealTablesContainer.addMealButton.setVisible(true);
         firstMealAdded = true;
-
+        dailySummaryContainer.setAlignment(Pos.CENTER);
 
     }
     private void setStyleClassByRequirements(Float provided, Float required, Text text) {
@@ -147,24 +147,27 @@ public class DailySummary {
             children.setVisible(false);
         for (Node children: dailySummaryContainer.getChildren())
             children.setVisible(false);
+        dailySummaryContainer.setAlignment(Pos.TOP_LEFT);
         dietViewController.separator.setVisible(false);
     }
 
     public void setRightPanelNoMeals() {
+        welcomeTextContainer = new VBox();
         emptyHeader.setText("You have no meals in today's nutritional diary.");
+        //!!!!!!!!!!!!!!!!!!!emptyHeader.style
         addFirstMeal.setText("Add meal");
         addFirstMeal.setOnAction(e -> addFirstMealButtonOnAction());
-        dailySummaryContainer.getChildren().addAll(emptyHeader, addFirstMeal);
+        welcomeTextContainer.setAlignment(Pos.CENTER);
+        welcomeTextContainer.getChildren().addAll(emptyHeader, addFirstMeal);
+        dailySummaryContainer.getChildren().addAll(welcomeTextContainer);
     }
 
     public void showRightPanelNoMealsContent() {
-        emptyHeader.setVisible(true);
-        addFirstMeal.setVisible(true);
+        welcomeTextContainer.setVisible(true);
     }
 
     public void hideRightPanelNoMealsContent() {
-        emptyHeader.setVisible(false);
-        addFirstMeal.setVisible(false);
+        welcomeTextContainer.setVisible(false);
     }
 
 }

@@ -38,6 +38,7 @@ public class MealTablesContainer {
                 if (dietViewController.user.mealsList.size() < 1) {
                     dietViewController.dailySummary.hideDailySummaryContent();
                     dietViewController.dailySummary.showRightPanelNoMealsContent();
+                    addMealButton.setVisible(false);
                 }
                 else {
                     dietViewController.dailySummary.showDailySummaryContent();

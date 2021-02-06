@@ -31,7 +31,7 @@ public class DietViewController {
     public User user;
     ImageView dietImage;
     public final String MAINCOLOR = "#99deee";
-    public final Integer WINDOWHEIGHT = 999, WINDOWWIDTH = 1680;
+    public final Integer WINDOWHEIGHT = 1000, WINDOWWIDTH = 1680;
 
     public DietViewController(SelectProfileController selectProfileController) {
         String username = selectProfileController.getUsername();
@@ -68,7 +68,7 @@ public class DietViewController {
     }
 
     private void styleTopBar() {
-        topBar = new HBox(10);
+        topBar = new HBox(20);
         topBar.setMinHeight(60);
         topBar.setMinWidth(WINDOWWIDTH);
         topBar.setStyle("-fx-background-color: " + MAINCOLOR);
@@ -76,12 +76,15 @@ public class DietViewController {
         topBar.setLayoutY(0);
         topBar.setAlignment(Pos.CENTER_LEFT);
         topBar.setBorder(new Border(new BorderStroke(Color.rgb(0, 0, 0, 0.1), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        dietNameLabel = new Label(diet.name);
+        dietNameLabel.getStyleClass().add("dietNameLabel");
         dietImage = new ImageView("/img/diet.png");
         dietImage.setFitHeight(60);
         dietImage.setFitWidth(60);
-        dietNameLabel = new Label(diet.name);
 
         topBar.getChildren().addAll(dietNameLabel, dietImage);
+        dietNameLabel.toFront();
+        dietImage.toBack();
     }
 
 }
