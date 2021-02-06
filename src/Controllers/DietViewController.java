@@ -3,11 +3,13 @@ package Controllers;
 import Classes.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -29,7 +31,7 @@ public class DietViewController {
     public User user;
     ImageView dietImage;
     public final String MAINCOLOR = "#99deee";
-    public final Integer WINDOWHEIGHT = 1020, WINDOWWIDTH = 1680;
+    public final Integer WINDOWHEIGHT = 999, WINDOWWIDTH = 1680;
 
     public DietViewController(SelectProfileController selectProfileController) {
         String username = selectProfileController.getUsername();
@@ -41,23 +43,12 @@ public class DietViewController {
         //thisStage.initStyle(StageStyle.DECORATED); // DEBUG
         mealTablesContainer.create();
         styleTablesContainer();
-        String query = "SELECT * FROM diets WHERE username = '" + username + "';";
-        try {
-            Statement statement = con.createStatement();
-            ResultSet usersDiet = statement.executeQuery(query);
-            usersDiet.next();
-            diet = new Diet(con, usersDiet.getString("diet_name"), username);
-            dietNameLabel = new Label(diet.name);
-        } catch (Exception e) {
-            e.printStackTrace();
-            e.getCause();
-        }
+        diet = Helper.getDiet(con, username);
         dailySummary.create();
-        //styleTopBar();
+        styleTopBar();
         tablesContainer.getChildren().addAll(mealTablesContainer.vBox, separator, dailySummary.dailySummaryContainer);
         dietViewPane.setStyle("-fx-background-color: #fff;");
-        dietViewPane.getChildren().addAll(tablesContainer);
-
+        dietViewPane.getChildren().addAll(tablesContainer, topBar);
     }
 
     public void showStage() {
@@ -83,15 +74,14 @@ public class DietViewController {
         topBar.setStyle("-fx-background-color: " + MAINCOLOR);
         topBar.setLayoutX(0);
         topBar.setLayoutY(0);
-        //topBar.setBorder(new Border(new BorderStroke(Color.rgb(0, 0, 0, 0.1), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-        //dietImage = new ImageView("/img/diet.png");
-        //dietImage.setFitHeight(60);
-        //dietImage.setFitWidth(60);
-        topBar.getChildren().addAll(dietNameLabel);
-    }
+        topBar.setAlignment(Pos.CENTER_LEFT);
+        topBar.setBorder(new Border(new BorderStroke(Color.rgb(0, 0, 0, 0.1), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        dietImage = new ImageView("/img/diet.png");
+        dietImage.setFitHeight(60);
+        dietImage.setFitWidth(60);
+        dietNameLabel = new Label(diet.name);
 
-
-    public void testButtonOnAction() {
+        topBar.getChildren().addAll(dietNameLabel, dietImage);
     }
 
 }

@@ -1,6 +1,0 @@
-Smaller bugs that need to be fixed:
-
-
-MealTableSummary resizes the first time I want to add product into the table. One can only see it when add product window is closed without selecting any product.
-
-When you try to add and delete meals you can end up with two meals with the same number (ID)
