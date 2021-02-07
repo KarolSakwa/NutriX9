@@ -31,7 +31,7 @@ public class DietViewController {
     public User user;
     ImageView dietImage;
     public final String MAINCOLOR = "#99deee";
-    public final Integer WINDOWHEIGHT = 1000, WINDOWWIDTH = 1680;
+    public final Integer WINDOWHEIGHT = 1020, WINDOWWIDTH = 1680;
 
     public DietViewController(SelectProfileController selectProfileController) {
         String username = selectProfileController.getUsername();

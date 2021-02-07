@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
@@ -35,7 +36,7 @@ public class DailySummary {
         diet = dietViewController.diet;
         dailySummaryContainer = new VBox(20);
         dailySummaryContainer.setAlignment(Pos.TOP_LEFT);
-        dailySummaryContainer.setPrefWidth(500);
+        dailySummaryContainer.setPrefWidth(200);
         dailySummaryContainer.setPrefHeight(1000);
         setDailySummaryContent();
         hideDailySummaryContent();
@@ -138,6 +139,7 @@ public class DailySummary {
         for (Node children: dailySummaryContainer.getChildren())
             children.setVisible(true);
         dietViewController.separator.setVisible(true);
+        dailySummaryContainer.setPrefWidth(500);
     }
 
     public void hideDailySummaryContent() {
@@ -152,9 +154,8 @@ public class DailySummary {
     }
 
     public void setRightPanelNoMeals() {
-        welcomeTextContainer = new VBox();
+        welcomeTextContainer = new VBox(20);
         emptyHeader.setText("You have no meals in today's nutritional diary.");
-        //!!!!!!!!!!!!!!!!!!!emptyHeader.style
         addFirstMeal.setText("Add meal");
         addFirstMeal.setOnAction(e -> addFirstMealButtonOnAction());
         welcomeTextContainer.setAlignment(Pos.CENTER);
