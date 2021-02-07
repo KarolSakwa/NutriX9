@@ -11,7 +11,6 @@ public class Main extends Application {
         window.createWindow("../fxml/selectProfile.fxml", false, primaryStage, false, 520, 400);
     }
 
-
     public static void main(String[] args) {
         launch(args);
     }

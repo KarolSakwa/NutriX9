@@ -11,12 +11,6 @@ public class Product {
 
     private Float quantity;
     private Integer wholesomenessIndex;
-    public final String kcalAbbr = "K";
-    public final String proteinsAbbr = "P";
-    public final String carbsAbbr = "C";
-    public final String fatsAbbr = "F";
-    public final String priceAbbr = "zł";
-
 
     public Float getKcal() {
         return kcal;

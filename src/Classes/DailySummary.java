@@ -5,16 +5,12 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 
-import java.sql.Connection;
 
 public class DailySummary {
-    DatabaseConnection databaseConnection = new DatabaseConnection();
-    Connection con = databaseConnection.getConnection();
     public VBox dailySummaryContainer;
     TextFlow totalDaily = new TextFlow(), dailyRequirement = new TextFlow();
     Text totalHeader = new Text(), emptyHeader = new Text(), dailyRequirementHeader = new Text(), kcalText = new Text(), proteinsText = new Text(), carbsText = new Text(),
@@ -41,13 +37,11 @@ public class DailySummary {
         setDailySummaryContent();
         hideDailySummaryContent();
         setRightPanelNoMeals();
-        //dailySummaryContainer.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT))); // DEBUG
         user = dietViewController.user;
     }
 
-
     public void calculateTotalMacro() {
-        // this method is called whenever meal or products list is changed. I need to reset every macronutrient counter everytime and calculate it again\
+        // this method is called whenever meal or products list is changed. I need to reset every macronutrient counter everytime and calculate it again
         user.kcalConsumed = 0F;
         user.proteinsConsumed = 0F;
         user.carbsConsumed = 0F;
@@ -80,8 +74,8 @@ public class DailySummary {
         dietViewController.mealTablesContainer.addMealButton.setVisible(true);
         firstMealAdded = true;
         dailySummaryContainer.setAlignment(Pos.CENTER);
-
     }
+
     private void setStyleClassByRequirements(Float provided, Float required, Text text) {
         // There is some issue with "getStyleClass().add" so I need to do it another way
         if (provided < required) {
@@ -128,7 +122,6 @@ public class DailySummary {
 
         dietViewController.separator.setVisible(true);
         dailySummaryContainer.getChildren().addAll(totalHeader, totalDaily, dailyRequirementHeader, dailyRequirement);
-
     }
 
     public void showDailySummaryContent() {

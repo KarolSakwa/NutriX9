@@ -1,19 +1,13 @@
 package Classes;
 
-import Controllers.DietViewController;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 public class User {
-
     DatabaseConnection databaseConnection = new DatabaseConnection();
-    Connection con = databaseConnection.getConnection();
 
     private ResultSet userData;
     private String query;
@@ -42,5 +36,4 @@ public class User {
             e.getCause();
         }
     }
-
 }

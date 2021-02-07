@@ -2,13 +2,9 @@ package Classes;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Diet {
-
-    DatabaseConnection databaseConnection = new DatabaseConnection();
-    Connection con = databaseConnection.getConnection();
 
     private ResultSet dietData;
     private String query;

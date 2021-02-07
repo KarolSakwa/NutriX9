@@ -1,19 +1,12 @@
 package Controllers;
 
-
 import Classes.ChildrenWindow;
 import Classes.DatabaseConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Statement;
 
@@ -21,11 +14,8 @@ public class AddNewProfileController {
     DatabaseConnection databaseConnection = new DatabaseConnection();
     Connection con = databaseConnection.getConnection();
     Stage thisStage = new Stage();
-    @FXML
-    private Button closeButton;
-    @FXML
-    private TextField firstNameTextField, lastNameTextField, usernameTextField;
-
+    @FXML private Button closeButton;
+    @FXML private TextField firstNameTextField, lastNameTextField, usernameTextField;
     private final SelectProfileController selectProfileController;
 
     public AddNewProfileController(SelectProfileController selectProfileController) {

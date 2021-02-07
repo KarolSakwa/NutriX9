@@ -2,7 +2,6 @@ package Classes;
 
 import Controllers.AddProductController;
 import Controllers.DietViewController;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,9 +9,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
-import java.util.ArrayList;
-
 
 public class MealTable {
     public VBox tableContainer;
@@ -31,7 +27,6 @@ public class MealTable {
     Separator separator;
     public Meal meal;
 
-
     public MealTable(Meal meal, DietViewController dietViewController, Integer tableContainerLayoutX, Integer tableContainerLayoutY, MealTablesContainer mealTablesContainer, AddProductController addProductController) {
         this.meal = meal;
         this.tableContainerLayoutX = tableContainerLayoutX;
@@ -47,22 +42,6 @@ public class MealTable {
 
     public void setMealNum(Integer mealNum) {
         this.mealNum = mealNum;
-    }
-
-    public Integer getTableContainerLayoutX() {
-        return tableContainerLayoutX;
-    }
-
-    public void setTableContainerLayoutX(Integer tableContainerLayoutX) {
-        this.tableContainerLayoutX = tableContainerLayoutX;
-    }
-
-    public Integer getTableContainerLayoutY() {
-        return tableContainerLayoutY;
-    }
-
-    public void setTableContainerLayoutY(Integer tableContainerLayoutY) {
-        this.tableContainerLayoutY = tableContainerLayoutY;
     }
 
     public void create() {

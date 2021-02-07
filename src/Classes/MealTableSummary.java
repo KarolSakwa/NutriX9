@@ -8,19 +8,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
-import java.math.BigDecimal;
-
 public class MealTableSummary {
     TableColumn kcalSummary, proteinsSummary, carbsSummary, fatsSummary, WISummary, priceSummary, emptyColumn;
     SummaryTableView tableSummary;
-
     HBox summaryContainer;
-    Float totalKcal;
-    Float totalProteins;
-    Float totalCarbs;
-    Float totalFats;
+    Float totalKcal, totalProteins, totalCarbs, totalFats, totalPrice;
     Integer totalWI;
-    Float totalPrice;
     DietViewController dietViewController;
     MealTableSummary thisMealTableSummary; // I can't use "this" in method onChanged because it would refer to another class, so I created this variable
 
@@ -48,8 +41,6 @@ public class MealTableSummary {
 
         summaryContainer = new HBox();
         tableSummary = new SummaryTableView();
-
-
 
         kcalSummary.setCellValueFactory(new PropertyValueFactory<>("kcal"));
         proteinsSummary.setCellValueFactory(new PropertyValueFactory<>("proteins"));
