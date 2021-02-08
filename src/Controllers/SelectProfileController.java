@@ -1,14 +1,12 @@
 package Controllers;
 
-import Classes.User;
+import Classes.Helper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import Classes.DatabaseConnection;
-
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,13 +16,9 @@ public class SelectProfileController {
 
     DatabaseConnection databaseConnection = new DatabaseConnection();
     Connection con = databaseConnection.getConnection();
-    @FXML
-    private ComboBox selectProfileComboBox;
-    @FXML
-    private Button cancelButton, selectButton, addNewProfileButton;
+    @FXML ComboBox selectProfileComboBox;
+    @FXML Button cancelButton, selectButton;
     String username;
-    User user;
-
 
     public void initialize() throws SQLException {
         selectProfileComboBox.setEditable(true);
@@ -58,16 +52,10 @@ public class SelectProfileController {
         }
         Stage stage = (Stage) selectButton.getScene().getWindow();
         stage.close();
-        if (userDietsNum(username) == 0)
+        if (Helper.userDietsNum(username) == 0)
             openAddNewDietWindow();
         else
             openDietView();
-
-
-    }
-    public void addNewProfileButtonOnAction() {
-        AddNewProfileController addNewProfileController = new AddNewProfileController(this);
-        addNewProfileController.showStage();
     }
 
     // OTHER
@@ -85,18 +73,4 @@ public class SelectProfileController {
         DietViewController dietViewController = new DietViewController(this);
         dietViewController.showStage();
     }
-
-    private Integer userDietsNum(String username) {
-        try {
-            Statement statement = con.createStatement();
-            ResultSet usersDiets = statement.executeQuery("SELECT COUNT(*) AS 'dietCount' FROM diets WHERE username = '" + username + "'");
-            usersDiets.next();
-            return usersDiets.getInt("dietCount");
-        } catch (Exception e) {
-            e.printStackTrace();
-            e.getCause();
-            return 0;
-        }
-    }
-
 }

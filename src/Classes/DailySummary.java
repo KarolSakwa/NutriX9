@@ -144,6 +144,7 @@ public class DailySummary {
             children.setVisible(false);
         dailySummaryContainer.setAlignment(Pos.TOP_LEFT);
         dietViewController.separator.setVisible(false);
+        dailySummaryContainer.setPrefWidth(200);
     }
 
     public void setRightPanelNoMeals() {

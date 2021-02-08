@@ -48,7 +48,6 @@ public class MealTablesContainer {
                     dietViewController.dailySummary.showDailySummaryContent();
                     dietViewController.dailySummary.hideRightPanelNoMealsContent();
                 }
-
                 dietViewController.dailySummary.calculateTotalMacro();
             }
         });

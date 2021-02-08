@@ -20,6 +20,21 @@ import java.sql.Statement;
 
 public class Helper {
 
+    public static Integer userDietsNum(String username) {
+        DatabaseConnection databaseConnection = new DatabaseConnection();
+        Connection con = databaseConnection.getConnection();
+        try {
+            Statement statement = con.createStatement();
+            ResultSet usersDiets = statement.executeQuery("SELECT COUNT(*) AS 'dietCount' FROM diets WHERE username = '" + username + "'");
+            usersDiets.next();
+            return usersDiets.getInt("dietCount");
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+            return 0;
+        }
+    }
+
     public static Float twoDecimalsFloat(Float number) {
         BigDecimal bigDecimal = new BigDecimal(number.toString());
         BigDecimal roundOff = bigDecimal.setScale(2, BigDecimal.ROUND_HALF_EVEN);

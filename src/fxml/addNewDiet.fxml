@@ -49,7 +49,7 @@
             <Font size="11.0" />
          </font>
       </Label>
-      <Label fx:id="nameErrorLabel" layoutX="102.0" layoutY="451.0" text="The name is too long" textFill="#831212">
+      <Label fx:id="nameErrorLabel" layoutX="102.0" layoutY="451.0" text="The name is too long" textFill="#831212" visible="false">
          <font>
             <Font size="11.0" />
          </font>

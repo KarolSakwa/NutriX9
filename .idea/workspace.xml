@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="NutriX9:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -16,23 +21,18 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Layout fixes, logic moved out from controller">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Logic moved from controllers into helper class">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/NutriX9_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/NutriX9/Classes/Helper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NutriX9/Classes/Helper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/NutriX9/Controllers/DietViewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NutriX9/Controllers/DietViewController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/DailySummary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/DailySummary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/DatabaseConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Diet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Diet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Helper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Meal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Meal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/MealTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/MealTable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/MealTableSummary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/MealTableSummary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controllers/AddNewProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/AddNewProfileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controllers/AddProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/AddProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controllers/DietViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/DietViewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Classes/MealTablesContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/MealTablesContainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controllers/SelectProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/SelectProfileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/fxml/addNewDiet.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/fxml/addNewDiet.fxml" afterDir="false" />
     </list>
     <list id="14ff8b2e-ec73-4593-a8a6-9c069b4649cb" name="Screenshots added" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -131,7 +131,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="dynamic.classpath" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
@@ -244,13 +244,6 @@
       <option name="presentableId" value="Default" />
       <updated>1359379246138</updated>
       <workItem from="1359379250712" duration="1302000" />
-    </task>
-    <task id="LOCAL-00004" summary="Products table moved to MealTable class">
-      <created>1605278979182</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1605278979182</updated>
     </task>
     <task id="LOCAL-00005" summary="MealTable row problem resolved. New added class MealTableRow.">
       <created>1605312923615</created>
@@ -588,7 +581,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612685415559</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="Logic moved from controllers into helper class">
+      <created>1612708778429</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1612708778430</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -631,7 +631,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
-    <MESSAGE value="TrainingLength ComboBox added, kcal requirement calculation implemented" />
     <MESSAGE value="User class added" />
     <MESSAGE value="Diet class added, minor refactoring done" />
     <MESSAGE value="Few things refactored" />
@@ -656,7 +655,8 @@
     <MESSAGE value="Logic moved out from the controller" />
     <MESSAGE value="Layout fixes" />
     <MESSAGE value="Layout fixes, logic moved out from controller" />
-    <option name="LAST_COMMIT_MESSAGE" value="Layout fixes, logic moved out from controller" />
+    <MESSAGE value="Logic moved from controllers into helper class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Logic moved from controllers into helper class" />
   </component>
   <component name="WindowStateProjectService">
     <state x="592" y="314" key="#Images" timestamp="1608102137483">
@@ -679,10 +679,10 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="896" y="260" key="#com.intellij.ide.util.MemberChooser/0.0.1680.1010@0.0.1680.1010" timestamp="1606486208254" />
-    <state x="569" y="319" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1612635286111">
+    <state x="569" y="319" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1612761250272">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="569" y="319" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1612635286111" />
+    <state x="569" y="319" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1612761250272" />
     <state x="623" y="399" width="433" height="217" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1604925785574">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
@@ -695,46 +695,46 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="570" y="252" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1608023408155" />
-    <state x="546" y="246" key="FileChooserDialogImpl" timestamp="1612636448162">
+    <state x="546" y="246" key="FileChooserDialogImpl" timestamp="1612761445502">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="546" y="246" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1612636448162" />
+    <state x="546" y="246" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1612761445502" />
     <state x="718" y="403" key="Github.ShareDialog" timestamp="1604916392269">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="718" y="403" key="Github.ShareDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1604916392269" />
-    <state width="1637" height="336" key="GridCell.Tab.0.bottom" timestamp="1612707079186">
+    <state width="1637" height="203" key="GridCell.Tab.0.bottom" timestamp="1612758868856">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="336" key="GridCell.Tab.0.bottom/0.0.1680.1010@0.0.1680.1010" timestamp="1612707079186" />
-    <state width="1637" height="336" key="GridCell.Tab.0.center" timestamp="1612707079185">
+    <state width="1637" height="203" key="GridCell.Tab.0.bottom/0.0.1680.1010@0.0.1680.1010" timestamp="1612758868856" />
+    <state width="1637" height="203" key="GridCell.Tab.0.center" timestamp="1612758868855">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="336" key="GridCell.Tab.0.center/0.0.1680.1010@0.0.1680.1010" timestamp="1612707079185" />
-    <state width="1637" height="336" key="GridCell.Tab.0.left" timestamp="1612707079185">
+    <state width="1637" height="203" key="GridCell.Tab.0.center/0.0.1680.1010@0.0.1680.1010" timestamp="1612758868855" />
+    <state width="1637" height="203" key="GridCell.Tab.0.left" timestamp="1612758868853">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="336" key="GridCell.Tab.0.left/0.0.1680.1010@0.0.1680.1010" timestamp="1612707079185" />
-    <state width="1637" height="336" key="GridCell.Tab.0.right" timestamp="1612707079185">
+    <state width="1637" height="203" key="GridCell.Tab.0.left/0.0.1680.1010@0.0.1680.1010" timestamp="1612758868853" />
+    <state width="1637" height="203" key="GridCell.Tab.0.right" timestamp="1612758868855">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="336" key="GridCell.Tab.0.right/0.0.1680.1010@0.0.1680.1010" timestamp="1612707079185" />
-    <state width="1637" height="336" key="GridCell.Tab.1.bottom" timestamp="1612707079186">
+    <state width="1637" height="203" key="GridCell.Tab.0.right/0.0.1680.1010@0.0.1680.1010" timestamp="1612758868855" />
+    <state width="1637" height="336" key="GridCell.Tab.1.bottom" timestamp="1612708879579">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="336" key="GridCell.Tab.1.bottom/0.0.1680.1010@0.0.1680.1010" timestamp="1612707079186" />
-    <state width="1637" height="336" key="GridCell.Tab.1.center" timestamp="1612707079186">
+    <state width="1637" height="336" key="GridCell.Tab.1.bottom/0.0.1680.1010@0.0.1680.1010" timestamp="1612708879579" />
+    <state width="1637" height="336" key="GridCell.Tab.1.center" timestamp="1612708879568">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="336" key="GridCell.Tab.1.center/0.0.1680.1010@0.0.1680.1010" timestamp="1612707079186" />
-    <state width="1637" height="336" key="GridCell.Tab.1.left" timestamp="1612707079186">
+    <state width="1637" height="336" key="GridCell.Tab.1.center/0.0.1680.1010@0.0.1680.1010" timestamp="1612708879568" />
+    <state width="1637" height="336" key="GridCell.Tab.1.left" timestamp="1612708879568">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="336" key="GridCell.Tab.1.left/0.0.1680.1010@0.0.1680.1010" timestamp="1612707079186" />
-    <state width="1637" height="336" key="GridCell.Tab.1.right" timestamp="1612707079186">
+    <state width="1637" height="336" key="GridCell.Tab.1.left/0.0.1680.1010@0.0.1680.1010" timestamp="1612708879568" />
+    <state width="1637" height="336" key="GridCell.Tab.1.right" timestamp="1612708879579">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="336" key="GridCell.Tab.1.right/0.0.1680.1010@0.0.1680.1010" timestamp="1612707079186" />
+    <state width="1637" height="336" key="GridCell.Tab.1.right/0.0.1680.1010@0.0.1680.1010" timestamp="1612708879579" />
     <state x="160" y="83" key="MergeDialog" timestamp="1612602280909">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
@@ -747,10 +747,10 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="649" y="225" key="RollbackChangesDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1612635086936" />
-    <state x="320" y="79" key="SettingsEditor" timestamp="1612636462435">
+    <state x="320" y="79" key="SettingsEditor" timestamp="1612762005026">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="320" y="79" key="SettingsEditor/0.0.1680.1010@0.0.1680.1010" timestamp="1612636462435" />
+    <state x="320" y="79" key="SettingsEditor/0.0.1680.1010@0.0.1680.1010" timestamp="1612762005026" />
     <state x="603" y="209" key="VCS.ChangeListViewerDialog" timestamp="1612331636941">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
@@ -759,10 +759,10 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="687" y="418" key="VCS.ChangelistChooser/0.0.1680.1010@0.0.1680.1010" timestamp="1612332057695" />
-    <state x="432" y="238" key="Vcs.Push.Dialog.v2" timestamp="1612685419875">
+    <state x="432" y="238" key="Vcs.Push.Dialog.v2" timestamp="1612708858610">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="432" y="238" key="Vcs.Push.Dialog.v2/0.0.1680.1010@0.0.1680.1010" timestamp="1612685419875" />
+    <state x="432" y="238" key="Vcs.Push.Dialog.v2/0.0.1680.1010@0.0.1680.1010" timestamp="1612708858610" />
     <state x="446" y="115" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1606038639673">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
