@@ -21,18 +21,8 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Logic moved from controllers into helper class">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/NutriX9_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Logic moved from controllers into helper class, refactor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/NutriX9/Classes/Helper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NutriX9/Classes/Helper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/NutriX9/Controllers/DietViewController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/NutriX9/Controllers/DietViewController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/DailySummary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/DailySummary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Helper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/MealTablesContainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/MealTablesContainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controllers/SelectProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/SelectProfileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/fxml/addNewDiet.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/fxml/addNewDiet.fxml" afterDir="false" />
     </list>
     <list id="14ff8b2e-ec73-4593-a8a6-9c069b4649cb" name="Screenshots added" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -244,13 +234,6 @@
       <option name="presentableId" value="Default" />
       <updated>1359379246138</updated>
       <workItem from="1359379250712" duration="1302000" />
-    </task>
-    <task id="LOCAL-00005" summary="MealTable row problem resolved. New added class MealTableRow.">
-      <created>1605312923615</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1605312923616</updated>
     </task>
     <task id="LOCAL-00006" summary="New way to include data in MealTable">
       <created>1605340091851</created>
@@ -588,7 +571,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612708778430</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="Logic moved from controllers into helper class, refactor">
+      <created>1612767934899</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1612767934910</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -631,7 +621,6 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
-    <MESSAGE value="User class added" />
     <MESSAGE value="Diet class added, minor refactoring done" />
     <MESSAGE value="Few things refactored" />
     <MESSAGE value="Macronutrient requirement calculation implemented" />
@@ -656,7 +645,8 @@
     <MESSAGE value="Layout fixes" />
     <MESSAGE value="Layout fixes, logic moved out from controller" />
     <MESSAGE value="Logic moved from controllers into helper class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Logic moved from controllers into helper class" />
+    <MESSAGE value="Logic moved from controllers into helper class, refactor" />
+    <option name="LAST_COMMIT_MESSAGE" value="Logic moved from controllers into helper class, refactor" />
   </component>
   <component name="WindowStateProjectService">
     <state x="592" y="314" key="#Images" timestamp="1608102137483">
@@ -703,22 +693,22 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="718" y="403" key="Github.ShareDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1604916392269" />
-    <state width="1637" height="203" key="GridCell.Tab.0.bottom" timestamp="1612758868856">
+    <state width="1637" height="203" key="GridCell.Tab.0.bottom" timestamp="1612775814094">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="203" key="GridCell.Tab.0.bottom/0.0.1680.1010@0.0.1680.1010" timestamp="1612758868856" />
-    <state width="1637" height="203" key="GridCell.Tab.0.center" timestamp="1612758868855">
+    <state width="1637" height="203" key="GridCell.Tab.0.bottom/0.0.1680.1010@0.0.1680.1010" timestamp="1612775814094" />
+    <state width="1637" height="203" key="GridCell.Tab.0.center" timestamp="1612775814094">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="203" key="GridCell.Tab.0.center/0.0.1680.1010@0.0.1680.1010" timestamp="1612758868855" />
-    <state width="1637" height="203" key="GridCell.Tab.0.left" timestamp="1612758868853">
+    <state width="1637" height="203" key="GridCell.Tab.0.center/0.0.1680.1010@0.0.1680.1010" timestamp="1612775814094" />
+    <state width="1637" height="203" key="GridCell.Tab.0.left" timestamp="1612775814094">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="203" key="GridCell.Tab.0.left/0.0.1680.1010@0.0.1680.1010" timestamp="1612758868853" />
-    <state width="1637" height="203" key="GridCell.Tab.0.right" timestamp="1612758868855">
+    <state width="1637" height="203" key="GridCell.Tab.0.left/0.0.1680.1010@0.0.1680.1010" timestamp="1612775814094" />
+    <state width="1637" height="203" key="GridCell.Tab.0.right" timestamp="1612775814094">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state width="1637" height="203" key="GridCell.Tab.0.right/0.0.1680.1010@0.0.1680.1010" timestamp="1612758868855" />
+    <state width="1637" height="203" key="GridCell.Tab.0.right/0.0.1680.1010@0.0.1680.1010" timestamp="1612775814094" />
     <state width="1637" height="336" key="GridCell.Tab.1.bottom" timestamp="1612708879579">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
@@ -759,10 +749,10 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="687" y="418" key="VCS.ChangelistChooser/0.0.1680.1010@0.0.1680.1010" timestamp="1612332057695" />
-    <state x="432" y="238" key="Vcs.Push.Dialog.v2" timestamp="1612708858610">
+    <state x="432" y="238" key="Vcs.Push.Dialog.v2" timestamp="1612767938670">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
-    <state x="432" y="238" key="Vcs.Push.Dialog.v2/0.0.1680.1010@0.0.1680.1010" timestamp="1612708858610" />
+    <state x="432" y="238" key="Vcs.Push.Dialog.v2/0.0.1680.1010@0.0.1680.1010" timestamp="1612767938670" />
     <state x="446" y="115" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1606038639673">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
