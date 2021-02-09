@@ -12,7 +12,8 @@ public class DatabaseConnection {
         String databaseName = "nutrix9";
         String databaseUser = "root";
         String databasePassword = "admin";
-        String url = "jdbc:mysql://localhost:3306/" + databaseName + "?autoReconnect=true&useSSL=false";
+        String url = "jdbc:mysql://localhost:3306/" + databaseName + "?autoReconnect=true&useSSL=false&createDatabaseIfNotExist=true";
+
         try {
             Class.forName("com.mysql.jdbc.Driver");
             databaseLink = DriverManager.getConnection(url, databaseUser, databasePassword);
