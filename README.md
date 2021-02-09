@@ -9,7 +9,7 @@
 <p align="center">
   <a href="#general-info">General info</a> •
   <a href="#technologies">Technologies</a> •
-  <a href="#status">Status</a>
+  <a href="#status">Project status</a>
 </p>
 
 <h1 align="center">
@@ -38,7 +38,7 @@ The app was created to help you organize your diet. With NutriX9, you can:
 - Java
 - JavaFX
 
-## Status
+## Project status
 
 The project is still being developed. There are a lot more features to be implemented, such as:
 - Much larger products database
