@@ -1,10 +1,10 @@
 <h1 align="center">
   <br>
-  <img src="https://raw.githubusercontent.com/KarolSakwa/NutriX9/branch2/src/img/logo_smaller.png" alt="NutriX9" >
+  <img src="https://raw.githubusercontent.com/KarolSakwa/FootIQ/master/assets/img/screens/challenge_screen.png" alt="challenge_screen" >
   <br>
-  NutriX9
+  FootIQ
 </h1>
-<h3 align="center">Dekstop diet application</h3>
+<h3 align="center">Football knowledge test app</h3>
 
 <p align="center">
   <a href="#general-info">General info</a> •
@@ -13,13 +13,13 @@
 </p>
 
 <h1 align="center">
-  <img src="https://raw.githubusercontent.com/KarolSakwa/NutriX9/branch2/src/img/NutriX9%20screen.png" alt="NutriX9 select profile view" />
+  <img src="https://raw.githubusercontent.com/KarolSakwa/FootIQ/master/assets/img/screens/welcome_screen.png" alt="FootIQ welcome screen" />
   <br>
   <br>
-  <img src="https://raw.githubusercontent.com/KarolSakwa/NutriX9/branch2/src/img/addProductView.jpg" alt="NutriX9 add product view" />
+  <img src="https://raw.githubusercontent.com/KarolSakwa/FootIQ/master/assets/img/screens/profile_screen.png" alt="FootIQ profile screen" />
   <br>
   <br>
-  <img src="https://raw.githubusercontent.com/KarolSakwa/NutriX9/branch2/src/img/dietView.jpg" alt="NutriX9 diet view" />
+  <img src="https://raw.githubusercontent.com/KarolSakwa/FootIQ/master/assets/img/screens/login_screen.png" alt="FootIQ login view" />
   <br>
   <br>
 </h1>
@@ -28,18 +28,18 @@
 
 ## General info
 
-The app was created to help you organize your diet. With NutriX9, you can: 
-- Easily calculate how many calories you have consumed in each meal of each day, thanks to built-in products database
-- Find out how healthy your diet is by looking at Wholesomeness Index value
-- Check your daily macronutrient requirement - the app calculates both the demand for each macronutrient and calories
+FootIQ is an advanced football knowledge test. 
+- it contains thousands of questions generated automatically thanks to statistical data from external databases
+- you can test your knowledge in many different categories and compare it with the knowledge of other users
+- you have access to a lot of statistical data on the tests you have performed
 
 ## Technologies
 
-- Java
-- JavaFX
+- Dart
+- Flutter
 
 ## Project status
 
 The project is still being developed. There are a lot more features to be implemented, such as:
-- Much larger products database
-- Food diary/calendar - storing the meals eaten each day and creating statistical summaries
+- duel feature - challenge another user to a duel to earn extra EXP points
+- even larger question database
